@@ -78,6 +78,7 @@ const config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: "ConsenSys", // Usually your GitHub org/user name.
   projectName: "docs-template", // Usually your repo name.
+  deploymentBranch: "gh-pages", // Github Pages deploying branch
 
   // Even if you don't use internalization, you can use this field to set useful
   // metadata like html lang. For example, if your site is Chinese, you may want
@@ -222,12 +223,8 @@ const config = {
                 to: "/docs/intro",
               },
               {
-                label: "Get Started",
-                to: "/docs/category/get-started",
-              },
-              {
-                label: "Migrating to Teku",
-                to: "/docs/HowTo/Get-Started/Migrate-to-Teku",
+                label: "Create a Page",
+                to: "/docs/tutorial-basics/create-a-page",
               },
             ],
           },

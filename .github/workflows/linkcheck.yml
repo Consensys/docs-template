@@ -1,0 +1,17 @@
+---
+name: Verify links
+
+on: [pull_request]
+
+jobs:
+  check:
+    name: Run check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Links check
+        uses: ConsenSys/doctools.action-builder/actions/tests/links@main
