@@ -10,6 +10,9 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
+const baseUrl = process.env.BASE_URL ?? "/";
+const isDev = process.env.NODE_ENV === "development";
+
 /**
  * @type {import('redocusaurus').PresetEntry}
  */
@@ -67,8 +70,8 @@ const config = {
   title: "ConsenSys Docs",
   tagline:
     "A template repository to quickly boostrap a Docusaurus application to serve documentation",
-  url: "https://docs-template.consensys.net",
-  baseUrl: "/",
+  url: "https://consensys.github.io",
+  baseUrl: isDev ? "/" : "/docs-template",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
   favicon: "img/favicon.ico",
