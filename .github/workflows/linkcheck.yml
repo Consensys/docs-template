@@ -26,7 +26,7 @@ inputs:
 
 jobs:
   markdown-link-check:
-    runs-on: ubuntu-latest
+    runs-on: ["self-hosted", "Linux", "X64", "generic"]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

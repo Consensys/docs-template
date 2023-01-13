@@ -4,7 +4,7 @@ on: [pull_request]
 jobs:
   vale:
     name: runner / vale
-    runs-on: ubuntu-latest
+    runs-on: ["self-hosted", "Linux", "X64", "generic"]
     steps:
       - uses: actions/checkout@v3
       - uses: errata-ai/vale-action@reviewdog

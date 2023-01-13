@@ -12,7 +12,7 @@ inputs:
 jobs:
   lint:
     name: Check file name case
-    runs-on: ubuntu-latest
+    runs-on: ["self-hosted", "Linux", "X64", "generic"]
     permissions:
       contents: read
     steps:
