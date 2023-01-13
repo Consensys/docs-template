@@ -1,71 +1,107 @@
-/**
- * Copyright (c) ConsenSys Software, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * @format
- */
-const OFF = 0;
-const WARNING = 1;
-const ERROR = 2;
-
 module.exports = {
-  root: true,
   env: {
     browser: true,
-    commonjs: true,
-    jest: true,
-    node: true,
+    es2021: true,
   },
-  parser: "@babel/eslint-parser",
+  extends: [
+    "plugin:react/recommended",
+    "airbnb-typescript",
+    "plugin:import/typescript",
+    // @NOTE: Make sure this is always the last element in the array.
+    "plugin:prettier/recommended",
+  ],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    allowImportExportEverywhere: true,
+    ecmaVersion: 2020,
+    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
+    project: "./tsconfig.json",
   },
-  extends: ["airbnb", "prettier", "plugin:mdx/recommended"],
-  plugins: ["react-hooks", "header"],
+  plugins: [
+    "react",
+    "react-hooks",
+    "jsx-a11y",
+    "import",
+    "prettier",
+    "@typescript-eslint",
+  ],
   settings: {
-    "mdx/code-blocks": true,
-    // optional, if you want to disable language mapper, set it to `false`
-    // if you want to override the default language mapper inside, you can provide your own
-    "mdx/language-mapper": {},
+    react: {
+      pragma: "React", // Pragma to use, default to "React"
+      fragment: "Fragment", // Fragment to use (may be a property of <pragma>), default to "Fragment"
+      version: "detect", // React version. "detect" automatically picks the version you have installed.
+      // You can also use `16.0`, `16.3`, etc, if you want to override the detected value.
+      // default to latest and warns if missing
+      // It will default to "detect" in the future
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"],
+    },
+    "import/resolver": {
+      typescript: {},
+    },
   },
   rules: {
-    // Ignore certain webpack alias because it can't be resolved
+    "import/prefer-default-export": 0,
+    "react/prop-types": 0,
     "import/no-unresolved": [
-      ERROR,
-      { ignore: ["^@theme", "^@docusaurus", "^@generated"] },
+      "error",
+      { ignore: ["^@theme", "^@docusaurus", "^@site"] },
     ],
-    "import/extensions": OFF,
-    "header/header": [
-      ERROR,
-      "block",
-
-      [
-        "*",
-        " * Copyright (c) ConsenSys Software, Inc. and affiliates.",
-        " *",
-        " * This source code is licensed under the MIT license found in the",
-        " * LICENSE file in the root directory of this source tree.",
-        " *",
-        // Unfortunately eslint-plugin-header doesn't support optional lines.
-        // If you want to enforce your website JS files to have @flow or @format,
-        // modify these lines accordingly.
-        {
-          pattern: ".* @format",
-        },
-        " ",
-      ],
-    ],
-    "react/jsx-filename-extension": OFF,
-    "react-hooks/rules-of-hooks": ERROR,
-    "react/prop-types": OFF, // PropTypes aren't used much these days.
-    "react/function-component-definition": [
-      WARNING,
+    "no-nested-ternary": 0,
+    "no-console": 0,
+    "no-unused-vars": 0,
+    "no-use-before-define": 0,
+    "arrow-body-style": 0,
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "@typescript-eslint/no-unused-expressions": 0,
+    "@typescript-eslint/no-unused-vars": ["warn", { args: "none" }],
+    "@typescript-eslint/no-use-before-define": "warn",
+    "react/require-default-props": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/button-has-type": 0,
+    "jsx-a11y/label-has-associated-control": [
+      "error",
       {
-        namedComponents: "function-declaration",
-        unnamedComponents: "arrow-function",
+        labelComponents: [],
+        labelAttributes: [],
+        controlComponents: [],
+        assert: "either",
+        depth: 2,
       },
     ],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        selector: "variableLike",
+        leadingUnderscore: "forbid",
+        trailingUnderscore: "forbid",
+        format: ["camelCase", "PascalCase", "UPPER_CASE"],
+      },
+    ],
+    "import/extensions": 0,
   },
+  overrides: [
+    {
+      files: ["**/*.styles.ts"],
+      rules: {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            selector: "variableLike",
+            format: null,
+            custom: {
+              regex:
+                "(^[A-Z]\\w+)|(^[A-Z]\\w+_\\w+$)|(^[A-Z]\\w+___\\w+$)|(^[A-Z]\\w+_\\w+___\\w+$)",
+              match: true,
+            },
+          },
+        ],
+      },
+    },
+  ],
 };
