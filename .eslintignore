@@ -4,3 +4,4 @@ docs/test-api
 ./node_modules/*
 *.md
 *.mdx
+LICENSE

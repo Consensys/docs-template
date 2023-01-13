@@ -37,7 +37,7 @@ jobs:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
           registry-url: https://registry.npmjs.org/
 
-      - name: npm install, lint
+      - name: npm install, build
         run: |
           npm ci
           npm run build
