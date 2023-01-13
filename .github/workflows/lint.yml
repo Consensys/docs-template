@@ -19,11 +19,11 @@ jobs:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
           registry-url: https://registry.npmjs.org/
 
-      - name: yarn install, lint
+      - name: npm install, lint
         run: |
-          yarn install
-          yarn run lint
-          yarn run typecheck
+          npm ci
+          npm run lint
+          npm run typecheck
   build:
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +37,7 @@ jobs:
           node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
           registry-url: https://registry.npmjs.org/
 
-      - name: yarn install, build
+      - name: npm install, lint
         run: |
-          yarn install
-          yarn run build
+          npm ci
+          npm run build
