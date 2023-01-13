@@ -17,7 +17,7 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    project: "./tsconfig.json",
+    project: ["./tsconfig.json"],
   },
   plugins: [
     "react",
@@ -85,23 +85,4 @@ module.exports = {
     ],
     "import/extensions": 0,
   },
-  overrides: [
-    {
-      files: ["**/*.styles.ts"],
-      rules: {
-        "@typescript-eslint/naming-convention": [
-          "error",
-          {
-            selector: "variableLike",
-            format: null,
-            custom: {
-              regex:
-                "(^[A-Z]\\w+)|(^[A-Z]\\w+_\\w+$)|(^[A-Z]\\w+___\\w+$)|(^[A-Z]\\w+_\\w+___\\w+$)",
-              match: true,
-            },
-          },
-        ],
-      },
-    },
-  ],
 };
