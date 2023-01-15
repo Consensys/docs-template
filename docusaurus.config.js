@@ -53,7 +53,8 @@ const docusaurusApi2 = [
     docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
     config: {
       api: {
-        specPath: "api/test_api.yaml", // path or URL to the OpenAPI spec
+        specPath:
+          "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path or URL to the OpenAPI spec
         outputDir: "docs/test-api", // output directory for generated *.mdx and sidebar.js files
         template: "api.mustache", // Customize API MDX with mustache template
         sidebarOptions: {
