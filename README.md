@@ -6,7 +6,8 @@ This is a documentation template repo built using [Docusaurus 2](https://docusau
 
 ```
 $ npm run prepare
-$ npm run start
+$ npm install
+$ npm start
 ```
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
