@@ -1,6 +1,7 @@
 name: Check Markdown links
 
-on: [pull_request]
+on:
+  pull_request:
 
 inputs:
   DOC_DIR:
