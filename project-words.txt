@@ -48,6 +48,7 @@ codegen
 codeql
 codesandbox
 codespaces
+consen
 contravariance
 corejs
 crawlable
