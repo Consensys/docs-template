@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/ConsenSys/docs-template/compare/v1.0.0...v1.1.0) (2023-01-18)
+
+
+### Features
+
+* **docusaurus.config.js:** add colormode settings ([7361e06](https://github.com/ConsenSys/docs-template/commit/7361e06bea2c7a0ae0b391a5bdaea9622a62c86f))
+
 # 1.0.0 (2023-01-16)
 
 
