@@ -2,7 +2,7 @@
 name: Build and deploy to GitHub Pages
 
 on:
-  pull_request:
+  push:
     branches:
       - main
     # Review gh actions docs if you want to further define triggers, paths, etc
