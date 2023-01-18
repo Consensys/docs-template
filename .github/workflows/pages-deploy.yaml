@@ -9,8 +9,8 @@ on:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 
 jobs:
-  case:
-    name: Check for case being inconsistent
+  pages-deploy:
+    name: Deploy to GitHub Pages
     runs-on: [self-hosted, linux, X64, generic]
     # the enviroment to deploy to / use secrets from
     environment: no-secret
