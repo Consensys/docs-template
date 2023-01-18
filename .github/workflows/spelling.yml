@@ -1,17 +1,23 @@
-name: Verify spelling and guidelines
-on: [pull_request]
+---
+name: Check for spelling errors
+
+on:
+  push: {}
+  pull_request: {}
 
 jobs:
-  vale:
-    name: runner / vale
-    runs-on: ["self-hosted", "Linux", "X64", "generic"]
+  spelling:
+    name: Spell Check Code Base
+    runs-on: [self-hosted, linux, X64, generic]
+    # the enviroment to deploy to / use secrets from
+    environment: no-secret
+    # modify the default permissions of the GITHUB_TOKEN, so as to only allow least priveleges
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
-      - uses: errata-ai/vale-action@reviewdog
+
+      - name: Spell check 
+        uses: ConsenSys/docs-gha/spelling@main
         with:
-          files: "./docs/,./blog/"
-          vale_flags: "--glob='!docs/**/*.js'"
-        env:
-          # Required, set by GitHub actions automatically:
-          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

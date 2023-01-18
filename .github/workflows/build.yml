@@ -1,13 +1,16 @@
 ---
-name: Check for lint/build errors
+name: Build
 
 on:
-  push: {}
-  pull_request: {}
+  pull_request:
+    branches:
+      - main
+    # Review gh actions docs if you want to further define triggers, paths, etc
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 
 jobs:
-  lint:
-    name: Lint Code Base
+  case:
+    name: Check for case being inconsistent
     runs-on: [self-hosted, linux, X64, generic]
     # the enviroment to deploy to / use secrets from
     environment: no-secret
@@ -16,8 +19,8 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v3
-        
-      - name: Lint
-        uses: ConsenSys/docs-gha/lint@main
+
+      - name: Build
+        uses: ConsenSys/docs-gha/build@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

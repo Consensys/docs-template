@@ -1,36 +1,23 @@
 ---
 name: Check file name case
 
-on: [pull_request]
-
-inputs:
-  DOC_DIR:
-    description: "doc directory path from project root"
-    required: false
-    default: docs
+on:
+  push: {}
+  pull_request: {}
 
 jobs:
-  lint:
-    name: Check file name case
-    runs-on: ["self-hosted", "Linux", "X64", "generic"]
+  case:
+    name: Check for case being inconsistent
+    runs-on: [self-hosted, linux, X64, generic]
+    # the enviroment to deploy to / use secrets from
+    environment: no-secret
+    # modify the default permissions of the GITHUB_TOKEN, so as to only allow least priveleges
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v3
-      - name: Check pages file name case
-        shell: sh
-        run: |
-          echo "Testing file case in ${{ inputs.DOC_DIR }}."
-          passed=true
-          for filename in `find ${{ inputs.DOC_DIR }} -name "*.md" | ( ! grep -P -v "^[[:lower:][:digit:]\/\-_]+\.md$" )`
-          do
-            echo "$filename"
-            echo "::error file=$filename ::File path must be only lowercase letters, digits, - (dash) and _ (underscore)"
-            passed=false
-          done;
-          if [ "$passed" = false ] ; then
-            echo "::error ::Some files path are incorrect. Check error annotations in the pull request."
-            echo "Correct example: my-folder/my-file-name_new2.md"
-            echo "Wrong example: My-Folder/MyFile-NAME.old.md"
-            exit 1
-          fi
+
+      - name: Case check action
+        uses: ConsenSys/docs-gha/case@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
