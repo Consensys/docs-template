@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/ConsenSys/docs-template/compare/v1.1.0...v1.1.1) (2023-01-18)
+
+
+### Bug Fixes
+
+* **custom.css:** dockerhub after ([b3a8b55](https://github.com/ConsenSys/docs-template/commit/b3a8b55ce8914fd1a0753ea5b12a83b4d15508ce))
+
 # [1.1.0](https://github.com/ConsenSys/docs-template/compare/v1.0.0...v1.1.0) (2023-01-18)
 
 
