@@ -15,9 +15,13 @@ jobs:
       NODE_ENV: production
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: Read .nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+        id: nvm
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
+        uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
           cache: npm
 
       - name: Install dependencies
