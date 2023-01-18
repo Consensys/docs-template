@@ -16,7 +16,7 @@ jobs:
     environment: no-secret
     # modify the default permissions of the GITHUB_TOKEN, so as to only allow least priveleges
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@v3
 
