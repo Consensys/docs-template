@@ -155,6 +155,11 @@ const config = {
 
         // ... other Algolia params
       },
+      colorMode: {
+        defaultMode: "light",
+        disableSwitch: false,
+        respectPrefersColorScheme: true,
+      },
       tableOfContents: {
         minHeadingLevel: 2,
         maxHeadingLevel: 5,
