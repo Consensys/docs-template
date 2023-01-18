@@ -11,11 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Read .nvmrc
-        run: echo "NODE_VERSION=$(cat .nvmrc)" > "$NODE_VERSION"
-      - name: Use Node.js ${{ env.NODE_VERSION }}
+        run: echo "NODE_VERSION=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+        id: nvm
+      - name: Use Node.js ${{ steps.nvm.outputs.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version: ${{ steps.nvm.outputs.NODE_VERSION }}
           registry-url: https://registry.npmjs.org/
 
       - name: npm install, lint
