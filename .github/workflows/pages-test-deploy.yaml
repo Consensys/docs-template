@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Read .nvmrc
-        run: echo "NODE_VERSION=$(cat .nvmrc)" > $NODE_VERSION
+        run: echo "NODE_VERSION=$(cat .nvmrc)" > "$NODE_VERSION"
       - name: Use Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v3
         with:
