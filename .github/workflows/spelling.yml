@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Spell check 
+      - name: Spell check
         uses: ConsenSys/docs-gha/spelling@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
