@@ -131,6 +131,11 @@ html[data-theme="dark"] .header-dockerhub-link::before {
     margin-left: 20px;
     content: "Discord ";
   }
+
+  .header-dockerhub-link::after {
+    margin-left: 20px;
+    content: "DockerHub ";
+  }
 }
 
 /* Make navbar looks friendly on small devices. */
