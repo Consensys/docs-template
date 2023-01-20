@@ -1,6 +1,6 @@
 ---
-
-## sidebar_position: 2
+sidebar_position: 2
+---
 
 # Create a Document
 
@@ -30,16 +30,14 @@ Add metadata to customize the sidebar label and position:
 
 ```md title="docs/hello.md" {1-4}
 ---
-
-sidebar_label: "Hi!" sidebar_position: 3
-
+sidebar_label: "Hi!"
+sidebar_position: 3
 ---
 
 # Hello
 
 This is my **first Docusaurus document**!
-
-````
+```
 
 It is also possible to create your sidebar explicitly in `sidebars.js`:
 
@@ -56,4 +54,4 @@ module.exports = {
     },
   ],
 };
-````
+```
