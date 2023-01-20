@@ -4,4 +4,97 @@ sidebar_position: 2
 
 # Understanding repo layout
 
-The purpose of this page is to describe what each file and function
+The purpose of this page is to describe the function of each file in this repo.
+
+## 🗂️ `.github` folder
+
+<details>
+  <summary>See folder structure</summary>
+
+    .github
+    ├── ISSUE_TEMPLATE
+    │   └── bug_report.md
+    ├── pull_request_template.md
+    └── workflows
+        ├── build.yml
+        ├── case.yml
+        ├── lint.yml
+        ├── pages-deploy.yaml
+        └── release.yaml
+    3 directories, 7 files
+
+</details>
+
+### 📂 `ISSUE_TEMPLATE`
+
+Contains the bug report template when opening an Issue on GitHub. This can be customized to your needs. Note that by GitHub convention, this name cannot be changed.
+
+### 📄 `pull_request_template.md`
+
+Pull request template when pull request is opened. This can be customized to your needs. Note that by GitHub convention, this name cannot be changed.
+
+### 📂 `workflows`
+
+Contains all the GitHub Actions for the repo.
+
+#### 📄 `build.yml`
+
+Build the docs as it would in production to check for any build errors.
+
+#### 📄 `case.yml`
+
+Ensure that all markdown files have names which are only lower case letters, digits, dashes or underscores.
+
+#### 📄 `lint.yml`
+
+Run `npm run lint` from `package.json`. It includes spell checking, TypeScript linting, and CSS styling.
+
+#### 📄 `pages-deploy.yaml`
+
+Build and deploy the docs to GitHub Pages when any commit is made to the `main` branch.
+
+#### 📄 `release.yaml`
+
+Check all recent commits made to `main` branch and automatically cut a release in line with [semantic versioning](https://semver.org/). The Action will read the configuration in `.releaserc.js` in the root directory of this repo.
+
+## 🗂️ `.husky` folder
+
+:::tip
+
+[Husky](https://typicode.github.io/husky/#/) manages Git hooks in an easy way and it is used in this repository for pre-commit, commit message, and staged linting so far.
+
+:::
+
+<details>
+  <summary>See folder structure</summary>
+
+    .husky
+    ├── _
+    │   └── husky.sh
+    ├── commit-msg
+    ├── pre-commit
+    └── prepare-commit-msg
+
+    2 directories, 4 files
+
+</details>
+
+#### 📄 `commit-msg`
+
+On any commit message, `commitlint` will be run to ensure that it is compliant. The config used in this repo is the `config-conventional` found [here](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/index.js). This is specified in the `package.json` on the `commitlint` JSON key.
+
+#### 📄 `pre-commit`
+
+Before a commit, `lint-staged` will be run which will check all staged files for spelling errors, TypeScript linting, and CSS linting. Settings for it can be found in `package.json` under `lint-staged` JSON key.
+
+#### 📄 `prepare-commit-msg`
+
+Commit message will use [git-cz](https://github.com/commitizen/cz-cli), which has its settings in `package.json` under `config` JSON key. It uses `cz-conventional-changelog` which is the [conventional log standard](https://github.com/conventional-changelog/conventional-changelog).
+
+## 🗂️ `blog` folder
+
+:::tip
+
+Contains all the Markdown and related files for the [blog](https://docusaurus.io/docs/blog) functionality of Docusaurus.
+
+:::

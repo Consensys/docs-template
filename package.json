@@ -28,7 +28,7 @@
     "**/*.{ts,tsx}": "npm run typecheck-staged",
     "**/*.css": "npm run lint:style",
     "**/*.{md,mdx}": "npm run lint:spelling",
-    "**/*.{md,mdx,ts,js,tsx,jsx,json,txt}": "npm run format"
+    "**/*.{md,mdx,ts,js,tsx,jsx,json}": "npm run format"
   },
   "dependencies": {
     "@docusaurus/core": "2.2.0",
