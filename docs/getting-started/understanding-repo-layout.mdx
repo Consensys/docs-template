@@ -98,3 +98,85 @@ Commit message will use [git-cz](https://github.com/commitizen/cz-cli), which ha
 Contains all the Markdown and related files for the [blog](https://docusaurus.io/docs/blog) functionality of Docusaurus.
 
 :::
+
+## 🗂️ `docs` folder
+
+:::tip
+
+Contains all the Markdown and related files for the [docs](https://docusaurus.io/docs/docs-introduction) functionality of Docusaurus.
+
+:::
+
+## 🗂️ `src` folder
+
+:::tip
+
+Contains all the Markdown and related files for the [docs](https://docusaurus.io/docs/docs-introduction) functionality of Docusaurus.
+
+:::
+
+<details>
+  <summary>See folder structure</summary>
+
+    src
+    ├── components
+    │   └── HomepageFeatures
+    │       ├── index.tsx
+    │       └── styles.module.css
+    ├── css
+    │   └── custom.css
+    └── pages
+        ├── index.module.css
+        ├── index.tsx
+        └── markdown-page.md
+
+    5 directories, 6 files
+
+</details>
+
+### 📂 `components`
+
+Contains JSX components for React.js which should live separately from the [pages](https://docusaurus.io/docs/creating-pages) folder. The pattern should be that JSX components are broken up here with `.tsx` extensions and accompanying scoped `.modules.css`. These components can then be imported by files in the `pages` folder.
+
+### 📂 `css`
+
+Any non-scoped `css` files should live in this folder.
+
+:::caution
+
+It is recommended to leave the default `custom.css` file by itself in this folder and not add any other files. The `custom.css` file is referred to as the [global](https://docusaurus.io/docs/styling-layout#global-styles) styles file which applies to the entire docs site.
+
+:::
+
+### 📂 `pages`
+
+[Pages](https://docusaurus.io/docs/creating-pages) are one-off standalone pages which do not have sidebars as default.
+
+Markdown/MDX pages are still [supported](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) in this folder and will be rendered with the file name as the path.
+
+[Routing](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) is file-based for any `.js` and `.tsx` file.
+
+## 🗂️ `static` folder
+
+Any assets which can be directly copied on build output. Usually images, stylesheets, favicons, fonts, etc.
+
+More information: [Referencing your static asset.](https://docusaurus.io/docs/static-assets#referencing-your-static-asset)
+
+  <details>
+  <summary>See folder structure</summary>
+
+    static
+    └── img
+        ├── docusaurus.png
+        ├── favicon.ico
+        ├── logo.svg
+        ├── logo_dark.svg
+        ├── undraw_docusaurus_mountain.svg
+        ├── undraw_docusaurus_react.svg
+        └── undraw_docusaurus_tree.svg
+
+    2 directories, 7 files
+
+  </details>
+
+## 📄 `.cspell.json`
