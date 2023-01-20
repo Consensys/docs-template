@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/ConsenSys/docs-template/compare/v1.2.0...v1.3.0) (2023-01-20)
+
+
+### Features
+
+* cspell addition ([e4700cb](https://github.com/ConsenSys/docs-template/commit/e4700cbcf72ff7ddfe670417fc1bcf6e1700ba1b))
+
 # [1.2.0](https://github.com/ConsenSys/docs-template/compare/v1.1.2...v1.2.0) (2023-01-20)
 
 
