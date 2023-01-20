@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/ConsenSys/docs-template/compare/v1.3.0...v1.3.1) (2023-01-20)
+
+
+### Bug Fixes
+
+* src tip details ([bbf3e60](https://github.com/ConsenSys/docs-template/commit/bbf3e6042fb84bf0d0577af11f50a203d3d29c2a))
+
 # [1.3.0](https://github.com/ConsenSys/docs-template/compare/v1.2.0...v1.3.0) (2023-01-20)
 
 
