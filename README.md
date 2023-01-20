@@ -4,8 +4,8 @@ This is a documentation template repo built using [Docusaurus 2](https://docusau
 
 ### Local Development
 
-    $ npm run prepare
     $ npm install
+    $ npm run prepare
     $ npm start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
