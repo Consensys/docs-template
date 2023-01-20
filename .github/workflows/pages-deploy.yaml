@@ -18,7 +18,7 @@ jobs:
     permissions:
       contents: write
     env:
-      NODE_ENV: gh-pages
+      isGA: true
     steps:
       - uses: actions/checkout@v3
 
