@@ -17,7 +17,8 @@ jobs:
     # modify the default permissions of the GITHUB_TOKEN, so as to only allow least priveleges
     permissions:
       contents: write
-      issues: read
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
