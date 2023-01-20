@@ -10,7 +10,7 @@
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
-const isProd = process.env.NODE_ENV !== "development";
+const isProd = process.env.NODE_ENV !== "gh-pages";
 const baseUrl = isProd ? "/" : "/docs-template";
 
 /**

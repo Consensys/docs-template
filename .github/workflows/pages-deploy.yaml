@@ -18,7 +18,7 @@ jobs:
     permissions:
       contents: write
     env:
-      NODE_ENV: production
+      NODE_ENV: gh-pages
     steps:
       - uses: actions/checkout@v3
 
