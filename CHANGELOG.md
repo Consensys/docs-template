@@ -1,3 +1,13 @@
+## [1.1.2](https://github.com/ConsenSys/docs-template/compare/v1.1.1...v1.1.2) (2023-01-20)
+
+
+### Bug Fixes
+
+* **actions:** matrix docs and blog ([01baf89](https://github.com/ConsenSys/docs-template/commit/01baf894fc4e86e445fa4ab010cb634cf3eb8785))
+* **create-a-document:** revert error formatting ([4c7334b](https://github.com/ConsenSys/docs-template/commit/4c7334b8ef1526ae7131fb4bff5c1a975e0300a7))
+* **md and actions:** rename md and case matrix actions ([0a6f6db](https://github.com/ConsenSys/docs-template/commit/0a6f6db4009692e463adb35d76801e144d6da0c6))
+* **package.json:** lint-staged format skip txt ([7e89e7f](https://github.com/ConsenSys/docs-template/commit/7e89e7fb37b1f298e539878f7d079dabe60bb606))
+
 ## [1.1.1](https://github.com/ConsenSys/docs-template/compare/v1.1.0...v1.1.1) (2023-01-18)
 
 ### Bug Fixes
