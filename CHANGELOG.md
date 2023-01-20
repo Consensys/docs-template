@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/ConsenSys/docs-template/compare/v1.1.2...v1.2.0) (2023-01-20)
+
+
+### Features
+
+* **getting-started:** in progress understanding repo layout ([b9d50c1](https://github.com/ConsenSys/docs-template/commit/b9d50c1a381505228a23e5b2f5b5539fb9ff2995))
+
 ## [1.1.2](https://github.com/ConsenSys/docs-template/compare/v1.1.1...v1.1.2) (2023-01-20)
 
 
