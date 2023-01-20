@@ -7,7 +7,7 @@ on:
 
 jobs:
   lint:
-    name: Lint Code Base
+    name: Lint Code Base, Spelling, Link Check
     runs-on: [self-hosted, linux, X64, generic]
     # the enviroment to deploy to / use secrets from
     environment: no-secret
