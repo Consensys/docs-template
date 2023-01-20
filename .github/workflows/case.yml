@@ -5,24 +5,13 @@ on:
   push: {}
   pull_request: {}
 
-inputs:
-  docsDir:
-    description: "Docs Dir"
-    required: true
-    default: '["docs"]'
-  blogDir:
-    description: "Blogs Dir"
-    required: true
-    default: '["blog"]'
-
 jobs:
   case:
     name: Check for case being inconsistent
     runs-on: [self-hosted, linux, X64, large]
     strategy:
       matrix:
-        docs: ${{ fromJSON(github.event.inputs.docsDir)}}
-        blog: ${{ fromJSON(github.event.inputs.blogDir) }}
+        folder: ["docs", "blog"]
     # the enviroment to deploy to / use secrets from
     environment: no-secret
     # modify the default permissions of the GITHUB_TOKEN, so as to only allow least priveleges
@@ -35,3 +24,4 @@ jobs:
         uses: ConsenSys/docs-gha/case@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DOC_DIR: ${{ matrix.folder }}
