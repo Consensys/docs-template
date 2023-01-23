@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/ConsenSys/docs-template/compare/v1.4.1...v1.5.0) (2023-01-23)
+
+
+### Features
+
+* complete repo layout ([812c721](https://github.com/ConsenSys/docs-template/commit/812c721cf353e9c623aa1bb13055650891525b24))
+
 ## [1.4.1](https://github.com/ConsenSys/docs-template/compare/v1.4.0...v1.4.1) (2023-01-23)
 
 
