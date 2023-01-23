@@ -184,3 +184,79 @@ More information: [Referencing your static asset.](https://docusaurus.io/docs/st
 A [spell checker](https://cspell.org/) configuration file which is used in linting to check for misspelling in all files.
 
 Configuration JSON file includes basic configuration with `ignorePaths` for paths/files which should not be checked. Additional dictionaries can be added, either default supported, or additional files, such as the `project-words.txt` included in this repository.
+
+## 📄 `.editorconfig`
+
+[EditorConfig](https://editorconfig.org/#overview) is supported by most IDEs and text editors to provide consistent coding styles for projects through a config specification.
+
+## 📄 `.eslintignore`
+
+[ESLint](https://eslint.org/) is used by this project since it contains Javascript, Typescript, and React code and lints the code to provide a consistent style for all developers and contributors.
+
+The `.eslintignore` file are a list of directories for ESLint to ignore when linting.
+
+## 📄 `.eslintrc.js`
+
+Configuration for [ESLint](https://eslint.org/) and accompanying plugins used by it to parse and lint the code.
+
+## 📄 `.gitignore`
+
+A file containing files and folders for Git to ignore when adding or committing.
+
+## 📄 `.nvmrc`
+
+Contains the **Node.js** version that we want to use for this project. It requires the installation of [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). See [here](index.mdx#installing-recommended-nodejs-version-with-nvm) for more.
+
+## 📄 `.prettierrc`
+
+It is recommended to use [Prettier](https://prettier.io/) to format all files. Whatever is not covered in the `.editorconfig` will be overridden or specified in this Prettier configuration file.
+
+When you `git commit` on this repo, `lint-staged` will run `npm run format` which will run Prettier to format and save those changes.
+
+## 📄 `.releaserc.js`
+
+[Semantic Release](https://github.com/semantic-release/semantic-release) is used to easily keep track of version changes to documentation. On push to the `main` branch, the `release` GitHub Action will take all necessary commits based on their type and increment the version according to [semver](https://semver.org/) conventions. However, it is not strictly necessary and can be removed along with its accompanying action if it is not preferred.
+
+## 📄 `.stylelintignore`
+
+[StyleLint](https://stylelint.io/) is used to lint CSS files. This file ignores directories which do not need to be linted.
+
+## 📄 `.stylelintrc.js`
+
+[StyleLint](https://stylelint.io/) configuration for linting.
+
+## 📄 `CHANGELOG.md`
+
+[Semantic Release](https://github.com/semantic-release/semantic-release) automatically updates the CHANGELOG file with release history and commits appended to each release. It should not be modified manually.
+
+## 📄 `api.mustache`
+
+This repo by default has the plugin `docusaurus-plugin-openapi-docs` installed to demonstrate how to integrate OpenAPI documentation directly into Docusaurus. The `api.mustache` file contains the API template for the plugin when generating the Markdown files.
+
+## 📄 `babel.config.js`
+
+This is the Babel configuration which is used by Docusaurus. It should not be modified.
+
+## 🦖 `docusaurus.config.js`
+
+Contains all major Docusaurus configuration which is necessary to configure its behavior.
+
+## 🔐 `package-lock.json`
+
+Used by `npm` when `npm install` is used to lock versions and reduce differences between dev environments if this is not committed into the repository. It should not be necessary to edit this file directory.
+
+## 📦 `package.json`
+
+Used by [`npm`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) containing configuration scripts, dependencies, dev dependencies and other related dependency configurations.
+
+## 📖 `project-words.txt`
+
+Used by `CSpell` in the `.cspell.json` configuration file with additional project words that should not be flagged as misspelling when linting.
+
+## 🦖 `sidebars.js`
+
+Separate `.js` file used by Docusaurus to provide sidebar configuration. It is possible to place this directly into `docusaurus.config.js` but has been separated for clarity and ease-of-use.
+
+## 🦖 `tsconfig.json`
+
+This project uses Typescript for React. The `tsconfig.json` contains Typescript compiler options but is not used in compilation of the project and only for editor experience.

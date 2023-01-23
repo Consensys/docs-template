@@ -326,6 +326,7 @@ strikethrough
 strikethroughs
 styl
 stylelint
+stylelintignore
 stylelintrc
 subdir
 sublabel
