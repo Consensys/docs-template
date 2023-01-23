@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/ConsenSys/docs-template/compare/v1.4.0...v1.4.1) (2023-01-23)
+
+
+### Bug Fixes
+
+* tab indentation code ([e60ef70](https://github.com/ConsenSys/docs-template/commit/e60ef70a507899a728ac8f73e4518ac6e5016fa6))
+
 # [1.4.0](https://github.com/ConsenSys/docs-template/compare/v1.3.1...v1.4.0) (2023-01-22)
 
 
