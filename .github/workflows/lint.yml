@@ -2,8 +2,9 @@
 name: Check for lint/build errors
 
 on:
-  push: {}
-  pull_request: {}
+  pull_request:
+    branches:
+      - main
 
 jobs:
   lint:

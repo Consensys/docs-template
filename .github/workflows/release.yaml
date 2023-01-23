@@ -9,7 +9,21 @@ on:
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: [self-hosted, linux, X64, large]
+    uses: ./.github/workflows/lint.yml
+  case:
+    name: Case
+    runs-on: [self-hosted, linux, X64, large]
+    uses: ./.github/workflows/case.yml
+  build:
+    needs: [lint, case]
+    name: Build
+    runs-on: [self-hosted, linux, X64, large]
+    uses: ./.github/workflows/build.yml
   release:
+    needs: build
     name: Create Release
     runs-on: [self-hosted, linux, X64, large]
     # the enviroment to deploy to / use secrets from
@@ -21,8 +35,12 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v3
-
       - name: Release
         uses: ConsenSys/docs-gha/release@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    needs: release
+    name: Deploy
+    runs-on: [self-hosted, linux, X64, large]
+    uses: ./.github/workflows/pages-deploy.yaml

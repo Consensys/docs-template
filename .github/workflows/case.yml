@@ -2,8 +2,9 @@
 name: Check file name case
 
 on:
-  push: {}
-  pull_request: {}
+  pull_request:
+    branches:
+      - main
 
 jobs:
   case:
