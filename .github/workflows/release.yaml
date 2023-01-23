@@ -10,17 +10,11 @@ on:
 
 jobs:
   lint:
-    name: Lint
-    runs-on: [self-hosted, linux, X64, large]
     uses: ./.github/workflows/lint.yml
   case:
-    name: Case
-    runs-on: [self-hosted, linux, X64, large]
     uses: ./.github/workflows/case.yml
   build:
     needs: [lint, case]
-    name: Build
-    runs-on: [self-hosted, linux, X64, large]
     uses: ./.github/workflows/build.yml
   release:
     needs: build
@@ -41,6 +35,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy:
     needs: release
-    name: Deploy
-    runs-on: [self-hosted, linux, X64, large]
     uses: ./.github/workflows/pages-deploy.yaml
