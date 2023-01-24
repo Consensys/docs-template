@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/ConsenSys/docs-template/compare/v1.5.0...v1.6.0) (2023-01-24)
+
+
+### Bug Fixes
+
+* broken link ([5dc5ca0](https://github.com/ConsenSys/docs-template/commit/5dc5ca03e285c1c15d0cc05f7e858bdb1e216771))
+
+
+### Features
+
+* **format:** refactor and move ([1e1aec9](https://github.com/ConsenSys/docs-template/commit/1e1aec99463b320564fc77c6d4fd125d2358bc5f))
+* general docs additions ([0d005bd](https://github.com/ConsenSys/docs-template/commit/0d005bdfdeb7597476f6f3a14e86bb56603d1104))
+
 # [1.5.0](https://github.com/ConsenSys/docs-template/compare/v1.4.1...v1.5.0) (2023-01-23)
 
 
