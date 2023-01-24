@@ -242,7 +242,7 @@ const config = {
             items: [
               {
                 label: "Introduction",
-                to: "/docs/intro",
+                to: "/docs/category/getting-started",
               },
               {
                 label: "Create a Page",
