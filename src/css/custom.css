@@ -18,7 +18,7 @@
   --ifm-color-primary-dark: #657cdf;
   --ifm-color-primary-darker: #657cdf;
   --ifm-color-primary-darkest: #657cdf;
-  --docusaurus-highlighted-code-line-bg: rgba(0 0 0 30%);
+  /* --docusaurus-highlighted-code-line-bg: rgb(182 182 182); */
 }
 
 [data-theme="light"] {
@@ -29,7 +29,7 @@
   --ifm-color-primary-dark: #2a48c7;
   --ifm-color-primary-darker: #2744bc;
   --ifm-color-primary-darkest: #20389b;
-  --docusaurus-highlighted-code-line-bg: rgba(0 0 0 10%);
+  /* --docusaurus-highlighted-code-line-bg: rgb(73, 73, 73); */
 }
 
 /* github */

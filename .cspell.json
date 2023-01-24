@@ -33,7 +33,8 @@
     "babel.config.js",
     "api/",
     "docs/test-api/",
-    "sidebars.js"
+    "sidebars.js",
+    "tsconfig.*.json"
   ],
   "ignoreRegExpList": ["Email", "Urls", "#[\\w-]*"]
 }

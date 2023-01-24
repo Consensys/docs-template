@@ -46,7 +46,7 @@ const sidebars = {
   apiSidebar: [
     {
       type: "category",
-      label: "Teku",
+      label: "Pet Store",
       link: {
         type: "generated-index",
         title: "Test API",

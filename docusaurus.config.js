@@ -90,13 +90,23 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Set a base path separate from default /docs
-          // routeBasePath: "my-base-path",
           editUrl: "https://github.com/ConsenSys/docs-template/tree/main/",
+          routeBasePath: "/docs",
           // @ts-ignore
           // eslint-disable-next-line global-require
           remarkPlugins: [require("remark-docusaurus-tabs")],
-          docLayoutComponent: "@theme/DocPage", // Remove if not using OpenAPI
-          docItemComponent: "@theme/ApiItem", // Remove if not using OpenAPI
+          docLayoutComponent: "@theme/DocPage", // Remove if not using docusaurus-plugin-openapi-docs
+          docItemComponent: "@theme/ApiItem", // Remove if not using docusaurus-plugin-openapi-docs
+          include: ["**/*.md", "**/*.mdx"],
+          exclude: [
+            "**/_*.{js,jsx,ts,tsx,md,mdx}",
+            "**/_*/**",
+            "**/*.test.{js,jsx,ts,tsx}",
+            "**/__tests__/**",
+          ],
+          showLastUpdateAuthor: true,
+          showLastUpdateTime: true,
+          includeCurrentVersion: true,
         },
         blog: {
           // routeBasePath: '/',
@@ -115,9 +125,13 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
+        // gtag: {
+        //   trackingID: "G-999X9XX9XX",
+        //   anonymizeIP: true,
+        // },
       },
     ],
-    redocusaurus,
+    redocusaurus, // remove if not using redocusaurus
   ],
 
   themeConfig:
@@ -145,6 +159,14 @@ const config = {
         searchPagePath: "search",
 
         // ... other Algolia params
+      },
+      announcementBar: {
+        id: "announcement_bar",
+        content:
+          "⛔️ This template documentation site is still under construction! 🚧",
+        backgroundColor: "#fafbfc",
+        textColor: "#091E42",
+        isCloseable: false,
       },
       colorMode: {
         defaultMode: "light",
@@ -299,8 +321,8 @@ const config = {
         // },
       ],
     }),
-  plugins: [docusaurusApi2],
-  themes: ["docusaurus-theme-openapi-docs"],
+  plugins: [docusaurusApi2], // remove if not using docusaurus-plugin-openapi-docs
+  themes: ["docusaurus-theme-openapi-docs"], // remove if not using docusaurus-plugin-openapi-docs
 };
 
 module.exports = config;

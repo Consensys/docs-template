@@ -1,0 +1,91 @@
+---
+sidebar_position: 4
+---
+
+# Configure OpenAPI plugins
+
+As part of this template repo, two options have been tested and provided for including OpenAPI documentation directly into Docusaurus. The major benefit of this is that it can be managed all within Docusaurus without linking to separate OpenAPI documentation and incurring more fragmentation in the docs system.
+
+## Demo Plugins included
+
+Click on the links to see the demo.
+
+- [_redocusaurus_](/api)
+- [_docusaurus-plugin-openapi-docs_](/docs/category/test-api)
+
+## Choosing between both plugins
+
+|  | redocusaurus | docusaurus-plugin-openapi-docs |
+| --- | --- | --- |
+| Setup requirements | Does not require extra CLI steps to generate OpenAPI Markdown | Requires additional setup in project to generate the Markdown |
+| Styling | Is a wrapper around Redocly and does not fit in completely with Docusaurus but is functionally very complete | Generates Markdown which fits in like documentation in Docusaurus |
+|  |  |  |
+
+## _redocusaurus_ configuration
+
+```js title="./docusaurus.config.js"
+const redocusaurus = [
+  "redocusaurus",
+  {
+    specs: [
+      {
+        id: "using-remote-url",
+        // Remote File
+        spec: "https://raw.githubusercontent.com/rohit-gohri/redocusaurus/main/website/openapi/single-file/openapi.yaml",
+        route: "/api/",
+      },
+    ],
+    theme: {
+      /**
+       * Highlight color for docs
+       */
+      primaryColor: "#3655d5",
+      /**
+       * Options to pass to redoc
+       * @see https://github.com/redocly/redoc#redoc-options-object
+       */
+      options: { disableSearch: true },
+      /**
+       * Options to pass to override RedocThemeObject
+       * @see https://github.com/Redocly/redoc#redoc-theme-object
+       */
+      theme: {},
+    },
+  },
+];
+```
+
+Above is an example of how to configure the _Redocusaurus_ plugin; this is also the same configuration used in this repo as part of the demo.
+
+## _docusaurus-plugin-openapi-docs_ configuration
+
+```js title="./docusaurus.config.js"
+const docusaurusApi2 = [
+  "docusaurus-plugin-openapi-docs",
+  {
+    id: "openapi",
+    docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
+    config: {
+      api: {
+        specPath:
+          "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path or URL to the OpenAPI spec
+        outputDir: "docs/test-api", // output directory for generated *.mdx and sidebar.js files
+        template: "api.mustache", // Customize API MDX with mustache template
+        sidebarOptions: {
+          groupPathsBy: "tag",
+          categoryLinkSource: "tag",
+        },
+      },
+    },
+  },
+];
+```
+
+## Removing a Plugin
+
+As these plugins are `npm` modules installed into the project, they can be easily removed by doing the following:
+
+1. `npm uninstall <plugin_dependency_name>` where `<plugin_dependency_name>` is either `redocusaurus` or (`docusaurus-plugin-openapi-docs` and `docusaurus-theme-openapi-docs`)
+2. To reduce clutter, you can also choose to remove the configuration as seen [above](##Redocusaurus-configuration) by deleting them from your `docusaurus.config.js`.
+3. Ensure that all references to the configuration is also removed from `docusaurus.config.js`. Delete the entire lines beginning with `const redocusaurus` and/or `const docusaurusApi2` depending on what you want to remove.
+4. Under the `const config` object, there is also a `plugins` and `themes` key which must have the references removed.
