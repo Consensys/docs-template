@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/ConsenSys/docs-template/compare/v1.7.0...v1.8.0) (2023-01-25)
+
+
+### Features
+
+* **docs:** remove tutorial basics from default ([665433d](https://github.com/ConsenSys/docs-template/commit/665433dd93a5cf96d535f2c0bf3added2017cc22))
+
 # [1.7.0](https://github.com/ConsenSys/docs-template/compare/v1.6.0...v1.7.0) (2023-01-25)
 
 
