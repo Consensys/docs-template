@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/ConsenSys/docs-template/compare/v1.6.0...v1.7.0) (2023-01-25)
+
+
+### Features
+
+* **docs:** versioned and non-versioned docs ([88614e1](https://github.com/ConsenSys/docs-template/commit/88614e170e20041403f2efa76f8be2be42e1ab59))
+* **getting-started:** running workflow complete ([6bd46be](https://github.com/ConsenSys/docs-template/commit/6bd46beb97e9b303663bd8be9e5b0d863ee819a3))
+
 # [1.6.0](https://github.com/ConsenSys/docs-template/compare/v1.5.0...v1.6.0) (2023-01-24)
 
 
