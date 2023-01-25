@@ -1,3 +1,10 @@
+## [1.8.1](https://github.com/ConsenSys/docs-template/compare/v1.8.0...v1.8.1) (2023-01-25)
+
+
+### Bug Fixes
+
+* **css:** dark mode primary ([e4bd4ea](https://github.com/ConsenSys/docs-template/commit/e4bd4eae4191e48c6288d3abdd1611bcfd09e044))
+
 # [1.8.0](https://github.com/ConsenSys/docs-template/compare/v1.7.0...v1.8.0) (2023-01-25)
 
 
