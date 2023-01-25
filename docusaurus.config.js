@@ -241,12 +241,12 @@ const config = {
             title: "Learn",
             items: [
               {
-                label: "Introduction",
+                label: "Getting Started",
                 to: "/docs/category/getting-started",
               },
               {
-                label: "Create a Page",
-                to: "/docs/tutorial-basics/create-a-page",
+                label: "Style Guide",
+                to: "/docs/getting-started/style-guide",
               },
             ],
           },
