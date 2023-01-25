@@ -1,5 +1,5 @@
 ---
-title: Manage versioned docs
+title: Creating versioned docs
 sidebar_position: 2
 ---
 
