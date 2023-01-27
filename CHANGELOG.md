@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/ConsenSys/docs-template/compare/v1.8.1...v1.9.0) (2023-01-27)
+
+
+### Features
+
+* **vercel.json:** enable cleanUrls for vercel deploy ([7fb4d77](https://github.com/ConsenSys/docs-template/commit/7fb4d7746eb79491163cd36cd817ba803c6f6a26))
+
 ## [1.8.1](https://github.com/ConsenSys/docs-template/compare/v1.8.0...v1.8.1) (2023-01-25)
 
 
