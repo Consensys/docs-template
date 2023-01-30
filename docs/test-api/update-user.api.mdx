@@ -49,7 +49,7 @@ api:
                                 {
                                   "title": "pet",
                                   "type": "object",
-                                  "required": ["name", "photoUrls"],
+                                  "required": ["name", "photoUrls", "tags"],
                                   "discriminator":
                                     {
                                       "propertyName": "petType",
@@ -204,12 +204,14 @@ api:
                                           "description": "The name given to a pet",
                                           "type": "string",
                                           "example": "Guru",
+                                          "nullable": true,
                                         },
                                       "photoUrls":
                                         {
                                           "description": "The list of URL to a cute photos featuring pet",
                                           "type": "array",
                                           "maxItems": 20,
+                                          "nullable": true,
                                           "xml":
                                             {
                                               "name": "photoUrl",
@@ -227,12 +229,14 @@ api:
                                           "description": "Tags attached to the pet",
                                           "type": "array",
                                           "minItems": 1,
+                                          "nullable": true,
                                           "xml":
                                             { "name": "tag", "wrapped": true },
                                           "items":
                                             {
                                               "title": "tag",
                                               "type": "object",
+                                              "nullable": true,
                                               "properties":
                                                 {
                                                   "id":
@@ -354,6 +358,7 @@ api:
                                 {
                                   "title": "tag",
                                   "type": "object",
+                                  "nullable": true,
                                   "properties":
                                     {
                                       "id":
@@ -591,7 +596,7 @@ Updated user object
 
 Test Sub Category
 
-</div><SchemaItem collapsible={false} name={"prop1"} required={false} deprecated={undefined} schemaDescription={"Dumb Property"} schemaName={"string"} qualifierMessage={undefined} defaultValue={undefined}></SchemaItem></div></details></SchemaItem></div></details></SchemaItem><SchemaItem collapsible={false} name={"name"} required={true} deprecated={undefined} schemaDescription={"The name given to a pet"} schemaName={"string"} qualifierMessage={undefined} defaultValue={undefined}></SchemaItem><SchemaItem collapsible={false} name={"photoUrls"} required={true} deprecated={undefined} schemaDescription={"The list of URL to a cute photos featuring pet"} schemaName={"url[]"} qualifierMessage={"**Possible values:** `<= 20`"} defaultValue={undefined}></SchemaItem><SchemaItem collapsible={false} name={"friend"} required={false} deprecated={undefined} schemaDescription={undefined} schemaName={"circular(pet)"} qualifierMessage={undefined} defaultValue={undefined}></SchemaItem><SchemaItem collapsible={true} className={"schemaItem"}><details style={{}}><summary style={{}}><strong>tags</strong><span style={{"opacity":"0.6"}}> Tag[]</span></summary><div style={{"marginLeft":"1rem"}}><div style={{"marginTop":".5rem","marginBottom":".5rem"}}>
+</div><SchemaItem collapsible={false} name={"prop1"} required={false} deprecated={undefined} schemaDescription={"Dumb Property"} schemaName={"string"} qualifierMessage={undefined} defaultValue={undefined}></SchemaItem></div></details></SchemaItem></div></details></SchemaItem><SchemaItem collapsible={false} name={"name"} required={true} deprecated={undefined} schemaDescription={"The name given to a pet"} schemaName={"string"} qualifierMessage={undefined} defaultValue={undefined}></SchemaItem><SchemaItem collapsible={false} name={"photoUrls"} required={true} deprecated={undefined} schemaDescription={"The list of URL to a cute photos featuring pet"} schemaName={"url[]"} qualifierMessage={"**Possible values:** `<= 20`"} defaultValue={undefined}></SchemaItem><SchemaItem collapsible={false} name={"friend"} required={false} deprecated={undefined} schemaDescription={undefined} schemaName={"circular(pet)"} qualifierMessage={undefined} defaultValue={undefined}></SchemaItem><SchemaItem collapsible={true} className={"schemaItem"}><details style={{}}><summary style={{}}><strong>tags</strong><span style={{"opacity":"0.6"}}> Tag[]</span><strong style={{"fontSize":"var(--ifm-code-font-size)","color":"var(--openapi-required)"}}> required</strong></summary><div style={{"marginLeft":"1rem"}}><div style={{"marginTop":".5rem","marginBottom":".5rem"}}>
 
 **Possible values:** `>= 1`
 

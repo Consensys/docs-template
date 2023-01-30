@@ -48,7 +48,7 @@ api:
                           {
                             "title": "pet",
                             "type": "object",
-                            "required": ["name", "photoUrls"],
+                            "required": ["name", "photoUrls", "tags"],
                             "discriminator":
                               {
                                 "propertyName": "petType",
@@ -202,12 +202,14 @@ api:
                                     "description": "The name given to a pet",
                                     "type": "string",
                                     "example": "Guru",
+                                    "nullable": true,
                                   },
                                 "photoUrls":
                                   {
                                     "description": "The list of URL to a cute photos featuring pet",
                                     "type": "array",
                                     "maxItems": 20,
+                                    "nullable": true,
                                     "xml":
                                       { "name": "photoUrl", "wrapped": true },
                                     "items":
@@ -219,11 +221,13 @@ api:
                                     "description": "Tags attached to the pet",
                                     "type": "array",
                                     "minItems": 1,
+                                    "nullable": true,
                                     "xml": { "name": "tag", "wrapped": true },
                                     "items":
                                       {
                                         "title": "tag",
                                         "type": "object",
+                                        "nullable": true,
                                         "properties":
                                           {
                                             "id":
@@ -350,7 +354,7 @@ api:
                           {
                             "title": "pet",
                             "type": "object",
-                            "required": ["name", "photoUrls"],
+                            "required": ["name", "photoUrls", "tags"],
                             "discriminator":
                               {
                                 "propertyName": "petType",
@@ -504,12 +508,14 @@ api:
                                     "description": "The name given to a pet",
                                     "type": "string",
                                     "example": "Guru",
+                                    "nullable": true,
                                   },
                                 "photoUrls":
                                   {
                                     "description": "The list of URL to a cute photos featuring pet",
                                     "type": "array",
                                     "maxItems": 20,
+                                    "nullable": true,
                                     "xml":
                                       { "name": "photoUrl", "wrapped": true },
                                     "items":
@@ -521,11 +527,13 @@ api:
                                     "description": "Tags attached to the pet",
                                     "type": "array",
                                     "minItems": 1,
+                                    "nullable": true,
                                     "xml": { "name": "tag", "wrapped": true },
                                     "items":
                                       {
                                         "title": "tag",
                                         "type": "object",
+                                        "nullable": true,
                                         "properties":
                                           {
                                             "id":
