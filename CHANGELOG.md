@@ -1,3 +1,10 @@
+## [1.9.1](https://github.com/ConsenSys/docs-template/compare/v1.9.0...v1.9.1) (2023-01-30)
+
+
+### Bug Fixes
+
+* revert docusaurus to 2.2.0 ([2487006](https://github.com/ConsenSys/docs-template/commit/2487006a4edfae7f1fdd3b17891f011f11a3c2fb))
+
 # [1.9.0](https://github.com/ConsenSys/docs-template/compare/v1.8.1...v1.9.0) (2023-01-27)
 
 
