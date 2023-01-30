@@ -1,3 +1,15 @@
+# [1.10.0](https://github.com/ConsenSys/docs-template/compare/v1.9.0...v1.10.0) (2023-01-30)
+
+
+### Bug Fixes
+
+* revert docusaurus to 2.2.0 ([2487006](https://github.com/ConsenSys/docs-template/commit/2487006a4edfae7f1fdd3b17891f011f11a3c2fb))
+
+
+### Features
+
+* add quick links instead of default ([69fb6f8](https://github.com/ConsenSys/docs-template/commit/69fb6f8e2b630f8d4ff169ea14ffac7e125b1e88))
+
 # [1.9.0](https://github.com/ConsenSys/docs-template/compare/v1.8.1...v1.9.0) (2023-01-27)
 
 
