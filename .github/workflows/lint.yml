@@ -37,4 +37,3 @@ jobs:
         uses: ConsenSys/docs-gha/linkcheck@main
         with:
           FILE_EXTENSION: ${{ matrix.file-extensions }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
