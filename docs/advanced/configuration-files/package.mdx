@@ -1,4 +1,88 @@
 ---
 title: package.json
-sidebar_position: 2
+sidebar_position: 1
 ---
+
+It should not be necessary to change the `package.json` very often.
+
+This page will describe what each dependency is and why it is included.
+
+## Docusaurus core dependencies
+
+The following are **core** Docusaurus dependencies and they should _not_ be removed.
+
+- `@docusaurus/core`
+- `@docusaurus/preset-classic`
+- `prism-react-renderer`
+- `@mdx-js/react`
+- `clsx`
+- `react`
+- `react-dom`
+- `typescript`
+
+:::tip
+
+For [extra safety](https://stackoverflow.com/a/22345808), you may also choose to use `~` on the versions instead of `^` if you prefer.
+
+:::
+
+## Docusaurus plugins and extra dependencies
+
+- [`docusaurus-plugin-openapi-docs`](https://github.com/cloud-annotations/docusaurus-openapi)
+- [`docusaurus-theme-openapi-docs`](https://github.com/cloud-annotations/docusaurus-openapi)
+- [`redocusaurus`](https://github.com/rohit-gohri/redocusaurus)
+- [`remark-docusaurus-tabs`](https://github.com/mccleanp/remark-docusaurus-tabs)
+
+## Dev dependencies
+
+### Docusaurus
+
+- `@docusaurus/module-type-aliases`
+- `@tsconfig/docusaurus`
+
+### `commitlint`
+
+- `@commitlint/cli`
+- `@commitlint/config-conventional`
+
+### `semantic-release`
+
+- `semantic-release`
+- `@semantic-release/changelog`
+- `@semantic-release/commit-analyzer`
+- `@semantic-release/git`
+- `@semantic-release/github`
+- `@semantic-release/npm`
+- `@semantic-release/release-notes-generator`
+
+### `cspell`
+
+- `cspell`
+
+### `eslint`
+
+- `@typescript-eslint/eslint-plugin`
+- `@typescript-eslint/parser`
+- `eslint`
+- `eslint-config-airbnb-typescript`
+- `eslint-config-prettier`
+- `eslint-import-resolver-typescript`
+- `eslint-plugin-import`
+- `eslint-plugin-jsx-a11y`
+- `eslint-plugin-prettier`
+- `eslint-plugin-react`
+- `eslint-plugin-react-hooks`
+
+### `stylelint`
+
+- `stylelint`
+- `stylelint-config-prettier`
+- `stylelint-config-standard`
+
+### Miscellaneous
+
+- `cz-conventional-changelog`
+- `husky`
+- `lint-staged`
+- `prettier`
+- `tsc-files`
