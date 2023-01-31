@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/ConsenSys/docs-template/compare/v1.10.1...v1.11.0) (2023-01-31)
+
+
+### Features
+
+* **algolia search:** adding algolia search creds ([c225615](https://github.com/ConsenSys/docs-template/commit/c2256159798f5a01fad39ecea2c6492e5335191d))
+
 ## [1.10.1](https://github.com/ConsenSys/docs-template/compare/v1.10.0...v1.10.1) (2023-01-31)
 
 
