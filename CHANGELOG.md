@@ -1,3 +1,16 @@
+# [1.12.0](https://github.com/ConsenSys/docs-template/compare/v1.11.0...v1.12.0) (2023-01-31)
+
+
+### Bug Fixes
+
+* banner consistency css ([1386d71](https://github.com/ConsenSys/docs-template/commit/1386d71b1821c33a6583ec7182427cc460107d1b))
+* remove extra svg ([3f71d56](https://github.com/ConsenSys/docs-template/commit/3f71d56107c9eece466d38560c1927c91f561601))
+
+
+### Features
+
+* configuration files md ([63bf6df](https://github.com/ConsenSys/docs-template/commit/63bf6dfdbc8da770006fa35df138c05878ffbfe6))
+
 # [1.11.0](https://github.com/ConsenSys/docs-template/compare/v1.10.1...v1.11.0) (2023-01-31)
 
 
