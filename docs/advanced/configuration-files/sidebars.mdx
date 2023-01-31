@@ -2,3 +2,24 @@
 title: sidebars.js
 sidebar_position: 4
 ---
+
+By default, the sidebars are defined in `sidebars.js` in the root folder of this repo.
+
+Under the key `config > presents > docs > sidebarPath` is where the path to the `sidebars.js` is referred for the docs plugin for Docusaurus.
+
+```js title="docusaurus.config.js" {8}
+const config = {
+  ...
+  presets: [
+    [
+      "classic",
+      {
+        docs: {
+          sidebarPath: require.resolve("./sidebars.js"),
+        ...
+        },
+      },
+    ],
+  ],
+};
+```

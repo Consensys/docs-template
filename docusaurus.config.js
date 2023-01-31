@@ -91,7 +91,8 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Set a base path separate from default /docs
           editUrl: "https://github.com/ConsenSys/docs-template/tree/main/",
-          routeBasePath: "/docs",
+          routeBasePath: "/",
+          path: "docs",
           // @ts-ignore
           // eslint-disable-next-line global-require
           remarkPlugins: [require("remark-docusaurus-tabs")],
@@ -242,11 +243,11 @@ const config = {
             items: [
               {
                 label: "Getting Started",
-                to: "/docs/category/getting-started",
+                to: "/category/getting-started",
               },
               {
                 label: "Style Guide",
-                to: "/docs/getting-started/style-guide",
+                to: "/getting-started/style-guide",
               },
             ],
           },

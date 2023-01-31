@@ -21,7 +21,7 @@ type CardItem = {
 const CardList: CardItem[] = [
   {
     title: "🏁 Getting Started",
-    link: "/docs/getting-started",
+    link: "/category/getting-started",
     description: (
       <>
         Come check out the fastest way to get started with this template repo!
@@ -32,7 +32,7 @@ const CardList: CardItem[] = [
   },
   {
     title: "💭 Repo Layout",
-    link: "/docs/getting-started/understanding-repo-layout",
+    link: "/getting-started/understanding-repo-layout",
     description: (
       <>
         See how this repo is laid out to understand what each file and folder is
@@ -44,7 +44,7 @@ const CardList: CardItem[] = [
   },
   {
     title: "👨‍💻 Documentation style guide",
-    link: "/docs/getting-started/style-guide",
+    link: "/getting-started/style-guide",
     description: (
       <>
         Find our standard documentation style guide to follow when applying to
