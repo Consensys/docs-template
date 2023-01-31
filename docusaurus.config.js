@@ -140,12 +140,12 @@ const config = {
     ({
       algolia: {
         // The application ID provided by Algolia
-        appId: "YOUR_APP_ID",
+        appId: "NSRFPEJ4NC",
 
         // Public API key: it is safe to commit it
-        apiKey: "YOUR_SEARCH_API_KEY",
+        apiKey: "cea41b975ad6c9a01408dfda6e0061d3",
 
-        indexName: "YOUR_INDEX_NAME",
+        indexName: "PING_TEAM_GALILEO_TO_GIVE_YOU_A_NEW_INDEX",
 
         // Optional: see doc section below
         contextualSearch: true,
