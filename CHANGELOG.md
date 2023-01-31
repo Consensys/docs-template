@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/ConsenSys/docs-template/compare/v1.10.0...v1.10.1) (2023-01-31)
+
+
+### Bug Fixes
+
+* remove docs path and update codeblocks highlight css ([a933013](https://github.com/ConsenSys/docs-template/commit/a933013cd2903bd154b94f3a1bc9d8484d4374bc))
+
 # [1.10.0](https://github.com/ConsenSys/docs-template/compare/v1.9.0...v1.10.0) (2023-01-30)
 
 
