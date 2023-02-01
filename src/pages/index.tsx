@@ -12,10 +12,15 @@ function HomepageHeader() {
   return (
     <header className={clsx(styles.introductionBlock)}>
       <div className="container">
-        <h1 className={clsx("hero__title", styles.forceColor)}>
+        <h1 className={clsx("hero__title", styles.forceColor, styles.title)}>
           {siteConfig.title}
         </h1>
-        <p className={clsx("hero__subtitle", styles.forceColor)}>
+        <p
+          className={clsx(
+            "hero__subtitle",
+            styles.forceColor,
+            styles.subtitle,
+          )}>
           {siteConfig.tagline}
         </p>
         <div className={styles.buttons}>

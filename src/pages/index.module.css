@@ -6,6 +6,15 @@
 @media screen and (max-width: 996px) {
   .introductionBlock {
     padding: 2rem;
+    word-wrap: normal;
+  }
+
+  .title {
+    font-size: 8vw;
+  }
+
+  .subtitle {
+    font-size: 3vw;
   }
 }
 
@@ -28,4 +37,12 @@
 
 html[data-theme="dark"] .forceColor {
   color: var(--ifm-font-color-secondary);
+}
+
+.title {
+  font-size: 5vw;
+}
+
+.subtitle {
+  font-size: 2vw;
 }
