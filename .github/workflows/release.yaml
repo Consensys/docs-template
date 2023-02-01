@@ -33,8 +33,7 @@ jobs:
         uses: ConsenSys/docs-gha/release@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SEMANTIC_RELEASE: true
   deploy:
     needs: release
     uses: ./.github/workflows/pages-deploy.yaml
-    with:
-      SEMANTIC_RELEASE: true
