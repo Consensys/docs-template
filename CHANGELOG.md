@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/ConsenSys/docs-template/compare/v1.12.2...v1.12.3) (2023-02-01)
+
+
+### Bug Fixes
+
+* css banner text ([94b198f](https://github.com/ConsenSys/docs-template/commit/94b198f7bbb058e751580e9a9f372e04c4ecd5d7))
+
 ## [1.12.2](https://github.com/ConsenSys/docs-template/compare/v1.12.1...v1.12.2) (2023-02-01)
 
 
