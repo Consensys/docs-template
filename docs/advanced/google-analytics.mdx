@@ -1,33 +1,30 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Google Analytics
 
-[Google Analytics](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-analytics) and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag) are Docusaurus plugins available depending on whether you need the older Analytics.js or GTag.
+[Google Analytics](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-analytics) and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag) are Docusaurus plugins available depending on whether you need Google Analytics or Google Tag Manager.
 
 :::tip Recommendation
 
-The **GTag** plugin is _pre-installed_ by default with this template repo.
-
-It is highly suggested to use GTag instead of Analytics.js.
+The **Google Tag Manager** plugin is _pre-installed_ by default with this template repo.
 
 :::
 
-## Setting up GTag in `docusaurus.config.js`
+## Setting up Google Tag Manager in `docusaurus.config.js`
 
-Uncomment the highlighted lines shown below in the `docusaurus.config.js` file to enable and set up GTag.
+Uncomment the highlighted lines shown below in the `docusaurus.config.js` file to enable and set up Google Tag Manager.
 
-```js title="./docusaurus.config.js" {5-8}
+```js title="docusaurus.config.js" {4-7}
 const config = {
-  presets: [
+  plugins: [
     [
-      "classic",
-      gtag: {
-        trackingID: "G-999X9XX9XX",
-        anonymizeIP: true,
+      "@docusaurus/plugin-google-tag-manager",
+      {
+        containerId: "YOUR_ID",
       },
     ],
   ],
-}
+};
 ```
