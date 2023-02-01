@@ -8,12 +8,6 @@ on:
     # Review gh actions docs if you want to further define triggers, paths, etc
     # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
 
-inputs:
-  semantic_release:
-    description: "whether to use semantic-release"
-    required: false
-    default: true
-
 jobs:
   lint:
     uses: ./.github/workflows/lint.yml
@@ -43,4 +37,4 @@ jobs:
     needs: release
     uses: ./.github/workflows/pages-deploy.yaml
     with:
-      SEMANTIC_RELEASE: ${{ inputs.semantic_release }}
+      SEMANTIC_RELEASE: true
