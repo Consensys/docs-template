@@ -23,6 +23,7 @@ const redocusaurus = [
        * Highlight color for docs
        */
       primaryColor: "#3655d5",
+      primaryColorDark: "#a2aeec",
       /**
        * Options to pass to redoc
        * @see https://github.com/redocly/redoc#redoc-options-object
