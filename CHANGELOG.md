@@ -1,3 +1,10 @@
+## [1.12.1](https://github.com/ConsenSys/docs-template/compare/v1.12.0...v1.12.1) (2023-02-01)
+
+
+### Bug Fixes
+
+* update google analytics and add placeholder release ([cd16624](https://github.com/ConsenSys/docs-template/commit/cd16624fcd07f94d1eb5c58b18a9f83d336cac02))
+
 # [1.12.0](https://github.com/ConsenSys/docs-template/compare/v1.11.0...v1.12.0) (2023-01-31)
 
 
