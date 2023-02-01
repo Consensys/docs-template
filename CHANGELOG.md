@@ -1,3 +1,12 @@
+## [1.12.2](https://github.com/ConsenSys/docs-template/compare/v1.12.1...v1.12.2) (2023-02-01)
+
+
+### Bug Fixes
+
+* banner text scaling ([fc22cc2](https://github.com/ConsenSys/docs-template/commit/fc22cc25969154ab7ebd40b06f1ed9220f52c122))
+* max width padding ([4ef45ec](https://github.com/ConsenSys/docs-template/commit/4ef45ecb622ea61af5214cb57ae5d80530696e09))
+* re-adjust banner sizing ([8c4a642](https://github.com/ConsenSys/docs-template/commit/8c4a642fee67815b76586b1564ab20370f6d0a4e))
+
 ## [1.12.1](https://github.com/ConsenSys/docs-template/compare/v1.12.0...v1.12.1) (2023-02-01)
 
 
