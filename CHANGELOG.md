@@ -1,3 +1,10 @@
+# [1.13.0](https://github.com/ConsenSys/docs-template/compare/v1.12.4...v1.13.0) (2023-02-02)
+
+
+### Features
+
+* **project words:** project words ([a9eecff](https://github.com/ConsenSys/docs-template/commit/a9eecffd619388382b46181805bc3c720a9a2bba))
+
 ## [1.12.4](https://github.com/ConsenSys/docs-template/compare/v1.12.3...v1.12.4) (2023-02-02)
 
 
