@@ -1,3 +1,10 @@
+## [1.12.4](https://github.com/ConsenSys/docs-template/compare/v1.12.3...v1.12.4) (2023-02-02)
+
+
+### Bug Fixes
+
+* better clamping on banner text ([6aa8e26](https://github.com/ConsenSys/docs-template/commit/6aa8e26d616baef954d62dc4e07e603eda73ab59))
+
 ## [1.12.3](https://github.com/ConsenSys/docs-template/compare/v1.12.2...v1.12.3) (2023-02-01)
 
 
