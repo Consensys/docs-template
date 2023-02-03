@@ -1,3 +1,10 @@
+# [1.14.0](https://github.com/ConsenSys/docs-template/compare/v1.13.0...v1.14.0) (2023-02-03)
+
+
+### Features
+
+* add algolia index name ([1d58c60](https://github.com/ConsenSys/docs-template/commit/1d58c60ac9a02dc232addb024362af1fbdb59264))
+
 # [1.13.0](https://github.com/ConsenSys/docs-template/compare/v1.12.4...v1.13.0) (2023-02-02)
 
 
