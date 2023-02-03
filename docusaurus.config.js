@@ -146,7 +146,7 @@ const config = {
         // Public API key: it is safe to commit it
         apiKey: "cea41b975ad6c9a01408dfda6e0061d3",
 
-        indexName: "PING_TEAM_GALILEO_TO_GIVE_YOU_A_NEW_INDEX",
+        indexName: "docs-template", // Ping @Galileo for your index name
 
         // Optional: see doc section below
         contextualSearch: true,
