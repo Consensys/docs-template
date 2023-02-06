@@ -1,3 +1,10 @@
+## [1.15.1](https://github.com/ConsenSys/docs-template/compare/v1.15.0...v1.15.1) (2023-02-06)
+
+
+### Bug Fixes
+
+* baseUrl for vercel ([dd9ecc2](https://github.com/ConsenSys/docs-template/commit/dd9ecc2fc18e9fa62c496f83f7988ea1d16e1521))
+
 # [1.15.0](https://github.com/ConsenSys/docs-template/compare/v1.14.0...v1.15.0) (2023-02-06)
 
 
