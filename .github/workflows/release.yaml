@@ -34,6 +34,3 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SEMANTIC_RELEASE: true
-  deploy:
-    needs: release
-    uses: ./.github/workflows/pages-deploy.yaml
