@@ -63,7 +63,7 @@ const config = {
   title: "ConsenSys Docs",
   tagline:
     "A template repository to quickly boostrap a Docusaurus application to serve documentation",
-  url: "https://consensys.github.io",
+  url: "https://docs-template-consensys.vercel.app",
   baseUrl,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
@@ -127,10 +127,6 @@ const config = {
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
-        // gtag: {
-        //   trackingID: "G-999X9XX9XX",
-        //   anonymizeIP: true,
-        // },
       },
     ],
     redocusaurus, // remove if not using redocusaurus
