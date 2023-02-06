@@ -1,3 +1,10 @@
+## [1.15.2](https://github.com/ConsenSys/docs-template/compare/v1.15.1...v1.15.2) (2023-02-06)
+
+
+### Bug Fixes
+
+* docusaurus config url ([bfc1e72](https://github.com/ConsenSys/docs-template/commit/bfc1e7267c3c035c3d0e57f1503a4d5eec21ab20))
+
 ## [1.15.1](https://github.com/ConsenSys/docs-template/compare/v1.15.0...v1.15.1) (2023-02-06)
 
 
