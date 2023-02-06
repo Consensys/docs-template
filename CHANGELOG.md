@@ -1,3 +1,10 @@
+## [1.15.3](https://github.com/ConsenSys/docs-template/compare/v1.15.2...v1.15.3) (2023-02-06)
+
+
+### Bug Fixes
+
+* typo ([5c2f235](https://github.com/ConsenSys/docs-template/commit/5c2f235e966035aba2dd7a1cd6479bedd1f1da3f))
+
 ## [1.15.2](https://github.com/ConsenSys/docs-template/compare/v1.15.1...v1.15.2) (2023-02-06)
 
 
