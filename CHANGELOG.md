@@ -1,3 +1,17 @@
+# [1.15.0](https://github.com/ConsenSys/docs-template/compare/v1.14.0...v1.15.0) (2023-02-06)
+
+
+### Bug Fixes
+
+* remove openapi due to version compatibility ([f9bb578](https://github.com/ConsenSys/docs-template/commit/f9bb5783101066765e2a3d588c2186c371de41b7))
+* remove unnecessary actions and PR template ([95afaa6](https://github.com/ConsenSys/docs-template/commit/95afaa632c95e2cdf437c568e44df9c68419ca30))
+
+
+### Features
+
+* update preview link ([8f857dc](https://github.com/ConsenSys/docs-template/commit/8f857dc8d0b574ed8cc2ef47399485b34923746d))
+* upgrade docusaurus 2.3.1 ([be27686](https://github.com/ConsenSys/docs-template/commit/be27686e1d0d3780a3729ba7bc94750572408b35))
+
 # [1.14.0](https://github.com/ConsenSys/docs-template/compare/v1.13.0...v1.14.0) (2023-02-03)
 
 
