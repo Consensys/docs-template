@@ -38,25 +38,25 @@ const redocusaurus = [
   },
 ];
 
-const docusaurusApi2 = [
-  "docusaurus-plugin-openapi-docs",
-  {
-    id: "openapi",
-    docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
-    config: {
-      api: {
-        specPath:
-          "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path or URL to the OpenAPI spec
-        outputDir: "docs/test-api", // output directory for generated *.mdx and sidebar.js files
-        template: "api.mustache", // Customize API MDX with mustache template
-        sidebarOptions: {
-          groupPathsBy: "tag",
-          categoryLinkSource: "tag",
-        },
-      },
-    },
-  },
-];
+// const docusaurusApi2 = [
+//   "docusaurus-plugin-openapi-docs",
+//   {
+//     id: "openapi",
+//     docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
+//     config: {
+//       api: {
+//         specPath:
+//           "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path or URL to the OpenAPI spec
+//         outputDir: "docs/test-api", // output directory for generated *.mdx and sidebar.js files
+//         template: "api.mustache", // Customize API MDX with mustache template
+//         sidebarOptions: {
+//           groupPathsBy: "tag",
+//           categoryLinkSource: "tag",
+//         },
+//       },
+//     },
+//   },
+// ];
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -97,8 +97,8 @@ const config = {
           // @ts-ignore
           // eslint-disable-next-line global-require
           remarkPlugins: [require("remark-docusaurus-tabs")],
-          docLayoutComponent: "@theme/DocPage", // Remove if not using docusaurus-plugin-openapi-docs
-          docItemComponent: "@theme/ApiItem", // Remove if not using docusaurus-plugin-openapi-docs
+          // docLayoutComponent: "@theme/DocPage", // Remove if not using docusaurus-plugin-openapi-docs
+          // docItemComponent: "@theme/ApiItem", // Remove if not using docusaurus-plugin-openapi-docs
           include: ["**/*.md", "**/*.mdx"],
           exclude: [
             "**/_*.{js,jsx,ts,tsx,md,mdx}",
@@ -207,13 +207,13 @@ const config = {
             label: "API",
             to: "/api/",
           },
-          {
-            type: "docSidebar",
-            sidebarId: "apiSidebar",
-            docId: "index",
-            position: "left",
-            label: "API2",
-          },
+          // {
+          //   type: "docSidebar",
+          //   sidebarId: "apiSidebar",
+          //   docId: "index",
+          //   position: "left",
+          //   label: "API2",
+          // },
           {
             href: "https://github.com/ConsenSys/docs-template",
             className: "header-github-link",
@@ -323,8 +323,8 @@ const config = {
         // },
       ],
     }),
-  plugins: [docusaurusApi2], // remove if not using docusaurus-plugin-openapi-docs
-  themes: ["docusaurus-theme-openapi-docs"], // remove if not using docusaurus-plugin-openapi-docs
+  plugins: [], // remove if not using docusaurus-plugin-openapi-docs
+  themes: [], // remove if not using docusaurus-plugin-openapi-docs
 };
 
 module.exports = config;
