@@ -142,7 +142,7 @@ const config = {
         // Public API key: it is safe to commit it
         apiKey: "cea41b975ad6c9a01408dfda6e0061d3",
 
-        indexName: "docs-template", // Ping @Galileo for your index name
+        indexName: "docs-template", // Ping #documentation on Slack for your index name
 
         // Optional: see doc section below
         contextualSearch: true,
@@ -319,7 +319,21 @@ const config = {
         // },
       ],
     }),
-  plugins: [], // remove if not using docusaurus-plugin-openapi-docs
+  plugins: [
+    [
+      "@docusaurus/plugin-google-gtag",
+      {
+        trackingID: "G-",
+        anonymizeIP: true,
+      },
+    ],
+    [
+      "@docusaurus/plugin-google-tag-manager",
+      {
+        containerId: "GTM-",
+      },
+    ],
+  ], // remove if not using docusaurus-plugin-openapi-docs
   themes: [], // remove if not using docusaurus-plugin-openapi-docs
 };
 
