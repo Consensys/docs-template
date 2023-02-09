@@ -63,7 +63,7 @@ const config = {
   title: "ConsenSys Docs",
   tagline:
     "A template repository to quickly boostrap a Docusaurus application to serve documentation",
-  url: "https://docs-template-consensys.vercel.app",
+  url: "https://docs-template.consensys.net",
   baseUrl,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
