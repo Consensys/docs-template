@@ -36,5 +36,10 @@
     "sidebars.js",
     "tsconfig.*.json"
   ],
-  "ignoreRegExpList": ["Email", "Urls", "#[\\w-]*"]
+  "ignoreRegExpList": [
+    "Email",
+    "Urls",
+    "#[\\w-]*",
+    "/^\\s*```[\\s\\S]*?^\\s*```/gm"
+  ]
 }
