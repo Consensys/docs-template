@@ -1,3 +1,10 @@
+# [1.17.0](https://github.com/ConsenSys/docs-template/compare/v1.16.0...v1.17.0) (2023-02-09)
+
+
+### Features
+
+* cspell ignore code blocks ([8949842](https://github.com/ConsenSys/docs-template/commit/894984267ec495fd2cb1ee716dc1feb7b97e5ef0))
+
 # [1.16.0](https://github.com/ConsenSys/docs-template/compare/v1.15.3...v1.16.0) (2023-02-09)
 
 
