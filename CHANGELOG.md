@@ -1,3 +1,10 @@
+# [1.16.0](https://github.com/ConsenSys/docs-template/compare/v1.15.3...v1.16.0) (2023-02-09)
+
+
+### Features
+
+* enable search and production deploy ([5234c4a](https://github.com/ConsenSys/docs-template/commit/5234c4a39d1a112ea727fbc5f5c2eaec07caa148))
+
 ## [1.15.3](https://github.com/ConsenSys/docs-template/compare/v1.15.2...v1.15.3) (2023-02-06)
 
 
