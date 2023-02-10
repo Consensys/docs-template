@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - main
-    # Review gh actions docs if you want to further define triggers, paths, etc
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#on
   workflow_dispatch:
 
 jobs:
@@ -21,9 +19,6 @@ jobs:
     needs: build
     name: Create Release
     runs-on: ubuntu-latest
-    # the enviroment to deploy to / use secrets from
-    environment: no-secret
-    # modify the default permissions of the GITHUB_TOKEN, so as to only allow least priveleges
     permissions:
       contents: write
       issues: write
