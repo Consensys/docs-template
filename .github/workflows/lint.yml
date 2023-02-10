@@ -23,8 +23,7 @@ jobs:
 
   linkCheck:
     name: Link Checking
-    runs-on: [self-hosted, linux, X64, large]
-    environment: no-secret
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         file-extensions: [".md", ".mdx"]
