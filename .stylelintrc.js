@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["stylelint-config-standard", "stylelint-config-prettier"],
+  extends: ["stylelint-config-standard"],
   rules: {
     "selector-pseudo-class-no-unknown": [
       true,
