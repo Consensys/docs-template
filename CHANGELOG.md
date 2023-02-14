@@ -1,3 +1,15 @@
+# [1.18.0](https://github.com/ConsenSys/docs-template/compare/v1.17.0...v1.18.0) (2023-02-14)
+
+
+### Bug Fixes
+
+* package lock update ([a878570](https://github.com/ConsenSys/docs-template/commit/a878570f71a9b758f28b54c71243c74121df1c6f))
+
+
+### Features
+
+* set up details for private repos with vercel ([2243cc8](https://github.com/ConsenSys/docs-template/commit/2243cc87e50c139a31399974ac38e50225f49a8a))
+
 # [1.17.0](https://github.com/ConsenSys/docs-template/compare/v1.16.0...v1.17.0) (2023-02-09)
 
 
