@@ -76,7 +76,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: cp vercel.json ./build
-      - uses: amondnet/vercel-action@v25.1.1 # // cspell:disable-line
+      - uses: amondnet/vercel-action@v25.1.1
         id: vercel-action-staging
         if: github.event_name == 'pull_request'
         with:
@@ -86,7 +86,7 @@ jobs:
           vercel-project-id: ${{ secrets.PROJECT_ID }}
           working-directory: ./build
           scope: infura-web
-      - uses: amondnet/vercel-action@v25.1.1 # // cspell:disable-line
+      - uses: amondnet/vercel-action@v25.1.1
         id: vercel-action-production
         if: github.event_name == 'push'
         with:
@@ -110,4 +110,36 @@ jobs:
   <div>
     <img src={require("./img/privateRepoVercel.png").default} alt="privateRepoVercel" />
   </div>
+</details>
+
+<hr />
+
+<details>
+  <summary>
+    Setting up private repos with Vercel (for documentation team only)
+  </summary>
+
+1. Install the [Vercel CLI](https://vercel.com/docs/cli#installing-vercel-cli)
+2. Run `vercel login`. Make sure you login with an account that is part of the `Infura Web` team account
+3. Run `vercel link` in the root directory of your Docusaurus project
+   1. Make sure to link to the `Infura Web` account and not your personal one
+   2. If you previously created the project in the account already you can link to the existing one, otherwise create a new one
+4. After completing the prompts, you should see a `.vercel` folder that includes a JSON file with `Project ID` and `Org ID`
+5. Login to the [Vercel Dashboard](https://vercel.com/account/tokens) and navigate to tokens
+6. Create a new token with the scope selected to `Infura Web` and expiration set to `never`. Make sure to copy this somewhere securely (preferably 1Password) as this token will never be shown again. If you lose it, it will need to be deleted and regenerated. There is also a security concern, as these tokens have access to the entire `Infura Web` account
+7. Navigate to your environments setting in GitHub: `https://github.com/ConsenSys/<DOC_REPO>/settings/environments`. Replace `<DOC_REPO>` with your repo name
+8. Create a new environment titled `vercel`.
+9. Add three new environment secrets to the `vercel` environment
+   1. `ORG_ID`: `orgId` in the `project.json` in `.vercel` folder
+   2. `PROJECT_ID`: `projectId` in the `project.json` in `.vercel` folder
+   3. `VERCEL_TOKEN`: token generated from step 5-6 above
+10. Copy the modified `build.yml` file above and put it into the `.github/workflows` folder
+11. Navigate to your project settings on the Vercel Dashboard and change the `Build & Development Settings` under `General` for `Framework Preset` to `Other` and toggle the `Override` for `Build Command` and leave it **empty**. Make sure to **save**. See below for example.
+12. Any new PR or push to `main` should automatically trigger the Action to build within GitHub and then have the artifacts pushed to Vercel directly.
+13. Make sure to edit the actions if there is something different about the docs repo (e.g. the main branch is called `master` instead of `main`)
+
+  <div>
+    <img src={require("./img/privateRepoVercelSettings.png").default} alt="privateRepoVercelSettings" />
+  </div>
+
 </details>
