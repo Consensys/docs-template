@@ -1,3 +1,10 @@
+## [1.18.1](https://github.com/ConsenSys/docs-template/compare/v1.18.0...v1.18.1) (2023-02-15)
+
+
+### Bug Fixes
+
+* include commitizen ([55dff04](https://github.com/ConsenSys/docs-template/commit/55dff0432ee976171ecd6f7cf98ae8db5a74777d))
+
 # [1.18.0](https://github.com/ConsenSys/docs-template/compare/v1.17.0...v1.18.0) (2023-02-14)
 
 
