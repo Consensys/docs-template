@@ -1,3 +1,10 @@
+## [1.18.2](https://github.com/ConsenSys/docs-template/compare/v1.18.1...v1.18.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* pr template and banner ([172e9c3](https://github.com/ConsenSys/docs-template/commit/172e9c38bdd7e7fea734aa5e5593d27b55218115))
+
 ## [1.18.1](https://github.com/ConsenSys/docs-template/compare/v1.18.0...v1.18.1) (2023-02-15)
 
 
