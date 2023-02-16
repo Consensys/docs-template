@@ -6,7 +6,7 @@ Use the following template to make sure your PR fits the ConsenSys documentation
 
 Make sure that:
 
-- [ ] You've read the [contribution guidelines](https://github.com/ConsenSys/docs-template).
+- [ ] You've read the contribution guidelines of this repository (if any)
 - [ ] You've [previewed your changes locally](https://consensys.github.io/docs-template/getting-started#running-locally).
 
 ## Describe the change
@@ -33,13 +33,13 @@ For content changes:
 
 For tool changes:
 
-- [ ] Build and QA tools
-- [ ] Node dependencies and JavaScript
-- [ ] GitHub integration
+- [ ] Docusaurus build changes
+- [ ] Package dependencies
+- [ ] GitHub CI
 
 ## After creating your PR and tests have finished
 
 Make sure that:
 
-- [ ] You've [fixed any issues](https://consensys.net/docs/doctools/en/latest/contribute/fix-cicd-errors/) raised by the tests.
+- [ ] You've fixed any issues raised by the tests.
 - [ ] You've previewed the build which is auto-deployed by Vercel below.

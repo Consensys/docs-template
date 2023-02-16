@@ -161,7 +161,7 @@ const config = {
       announcementBar: {
         id: "announcement_bar",
         content:
-          "🚧 This is a template documentation site to boostrap your Docusaurus boostrap application",
+          "🚧 This is a template site to boostrap your Docusaurus documentation",
         backgroundColor: "#fafbfc",
         textColor: "#091E42",
         isCloseable: false,
