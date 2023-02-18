@@ -1,3 +1,10 @@
+## [1.18.3](https://github.com/ConsenSys/docs-template/compare/v1.18.2...v1.18.3) (2023-02-18)
+
+
+### Bug Fixes
+
+* vercel json redirect including trail slash ([b676c0c](https://github.com/ConsenSys/docs-template/commit/b676c0cfdabef26c05ffa169a41be84fee9837e1))
+
 ## [1.18.2](https://github.com/ConsenSys/docs-template/compare/v1.18.1...v1.18.2) (2023-02-16)
 
 

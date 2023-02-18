@@ -1,6 +1,6 @@
 {
   "name": "docs-template",
-  "version": "1.18.2",
+  "version": "1.18.3",
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
