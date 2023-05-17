@@ -1,8 +1,10 @@
 ---
-sidebar_position: 6
+description: Track metrics for your documentation site by configuring Google Analytics.
+sidebar_label: Google Analytics
+sidebar_position: 3
 ---
 
-# Google Analytics
+# Configure Google Analytics
 
 [Google Tag Manager](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-tag-manager) and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag) are Docusaurus plugins available for Google Analytics.
 

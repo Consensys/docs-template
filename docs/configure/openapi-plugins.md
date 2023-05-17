@@ -1,4 +1,6 @@
 ---
+description: Configure OpenAPI plugins
+sidebar_label: OpenAPI plugins
 sidebar_position: 4
 ---
 

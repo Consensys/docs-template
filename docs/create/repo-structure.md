@@ -1,12 +1,14 @@
 ---
+description: Understand the structure of a documentation site repository.
+sidebar_label: Repository structure
 sidebar_position: 2
 ---
 
-# Understanding repo layout
+# Doc site repository structure
 
 The purpose of this page is to describe the function of each file in this repo.
 
-## 🗂️ `.github` folder
+## `.github` folder
 
 <details>
   <summary>See folder structure</summary>
@@ -25,44 +27,54 @@ The purpose of this page is to describe the function of each file in this repo.
 
 </details>
 
-### 📂 `ISSUE_TEMPLATE`
+### `ISSUE_TEMPLATE`
 
-Contains the bug report template when opening an Issue on GitHub. This can be customized to your needs. Note that by GitHub convention, this name cannot be changed.
+Contains the bug report template when opening an Issue on GitHub.
+This can be customized to your needs. Note that by GitHub convention, this name
+cannot be changed.
 
-### 📄 `pull_request_template.md`
+### `pull_request_template.md`
 
-Pull request template when pull request is opened. This can be customized to your needs. Note that by GitHub convention, this name cannot be changed.
+Pull request template when pull request is opened.
+This can be customized to your needs.
+Note that by GitHub convention, this name cannot be changed.
 
-### 📂 `workflows`
+### `workflows`
 
 Contains all the GitHub Actions for the repo.
 
-#### 📄 `build.yml`
+#### `build.yml`
 
 Build the docs as it would in production to check for any build errors.
 
-#### 📄 `case.yml`
+#### `case.yml`
 
-Ensure that all markdown files have names which are only lower case letters, digits, dashes or underscores.
+Ensure that all markdown files have names which are only lower case letters,
+digits, dashes or underscores.
 
-#### 📄 `lint.yml`
+#### `lint.yml`
 
-Run `npm run lint` from `package.json`. It includes spell checking, TypeScript linting, and CSS styling.
+Run `npm run lint` from `package.json`. It includes spell checking, TypeScript
+linting, and CSS styling.
 
-#### 📄 `pages-deploy.yaml`
+#### `pages-deploy.yaml`
 
-Build and deploy the docs to GitHub Pages when any commit is made to the `main` branch.
+Build and deploy the docs to GitHub Pages when any commit is made to the `main`
+branch.
 
-#### 📄 `release.yaml`
+#### `release.yaml`
 
-Check all recent commits made to `main` branch and automatically cut a release in line with [semantic versioning](https://semver.org/). The Action will read the configuration in `.releaserc.js` in the root directory of this repo.
+Check all recent commits made to `main` branch and automatically cut a release
+in line with [semantic versioning](https://semver.org/).
+The Action will read the configuration in `.releaserc.js` in the root directory
+of this repo.
 
-## 🗂️ `.husky` folder
+## 🗂`.husky` folder
 
 :::tip
-
-[Husky](https://typicode.github.io/husky/#/) manages Git hooks in an easy way and it is used in this repository for pre-commit, commit message, and staged linting so far.
-
+[Husky](https://typicode.github.io/husky/#/) manages Git hooks in an easy way
+and it is used in this repository for pre-commit, commit message, and staged
+linting so far.
 :::
 
 <details>
@@ -79,40 +91,45 @@ Check all recent commits made to `main` branch and automatically cut a release i
 
 </details>
 
-#### 📄 `commit-msg`
+#### `commit-msg`
 
-On any commit message, `commitlint` will be run to ensure that it is compliant. The config used in this repo is the `config-conventional` found [here](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/index.js). This is specified in the `package.json` on the `commitlint` JSON key.
+On any commit message, `commitlint` will be run to ensure that it is compliant.
+The config used in this repo is the `config-conventional` found
+[here](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/index.js).
+This is specified in the `package.json` on the `commitlint` JSON key.
 
-#### 📄 `pre-commit`
+#### `pre-commit`
 
-Before a commit, `lint-staged` will be run which will check all staged files for spelling errors, TypeScript linting, and CSS linting. Settings for it can be found in `package.json` under `lint-staged` JSON key.
+Before a commit, `lint-staged` will be run which will check all staged files for
+spelling errors, TypeScript linting, and CSS linting. Settings for it can be
+found in `package.json` under `lint-staged` JSON key.
 
-#### 📄 `prepare-commit-msg`
+#### `prepare-commit-msg`
 
-Commit message will use [git-cz](https://github.com/commitizen/cz-cli), which has its settings in `package.json` under `config` JSON key. It uses `cz-conventional-changelog` which is the [conventional log standard](https://github.com/conventional-changelog/conventional-changelog).
+Commit message will use [git-cz](https://github.com/commitizen/cz-cli), which
+has its settings in `package.json` under `config` JSON key.
+It uses `cz-conventional-changelog` which is the
+[conventional log standard](https://github.com/conventional-changelog/conventional-changelog).
 
-## 🗂️ `blog` folder
+## `blog` folder
 
 :::tip
-
-Contains all the Markdown and related files for the [blog](https://docusaurus.io/docs/blog) functionality of Docusaurus.
-
+Contains all the Markdown and related files for the
+[blog](https://docusaurus.io/docs/blog) functionality of Docusaurus.
 :::
 
-## 🗂️ `docs` folder
+## `docs` folder
 
 :::tip
-
-Contains all the Markdown and related files for the [docs](https://docusaurus.io/docs/docs-introduction) functionality of Docusaurus.
-
+Contains all the Markdown and related files for the
+[docs](https://docusaurus.io/docs/docs-introduction) functionality of Docusaurus.
 :::
 
-## 🗂️ `src` folder
+## `src` folder
 
 :::tip
-
-Contains all the JSX and CSS files for [pages](https://docusaurus.io/docs/creating-pages) functionality of Docusaurus.
-
+Contains all the JSX and CSS files for
+[pages](https://docusaurus.io/docs/creating-pages) functionality of Docusaurus.
 :::
 
 <details>
@@ -134,33 +151,45 @@ Contains all the JSX and CSS files for [pages](https://docusaurus.io/docs/creati
 
 </details>
 
-### 📂 `components`
+### `components`
 
-Contains JSX components for React.js which should live separately from the [pages](https://docusaurus.io/docs/creating-pages) folder. The pattern should be that JSX components are broken up here with `.tsx` extensions and accompanying scoped `.modules.css`. These components can then be imported by files in the `pages` folder.
+Contains JSX components for React.js which should live separately from the
+[pages](https://docusaurus.io/docs/creating-pages) folder.
+The pattern should be that JSX components are broken up here with `.tsx`
+extensions and accompanying scoped `.modules.css`.
+These components can then be imported by files in the `pages` folder.
 
-### 📂 `css`
+### `css`
 
 Any non-scoped `css` files should live in this folder.
 
 :::caution
-
-It is recommended to leave the default `custom.css` file by itself in this folder and not add any other files. The `custom.css` file is referred to as the [global](https://docusaurus.io/docs/styling-layout#global-styles) styles file which applies to the entire docs site.
-
+It is recommended to leave the default `custom.css` file by itself in this
+folder and not add any other files.
+The `custom.css` file is referred to as the
+[global](https://docusaurus.io/docs/styling-layout#global-styles) styles file
+which applies to the entire docs site.
 :::
 
-### 📂 `pages`
+### `pages`
 
-[Pages](https://docusaurus.io/docs/creating-pages) are one-off standalone pages which do not have sidebars as default.
+[Pages](https://docusaurus.io/docs/creating-pages) are one-off standalone pages
+which do not have sidebars as default.
 
-Markdown/MDX pages are still [supported](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) in this folder and will be rendered with the file name as the path.
+Markdown/MDX pages are still
+[supported](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) in
+this folder and will be rendered with the file name as the path.
 
-[Routing](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) is file-based for any `.js` and `.tsx` file.
+[Routing](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) is
+file-based for any `.js` and `.tsx` file.
 
-## 🗂️ `static` folder
+## `static` folder
 
-Any assets which can be directly copied on build output. Usually images, stylesheets, favicons, fonts, etc.
+Any assets which can be directly copied on build output.
+Usually images, stylesheets, favicons, fonts, etc.
 
-More information: [Referencing your static asset.](https://docusaurus.io/docs/static-assets#referencing-your-static-asset)
+More information:
+[Referencing your static asset.](https://docusaurus.io/docs/static-assets#referencing-your-static-asset)
 
   <details>
   <summary>See folder structure</summary>
@@ -179,7 +208,7 @@ More information: [Referencing your static asset.](https://docusaurus.io/docs/st
 
   </details>
 
-## 📄 `.cspell.json`
+## `.cspell.json`
 
 A [spell checker](https://cspell.org/) configuration file which is used in linting to check for misspelling in all files.
 
@@ -205,7 +234,7 @@ A file containing files and folders for Git to ignore when adding or committing.
 
 ## 📄 `.nvmrc`
 
-Contains the **Node.js** version that we want to use for this project. It requires the installation of [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). See [here](index.mdx#installing-recommended-nodejs-version-with-nvm) for more.
+Contains the **Node.js** version that we want to use for this project. It requires the installation of [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). See [here](workflow.md#installing-recommended-nodejs-version-with-nvm) for more.
 
 ## 📄 `.prettierrc`
 

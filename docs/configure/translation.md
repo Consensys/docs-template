@@ -1,8 +1,10 @@
 ---
-sidebar_position: 3
+description: Translate your site.
+sidebar_label: Translation
+sidebar_position: 6
 ---
 
-# Translate your site
+# Configure translation
 
 Let's translate `docs/intro.md` to French.
 

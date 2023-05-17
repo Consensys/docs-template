@@ -1,5 +1,6 @@
 ---
-sidebar_position: 3
+description: Support versioned and non-versioned documentation in multiple instances.
+sidebar_position: 2
 ---
 
 # Support versioned and non-versioned docs

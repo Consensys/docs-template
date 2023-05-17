@@ -110,20 +110,6 @@ const config = {
           showLastUpdateTime: true,
           includeCurrentVersion: true,
         },
-        blog: {
-          // routeBasePath: '/',
-          path: "blog",
-          editUrl: "https://github.com/ConsenSys/docs-template/tree/main/",
-
-          postsPerPage: 5,
-          feedOptions: {
-            type: "all",
-            copyright: `Copyright © ${new Date().getFullYear()} ConsenSys Software, Inc.`,
-          },
-          blogSidebarCount: "ALL",
-          blogSidebarTitle: "All our posts",
-          showReadingTime: true,
-        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -192,24 +178,9 @@ const config = {
         },
         items: [
           {
-            type: "docSidebar",
-            sidebarId: "docSidebar",
-            docId: "index",
-            position: "left",
-            label: "Documentation",
-          },
-          { to: "blog", label: "Blog", position: "left" },
-          {
             label: "API",
             to: "/api/",
           },
-          // {
-          //   type: "docSidebar",
-          //   sidebarId: "apiSidebar",
-          //   docId: "index",
-          //   position: "left",
-          //   label: "API2",
-          // },
           {
             href: "https://github.com/ConsenSys/docs-template",
             className: "header-github-link",
@@ -236,15 +207,44 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "Learn",
+            title: "ConsenSys developer docs",
             items: [
               {
-                label: "Getting Started",
-                to: "/category/getting-started",
+                label: "Introduction",
+                to: "/",
               },
               {
-                label: "Style Guide",
-                to: "/getting-started/style-guide",
+                label: "Contribute to the docs",
+                to: "/contribute",
+              },
+              {
+                label: "Create a new doc site",
+                to: "/create",
+              },
+              {
+                label: "Configure advanced features",
+                to: "/configure",
+              },
+            ],
+          },
+          {
+            title: "ConsenSys doc sites",
+            items: [
+              {
+                label: "Teku",
+                href: "https://docs.teku.consensys.net/",
+              },
+              {
+                label: "Web3Signer",
+                href: "https://docs.web3signer.consensys.net/",
+              },
+              {
+                label: "MetaMask",
+                href: "https://docs.metamask.io/",
+              },
+              {
+                label: "Linea",
+                href: "https://docs.linea.build/",
               },
             ],
           },
@@ -252,30 +252,21 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Discord",
+                label: "ConsenSys Discord",
                 href: "https://discord.com/invite/consensys",
               },
               {
-                label: "Issues",
-                href: "https://github.com/ConsenSys/docs-template/issues",
-              },
-            ],
-          },
-          {
-            title: "More",
-            items: [
-              {
-                label: "GitHub",
-                href: "https://github.com/ConsenSys/protocols-docs-test",
+                label: "ConsenSys documentation GitHub",
+                href: "https://github.com/ConsenSys/docs-template",
               },
               {
-                label: "ConsenSys",
-                href: "https://consensys.net",
+                label: "ConsenSys home",
+                href: "https://consensys.net/",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} ConsenSys, Inc. Built with Docusaurus.`,
+        copyright: `© ${new Date().getFullYear()} ConsenSys, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,

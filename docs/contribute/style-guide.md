@@ -1,9 +1,9 @@
 ---
-description: Documentation style guidelines
-sidebar_position: 4
+description: Style guidelines for writing developer documentation.
+sidebar_position: 2
 ---
 
-# Documentation style guide
+# Writing style guide
 
 The following are writing style guidelines for contributing to the ConsenSys documentation. These guidelines aim to keep the documentation consistent, well-organized, and easy to understand.
 
@@ -21,7 +21,7 @@ The following are writing style guidelines for contributing to the ConsenSys doc
 
 1. **Be inclusive** - ConsenSys documentation aims to be inclusive to all users. Refer to the [Google inclusive documentation guide](https://developers.google.com/style/inclusive-documentation) and the [Microsoft bias-free communication guide](https://docs.microsoft.com/en-us/style-guide/bias-free-communication) as starting points.
 
-## Writing style guide
+## Specific guidelines
 
 ConsenSys documentation follows the [Microsoft Writing Style Guide](https://docs.microsoft.com/en-us/style-guide/welcome/), which is a straightforward reference for natural and clear writing style. The following are some important style recommendations:
 

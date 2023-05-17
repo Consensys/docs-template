@@ -1,8 +1,10 @@
 ---
+description: Follow these steps to create a new documentation site.
+sidebar_label: Creation workflow
 sidebar_position: 1
 ---
 
-# Create new docs
+#  Doc site creation workflow
 
 This page contains information regarding how to fork this repo and quickly spin up your Docusaurus documentation and initial setup requirements.
 

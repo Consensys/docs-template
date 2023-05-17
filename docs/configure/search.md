@@ -1,8 +1,10 @@
 ---
-sidebar_position: 8
+description: Enable search using Algolia.
+sidebar_label: Search
+sidebar_position: 2
 ---
 
-# Enable search bar
+# Configure search
 
 Docusaurus has official support for [Algolia Search](https://docusaurus.io/docs/search#using-algolia-docsearch) as the primary method of integrating search into docs.
 

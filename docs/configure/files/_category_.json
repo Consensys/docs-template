@@ -1,0 +1,9 @@
+{
+  "label": "Configuration files",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "Advanced customization of configuration files.",
+    "slug": "/configure/files"
+  }
+}

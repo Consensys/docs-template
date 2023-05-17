@@ -1,9 +1,9 @@
 ---
-title: Creating versioned docs
-sidebar_position: 2
+description: Support and manage multiple documentation versions.
+sidebar_position: 1
 ---
 
-# Manage Versioned Docs
+# Manage versioned docs
 
 Docusaurus can manage multiple versions of your docs.
 
@@ -46,7 +46,7 @@ module.exports = {
 
 The docs version dropdown appears in your navbar:
 
-![Docs Version Dropdown](./img/docsVersionDropdown.png)
+![Docs Version Dropdown](../img/docsVersionDropdown.png)
 
 ## Update an existing version
 

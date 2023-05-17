@@ -1,31 +1,50 @@
 ---
-sidebar_position: 7
+description: Deploy your new documentation site to production using Vercel.
+sidebar_label: Deploy to production
+sidebar_position: 4
 ---
 
-# Production deployment
+# Deploy your doc site to production
 
-The recommended method to deploying your docs site is by using [**Vercel**](https://vercel.com/).
+The recommended method to deploying your docs site is by using
+[**Vercel**](https://vercel.com/).
 
-The main benefits of using Vercel over GitHub Pages is the ease of integration with GitHub repos and also deploying automatic previews on Pull Requests. The only caveat is that private GitHub repos require all pushes to a PR to also be members of the Vercel account which increases the cost of the subscription. In such a case, there is a workaround that allows Vercel to still host the docs and provide previews but requires a little more setup.
+The main benefits of using Vercel over GitHub Pages is the ease of integration
+with GitHub repos and also deploying automatic previews on Pull Requests.
+The only caveat is that private GitHub repos require all pushes to a PR to also
+be members of the Vercel account which increases the cost of the subscription.
+In such a case, there is a workaround that allows Vercel to still host the docs
+and provide previews but requires a little more setup.
 
 ## Scenario A: Public GitHub repo
 
 Once you are ready to deploy to Vercel, ensure that you have done the following:
 
-1. Copy the `vercel.json` file in the root of this template repo to the root of your documentation repo
+1. Copy the `vercel.json` file in the root of this template repo to the root of
+    your documentation repo
 
-   1. This file contains some URL redirects from older MkDocs docs that we had at the company before we moved to Docusaurus. If your documentation did not pre-exist in MkDocs, then you can remove these fields.
+    1. This file contains some URL redirects from older MkDocs docs that we had
+        at the company before we moved to Docusaurus.
+        If your documentation did not pre-exist in MkDocs, then you can remove
+        these fields.
 
-   :::caution
+    :::caution
+    Please ensure the `cleanUrls` is set to true and specified in the `vercel.json`.
+    This is necessary to make sure that Vercel deploys the app properly without
+    expecting trailing slashes.
+    :::
 
-   Please ensure the `cleanUrls` is set to true and specified in the `vercel.json`. This is necessary to make sure that Vercel deploys the app properly without expecting trailing slashes.
+2. Determine the public URL that you want to use to expose the docs site.
+    It is common practice for the URL to follow the format of
+    `https://docs.<YOUR_PRODUCT>.consensys.net`; however, that may be different
+    depending on your needs.
 
-   :::
+3. Join the [#documentation](https://consensys.slack.com/archives/C0272B5P1CY)
+    Slack channel and ask for Vercel integration for your repo.
+    Make sure to provide a link to your repo in your message.
 
-2. Determine the public URL that you want to use to expose the docs site. It is common practice for the URL to follow the format of `https://docs.<YOUR_PRODUCT>.consensys.net`; however, that may be different depending on your needs.
-3. Join the [#documentation](https://consensys.slack.com/archives/C0272B5P1CY) Slack channel and ask for Vercel integration for your repo. Make sure to provide a link to your repo in your message.
-
-Once integration has occurred, any new PRs should have a Vercel bot update with a preview link on all new commits to that PR.
+Once integration has occurred, any new PRs should have a Vercel bot update with
+a preview link on all new commits to that PR.
 
 <details>
   <summary>
@@ -38,8 +57,16 @@ Once integration has occurred, any new PRs should have a Vercel bot update with 
 
 ## Scenario B: Private GitHub repo
 
-1. Join the [#documentation](https://consensys.slack.com/archives/C0272B5P1CY) Slack channel and ask for Vercel integration for your **_private_** repo. Make sure to provide a link to your repo in your message.
-2. Your `build.yml` file under `.github/workflows` will be modified to look like below (you **do not** need to take this action yourself). Essentially, we will bypass the Vercel limitation by having GitHub Actions build and push the static build directly to Vercel. The Action will also take care of commenting the preview URLs in the PR on new commits.
+1. Join the [#documentation](https://consensys.slack.com/archives/C0272B5P1CY)
+    Slack channel and ask for Vercel integration for your **_private_** repo.
+    Make sure to provide a link to your repo in your message.
+
+2. Your `build.yml` file under `.github/workflows` will be modified to look like
+    below (you **do not** need to take this action yourself).
+    Essentially, we will bypass the Vercel limitation by having GitHub Actions
+    build and push the static build directly to Vercel.
+    The Action will also take care of commenting the preview URLs in the PR on
+    new commits.
 
 <details>
   <summary>

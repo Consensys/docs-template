@@ -1,8 +1,10 @@
 ---
+Description: Run various commands when developing your documentation site.
+sidebar_label: Run in development
 sidebar_position: 3
 ---
 
-# Running workflow
+# Run your doc site in development
 
 Once you have cloned your new docs repository, you will want to be able to know how to start previews, lint, build, and do all the necessary things in development.
 
