@@ -12,7 +12,7 @@ When adding a new image, such as a screenshot or diagram, make sure the image ha
 
 ConsenSys documentation sites contain diagrams created using [Figma](https://figma.com/).
 You must have access to the ConsenSys **Quorum Diagrams** template files on Figma to create a diagram.
-You can add a diagram to the documentation using the normal [contribution workflow](index.md#contribution-workflow) of
+You can add a diagram to the documentation using the normal [contribution workflow](workflow.md) of
 creating a pull request (PR).
 
 Create diagrams to illustrate:
@@ -56,8 +56,8 @@ Figma design elements, and more.
 
 #### Style
 
-- Use the premade diagram assets as starting points.
-  By default, you can adjust the width of the premade labels, but the height is automatically sized to the number of
+- Use the pre-made diagram assets as starting points.
+  By default, you can adjust the width of the pre-made labels, but the height is automatically sized to the number of
   lines of text.
   To freely customize a component, right-click on it, **detach instance**, and **remove auto layout**.
 - Use the pre-defined [color styles](https://help.figma.com/hc/en-us/articles/360039820134-Manage-and-share-styles) or

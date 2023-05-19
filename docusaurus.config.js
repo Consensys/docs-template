@@ -60,9 +60,9 @@ const redocusaurus = [
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "ConsenSys Docs",
+  title: "ConsenSys developer documentation",
   tagline:
-    "A template repository to quickly boostrap a Docusaurus application to serve documentation",
+    "A template documentation site repository and contribution guidelines.",
   url: "https://docs-template.consensys.net",
   baseUrl,
   onBrokenLinks: "throw",
@@ -144,14 +144,6 @@ const config = {
 
         // ... other Algolia params
       },
-      announcementBar: {
-        id: "announcement_bar",
-        content:
-          "🚧 This is a template site to boostrap your Docusaurus documentation",
-        backgroundColor: "#fafbfc",
-        textColor: "#091E42",
-        isCloseable: false,
-      },
       colorMode: {
         defaultMode: "light",
         disableSwitch: false,
@@ -168,9 +160,9 @@ const config = {
         },
       },
       navbar: {
-        title: "ConsenSys Docs",
+        title: "ConsenSys developer documentation",
         logo: {
-          alt: "ConsenSys Docs",
+          alt: "ConsenSys logo",
           src: "img/logo.svg",
           srcDark: "img/logo_dark.svg",
           width: 32,
@@ -189,16 +181,6 @@ const config = {
           {
             href: "https://discord.com/invite/consensys",
             className: "header-discord-link",
-            position: "right",
-          },
-          {
-            href: "https://twitter.com/consensys",
-            className: "header-twitter-link",
-            position: "right",
-          },
-          {
-            href: "https://hub.docker.com/r/consensys",
-            className: "header-dockerhub-link",
             position: "right",
           },
         ],
@@ -252,12 +234,16 @@ const config = {
             title: "Community",
             items: [
               {
+                label: "ConsenSys documentation GitHub",
+                href: "https://github.com/ConsenSys/docs-template",
+              },
+              {
                 label: "ConsenSys Discord",
                 href: "https://discord.com/invite/consensys",
               },
               {
-                label: "ConsenSys documentation GitHub",
-                href: "https://github.com/ConsenSys/docs-template",
+                label: "ConsenSys Twitter",
+                href: "https://twitter.com/consensys",
               },
               {
                 label: "ConsenSys home",
