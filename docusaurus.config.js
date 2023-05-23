@@ -60,7 +60,7 @@ const redocusaurus = [
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "ConsenSys developer documentation",
+  title: "ConsenSys docs guide",
   tagline:
     "A template documentation site repository and contribution guidelines.",
   url: "https://docs-template.consensys.net",
@@ -160,7 +160,7 @@ const config = {
         },
       },
       navbar: {
-        title: "ConsenSys developer documentation",
+        title: "ConsenSys docs guide",
         logo: {
           alt: "ConsenSys logo",
           src: "img/logo.svg",
@@ -169,10 +169,6 @@ const config = {
           height: 32,
         },
         items: [
-          {
-            label: "API",
-            to: "/api/",
-          },
           {
             href: "https://github.com/ConsenSys/docs-template",
             className: "header-github-link",
@@ -192,7 +188,7 @@ const config = {
             title: "ConsenSys developer docs",
             items: [
               {
-                label: "Introduction",
+                label: "Overview",
                 to: "/",
               },
               {
@@ -217,16 +213,16 @@ const config = {
                 href: "https://docs.teku.consensys.net/",
               },
               {
-                label: "Web3Signer",
-                href: "https://docs.web3signer.consensys.net/",
-              },
-              {
                 label: "MetaMask",
                 href: "https://docs.metamask.io/",
               },
               {
-                label: "Linea",
-                href: "https://docs.linea.build/",
+                label: "Infura",
+                href: "https://docs.infura.io/",
+              },
+              {
+                label: "See full list",
+                to: "/#list-of-documentation-sites",
               },
             ],
           },

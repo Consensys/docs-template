@@ -1,6 +1,6 @@
 ---
-description: Raise issues about the documentation.
-sidebar_position: 6
+description: Raise GitHub issues about the documentation.
+sidebar_position: 7
 ---
 
 # Raise issues

@@ -1,6 +1,6 @@
 ---
-description: Review other contributors' documentation pull requests.
-sidebar_position: 7
+description: Review other contributors' GitHub pull requests.
+sidebar_position: 8
 ---
 
 # Review contributions
@@ -20,8 +20,8 @@ To
   - The changes improve your understanding of the subject.
   - The changes make sense in the context they're in.
   - You're not left with any confusion or questions about the subject of the changes.
-  - The changes follow the [writing style guidelines](style-guide.md) and the
-    [markdown guidelines](markdown-guide).
+  - The changes follow the [writing style guidelines](write-with-style.md) and the
+    [markdown guidelines](format-markdown.md).
 
 1. In the **Files changed** tab, hover over any line you want to comment on to the right of the line number, and select
    the plus sign (+).

@@ -1,9 +1,9 @@
 ---
-description: How to use common Markdown features.
-sidebar_position: 2
+description: Use Markdown and MDX features supported by Docusaurus.
+sidebar_position: 4
 ---
 
-# Markdown features
+# Use Docusaurus features
 
 The documentation is built using [Docusaurus](https://docusaurus.io/), which is powered by
 [MDX](https://mdxjs.com/), an extension to [Markdown](https://www.markdownguide.org/) that allows

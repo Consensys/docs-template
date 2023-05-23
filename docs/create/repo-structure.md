@@ -234,7 +234,7 @@ A file containing files and folders for Git to ignore when adding or committing.
 
 ## 📄 `.nvmrc`
 
-Contains the **Node.js** version that we want to use for this project. It requires the installation of [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). See [here](workflow.md#installing-recommended-nodejs-version-with-nvm) for more.
+Contains the **Node.js** version that we want to use for this project. It requires the installation of [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). See [here](set-up-your-site.md#installing-recommended-nodejs-version-with-nvm) for more.
 
 ## 📄 `.prettierrc`
 

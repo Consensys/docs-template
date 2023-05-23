@@ -1,6 +1,6 @@
 ---
 description: Add screenshots and diagrams to the documentation.
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Add images
@@ -12,7 +12,7 @@ When adding a new image, such as a screenshot or diagram, make sure the image ha
 
 ConsenSys documentation sites contain diagrams created using [Figma](https://figma.com/).
 You must have access to the ConsenSys **Quorum Diagrams** template files on Figma to create a diagram.
-You can add a diagram to the documentation using the normal [contribution workflow](workflow.md) of
+You can add a diagram to the documentation using the normal [contribution workflow](submit-a-contribution.md) of
 creating a pull request (PR).
 
 Create diagrams to illustrate:

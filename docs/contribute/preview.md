@@ -1,6 +1,6 @@
 ---
-description: Preview the documentation locally.
-sidebar_position: 5
+description: Preview your documentation changes before submitting them.
+sidebar_position: 6
 ---
 
 # Preview the docs

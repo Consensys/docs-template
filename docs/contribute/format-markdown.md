@@ -1,9 +1,9 @@
 ---
-description: Best practices for formatting Markdown content.
-sidebar_position: 1
+description: Follow these guidelines for formatting Markdown content.
+sidebar_position: 3
 ---
 
-# Best practices
+# Format Markdown
 
 Having a standard for formatting Markdown helps writers and reviewers navigate the code and review changes.
 The following are rules for formatting Markdown in ConsenSys documentation:
@@ -29,7 +29,6 @@ The following are rules for formatting Markdown in ConsenSys documentation:
 - For the rest of the Markdown code, each line should be (roughly)
   [limited to 100 columns long](https://google.github.io/styleguide/javaguide.html#s4.4-column-limit) to be readable on
   any editor.
-  You'll receive a warning, not an error, if you exceed 100 columns.
   Lines must be wrapped without cutting the line in the middle of a word.
   One line break displays as a space.
 
@@ -47,12 +46,6 @@ The following are rules for formatting Markdown in ConsenSys documentation:
 
 - Use only one first level title (prefixed with a single `#`) on a page.
 
-- No HTML markup can be used inside a Markdown document.
-  You can use many extensions that have similar capabilities without HTML.
-
-  There's one exception where HTML is tolerated: tables that are too complex and already exist.
-  If possible, keep the table simple without any elements other than `table`, `tr`, and `td`.
-
 - If using Markdown tables, format them so they're also readable in the source code.
   For example, add an appropriate number of spaces to align the columns in the source code.
 
@@ -69,5 +62,4 @@ The following are rules for formatting Markdown in ConsenSys documentation:
   You can quickly formate tables by using [Markdown Table Formatter](http://markdowntable.com/) or create tables from
   scratch using [Tables Generator](https://www.tablesgenerator.com/markdown_tables).
 
-- Code samples should be written so that users can copy and paste them with minimal
-  editing and have them work as expected.
+also see "format text properly"
