@@ -20,6 +20,10 @@ To contribute changes:
 1. Choose the repository you'd like to contribute to.
    See the [list of ConsenSys documentation repositories](../index.md#list-of-documentation-sites).
 
+   :::note
+   These steps only apply to the doc sites that use Docusaurus.
+   :::
+
 2. In the repository, search for an existing issue to work on, or [create a new issue](raise-issues.md)
    describing the documentation issue you'd like to address.
    Make sure no one else is assigned to the issue, and assign yourself to it.
@@ -48,7 +52,7 @@ To contribute changes:
 
 5. Open the repository in a text editor of your choice (for example, [VS Code](https://code.visualstudio.com/))
    and make your documentation changes.
-   Make sure to [follow the style guidelines](write-with-style.md) and [format your Markdown
+   Make sure to [follow the style guidelines](style-guide.md) and [format your Markdown
    correctly](format-markdown.md).
 
    :::caution important

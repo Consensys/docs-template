@@ -5,61 +5,84 @@ sidebar_position: 3
 
 # Format Markdown
 
-Having a standard for formatting Markdown helps writers and reviewers navigate the code and review changes.
-The following are rules for formatting Markdown in ConsenSys documentation:
+Guidelines for formatting Markdown help writers and reviewers navigate the documentation source code
+and review changes.
+Refer to the following guidelines when formatting Markdown in ConsenSys documentation.
 
-- The name of each documentation folder and Markdown file must contain only lowercase letters and
-  dashes (`-`).
-  For example, `get-started`, `truffle.md`, and `performance-best-practices.md`.
+## File names
 
-- Each Markdown file must contain a header composed of
-  [metadata](https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#metadata) and limited by
-  three dashes (`-`).
+The name of each documentation folder and Markdown file must contain only lowercase letters and
+dashes (`-`) to represent spaces.
+Use simple file names that match the page titles and that make sense with the entire file path.
+For example:
 
-  :::tip example
+```text
+how-to/
+├─ get-started.md
+├─ manage-keys.md
+├─ request-permissions.md
+├─ troubleshoot.md
+concepts/
+├─ architecture.md
+├─ lifecycle.md
+├─ execution-environment.md
+...
+```
 
-        ```markdown
-        ---
-        title: Installation overview
-        description: Overview and requirements to install the software
-        ---
-        ```
-  :::
+## Column limit
 
-- For the rest of the Markdown code, each line should be (roughly)
-  [limited to 100 columns long](https://google.github.io/styleguide/javaguide.html#s4.4-column-limit) to be readable on
-  any editor.
-  Lines must be wrapped without cutting the line in the middle of a word.
-  One line break displays as a space.
+Each Markdown line should be (roughly) [limited to 100 columns
+long](https://google.github.io/styleguide/javaguide.html#s4.4-column-limit) to be readable on any editor.
+For example:
 
-  :::tip example
+<!--tabs-->
 
-        ```markdown
-        In this example, this first sentence exceeds 100 characters, so we recommend wrapping it into
-        multiple lines.
-        One line break displays as a space, so this Markdown renders as one paragraph without line breaks.
-        We also recommend starting each new sentence on a new line, even if the previous line didn't reach
-        100 columns, for easy reviewing.
-        You can set a column marker in your text editor as a heuristic.
-        ```
-  :::
+# Markdown
 
-- Use only one first level title (prefixed with a single `#`) on a page.
+```markdown
+In this example, this first sentence exceeds 100 characters, so we recommend wrapping it into
+multiple lines.
+One line break displays as a space, so this Markdown renders as one paragraph without line breaks.
+We also recommend starting each new sentence on a new line, even if the previous line didn't reach
+100 columns, for easy reviewing.
+You can set a [vertical ruler](https://dev.to/brad_beggs/vs-code-vertical-rulers-for-prettier-code-3gp3)
+in your text editor as a heuristic.
+```
 
-- If using Markdown tables, format them so they're also readable in the source code.
-  For example, add an appropriate number of spaces to align the columns in the source code.
+# Rendered
 
-  :::tip example
+In this example, this first sentence exceeds 100 characters, so we recommend wrapping it into
+multiple lines.
+One line break displays as a space, so this Markdown renders as one paragraph without line breaks.
+We also recommend starting each new sentence on a new line, even if the previous line didn't reach
+100 columns, for easy reviewing.
+You can set a [vertical ruler](https://dev.to/brad_beggs/vs-code-vertical-rulers-for-prettier-code-3gp3)
+in your text editor as a heuristic.
 
-        ```markdown
-        | Syntax    | Description |
-        | --------- | ----------- |
-        | Name      | Title       |
-        | Paragraph | Text        |
-        ```
-  :::
+<!--/tabs-->
 
-  You can quickly formate tables by using [Markdown Table Formatter](http://markdowntable.com/) or create tables from
-  scratch using [Tables Generator](https://www.tablesgenerator.com/markdown_tables).
+## Tables
 
-also see "format text properly"
+Format tables to be readable in the source code.
+Add an appropriate number of spaces to align the columns in the source code.
+For example, do this:
+
+```markdown
+| Syntax    | Description |
+|-----------|-------------|
+| Name      | Title       |
+| Paragraph | Text        |
+```
+
+Not this:
+
+```markdown
+| Syntax | Description |
+|--|--|
+| Name | Title |
+| Paragraph | Text |
+```
+
+You can quickly format tables using [Markdown Table Formatter](http://markdowntable.com/) or
+create tables from scratch using [Tables Generator](https://www.tablesgenerator.com/markdown_tables).
+Some editors also have settings or plugins to auto-format Markdown tables.
