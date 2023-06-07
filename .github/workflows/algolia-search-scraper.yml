@@ -1,0 +1,55 @@
+name: Algolia Search Scraper
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Trigger Algolia Scraper
+    runs-on: ubuntu-22.04
+    environment: algolia
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          [
+            "docs",            
+          ]
+    steps:
+      - uses: actions/checkout@v3
+      - id: config
+        name: Read ${{ matrix.version }}.json
+        shell: bash
+        run: |
+          content=$(cat ./.github/config/${{ matrix.version }}.json | jq -r tostring)
+          echo "configJSON=$content" >> $GITHUB_OUTPUT
+      - name: Checkout algolia/docsearch-scraper
+        uses: actions/checkout@v3
+        with:
+          repository: algolia/docsearch-scraper
+          path: "./algolia"
+      - name: Set up Python
+        uses: actions/setup-python@v4.5.0
+        with:
+          python-version: "3.6"
+      - name: Install pipenv
+        shell: bash
+        run: |
+          pip install pipenv
+      - name: pipenv Pipfile
+        shell: bash
+        run: |
+          cd ./algolia
+          pipenv install
+      - name: run algolia
+        shell: bash
+        env:
+          APPLICATION_ID: ${{ secrets.APPLICATION_ID }}
+          API_KEY: ${{ secrets.API_KEY }}
+          CONFIG: ${{ steps.config.outputs.configJSON }}
+        run: |
+          cd ./algolia/scraper
+          pipenv run python -m src.index
+
