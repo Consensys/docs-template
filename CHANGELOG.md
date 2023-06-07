@@ -1,3 +1,15 @@
+# [1.19.0](https://github.com/ConsenSys/docs-template/compare/v1.18.4...v1.19.0) (2023-06-07)
+
+
+### Bug Fixes
+
+* npm fix ([c1c9ca1](https://github.com/ConsenSys/docs-template/commit/c1c9ca1c84327bbb71dda57586b53300a558bbaf))
+
+
+### Features
+
+* doc content re algolia scraper ([eab16e9](https://github.com/ConsenSys/docs-template/commit/eab16e9cd255d8a9336ccc34e8fe503443843d56))
+
 ## [1.18.4](https://github.com/ConsenSys/docs-template/compare/v1.18.3...v1.18.4) (2023-06-07)
 
 
