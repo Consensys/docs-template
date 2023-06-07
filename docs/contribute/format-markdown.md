@@ -8,6 +8,7 @@ sidebar_position: 3
 Guidelines for formatting Markdown help writers and reviewers navigate the documentation source code
 and review changes.
 Refer to the following guidelines when formatting Markdown in ConsenSys documentation.
+You can also see how to use [Docusaurus Markdown features](use-docusaurus-features.md#markdown-features).
 
 ## File names
 

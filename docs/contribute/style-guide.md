@@ -101,7 +101,7 @@ Make sure readers can [effectively scan your content](https://learn.microsoft.co
 - [Get to your point fast](https://learn.microsoft.com/en-us/style-guide/top-10-tips-style-voice#get-to-the-point-fast)
   and make your point clear.
 - [Use short, simple sentences.](https://learn.microsoft.com/en-us/style-guide/word-choice/use-simple-words-concise-sentences)
-  Remove unnecessary, redundant, or non-specific words and sentences.
+  Remove nonessential, redundant, or non-specific words and sentences.
 - Break up three or more paragraphs of text with subheadings, admonitions, lists, tables, code samples, or images.
 - [Establish patterns in content.](https://learn.microsoft.com/en-us/style-guide/scannable-content/#establish-patterns-in-content)
   Use consistent language across list items and page titles.
@@ -139,7 +139,6 @@ elements](https://learn.microsoft.com/en-us/style-guide/text-formatting/):
 - Use code formatting (surround text with backticks `` ` ``) for references to URLs and file names.
 - Use bold text (surround text with double asterisks `**`) for references to user interface elements.
 - Use [descriptive link text](https://developers.google.com/style/link-text?hl=en).
-- Also see [how to format Markdown file names](format-markdown.md).
 
 :::info example
 
