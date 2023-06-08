@@ -287,3 +287,7 @@ h3 {
 h4 {
   font-size: 16px;
 }
+
+img {
+  border-radius: 0.4rem;
+}

@@ -7,9 +7,8 @@ sidebar_position: 1
 
 The ConsenSys documentation uses a [docs-as-code](https://www.writethedocs.org/guide/docs-as-code/)
 approach, meaning documentation is created using the same tools as code.
-The contribution workflow involves proposing changes to the docs by creating
-[branches](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches)
-and [pull requests (PRs)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
+The contribution workflow involves proposing changes to the docs by creating [forks and pull
+requests (PRs)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model)
 on the documentation GitHub repositories.
 This facilitates open contributions, testing, and review.
 
@@ -24,20 +23,30 @@ To contribute changes:
    These steps only apply to the doc sites that use Docusaurus.
    :::
 
-2. In the repository, search for an existing issue to work on, or [create a new issue](raise-issues.md)
+2. In the repository, search for an existing issue to work on, or [create a new
+   issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
    describing the documentation issue you'd like to address.
    Make sure no one else is assigned to the issue, and assign yourself to it.
    If you don't have permission to assign yourself to it, leave a comment on the issue or contact a
    maintainer of that repository.
 
-3. [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-   the repository to your computer.
+3. [Fork the repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository)
+   to your personal account.
+
+4. [Clone your forked repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository)
+   to your computer.
 
      ```bash
-     git clone <REPOSITORY-URL>
+     git clone <FORKED-REPO-URL>
+     ```
+   
+5. [Add an upstream remote.](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository)
+
+     ```bash
+     git remote add upstream <ORIGINAL-REPO-URL>
      ```
 
-4. [Create and checkout a topic branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging),
+6. [Create and checkout a topic branch](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging),
    naming it appropriately.
    We recommend including the issue number and a short description in the branch name (for example,
    `183-doc-cli-option`), which is a reminder to fix only one issue in a PR.
@@ -50,7 +59,7 @@ To contribute changes:
    You can use a Git client such as [Fork](https://fork.dev/) instead of the command line.
    :::
 
-5. Open the repository in a text editor of your choice (for example, [VS Code](https://code.visualstudio.com/))
+7. Open the repository in a text editor of your choice (for example, [VS Code](https://code.visualstudio.com/))
    and make your documentation changes.
    Make sure to [follow the style guidelines](style-guide.md) and [format your Markdown
    correctly](format-markdown.md).
@@ -61,9 +70,9 @@ To contribute changes:
    `docusaurus.config.js`.
    :::
 
-6. [Preview your changes locally](preview.md) to check that the changes render correctly.
+8. [Preview your changes locally](preview.md) to check that the changes render correctly.
 
-7. Add and commit your changes, briefly describing your changes in the commit message.
+9. Add and commit your changes, briefly describing your changes in the commit message.
    Push your changes to the remote origin.
 
      ```bash
@@ -72,18 +81,18 @@ To contribute changes:
      git push origin
      ```
 
-8. On the original repository on GitHub, you’ll see a banner prompting you to create a PR with your
-   recent changes.
-   Create a PR, describing your changes in detail.
-   [Link the issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
-   that your PR fixes by adding `fixes #<ISSUE-NUM>` to the PR description.
+10. On the original repository on GitHub, you’ll see a banner prompting you to create a PR with your
+    recent changes.
+    Create a PR, describing your changes in detail.
+    [Link the issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)
+    that your PR fixes by adding `fixes #<ISSUE-NUM>` to the PR description.
 
-9. For most doc repositories, specific reviewers are automatically requested when you submit a PR.
-   You can request additional reviewers in the right sidebar of your PR – for example, the original
-   issue raiser.
-   Make any required changes to your PR based on reviewer feedback, repeating steps 5–7.
+11. For most doc repositories, specific reviewers are automatically requested when you submit a PR.
+    You can request additional reviewers in the right sidebar of your PR – for example, the original
+    issue raiser.
+    Make any required changes to your PR based on reviewer feedback, repeating steps 5–7.
 
-10. After your PR is approved by two reviewers, all checks have passed, and your branch has no
+12. After your PR is approved by two reviewers, all checks have passed, and your branch has no
     conflicts with the main branch, you can merge your PR.
     If you don't have merge access, a maintainer will merge your PR for you.
     You can delete the topic branch after your PR is merged.
