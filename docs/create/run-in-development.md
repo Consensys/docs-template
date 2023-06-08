@@ -137,6 +137,12 @@ Lint JS/TS with ESLint.
 
 Checking spelling with CSpell.
 
+#### 📚 Adding new words to the dictionary
+
+It's possible that you will use a word in your content that is not known to the linter, and your build, or commit, will fail.
+
+If this happens, take a look at `project-words.txt` in the root directory of your project; if the word that the linter caught is correctly spelled, and you wish it to pass the linter's test, add it to `project-words.txt`, save, add and commit those changes, and see if it passes.
+
 ### 🧼 `npm run lint:style`
 
 Lint CSS files with specific styling.

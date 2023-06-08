@@ -42,6 +42,8 @@ const config = {
 };
 ```
 
+Add the [algolia-search-scraper](../../.github/workflows/algolia-search-scraper.yml) to your repo and include an environment 'algolia' with secrets for APPLICATION_ID and API_KEY. Edit the `docs` index in the file to match your repo's index in Algolia. This workflow will run in the background and populate the index that algolia uses to search.
+
 ## Source code is not open-source
 
 Unfortunately, if your project does not satisfy the [checklist](https://docsearch.algolia.com/docs/who-can-apply/) then we cannot use Algolia (for free).

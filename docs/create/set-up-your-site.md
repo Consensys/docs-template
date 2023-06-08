@@ -6,20 +6,20 @@ sidebar_position: 1
 
 # Set up your doc site
 
-This page contains information regarding how to fork this repo and quickly spin up your Docusaurus documentation and initial setup requirements.
+This page contains information regarding how to quickly spin up your Docusaurus documentation.
 
 To avoid duplication, [Docusaurus documentation](https://docusaurus.io/docs) will not be rewritten in this repo. Instead, these docs will provide more _specific_ details for the **deployment, maintenance, and development** of Docusaurus in a manner consistent with the "ConsenSys Way".
 
 :::tip Requirements
 
-- Ensure that you have permissions in the [ConsenSys GitHub](https://github.com/ConsenSys) to create a new repository
+- Ensure that you have permissions in the [ConsenSys GitHub](https://github.com/ConsenSys) to create a new repository _If you don't, write to the ConsenSys Help Desk, which administers the GitHub organization._
 - Have had a brief look at the [Docusaurus documentation](https://docusaurus.io/docs)
 - Familiarity with [Markdown](https://mdxjs.com/) syntax, specifically MDX
-- General understanding of Javascript and [React.js](https://reactjs.org/)
+- General understanding of JavaScript and [React.js](https://reactjs.org/)
 
 :::
 
-## Steps to fork this repo
+## Walkthrough
 
 1. Proceed to this [repo](https://github.com/ConsenSys/docs-template). You can also click on the GitHub icon on the top-right of the navbar.
 
@@ -47,7 +47,7 @@ To avoid duplication, [Docusaurus documentation](https://docusaurus.io/docs) wil
      </div>
    </details>
 
-4. Choose `Public`, `Internal` or `Private` depending on your needs. The difference between Internal and Private is that by default any ConsenSys member can see your repository if set as Internal, whereas Private will be completely invisible except to GitHub administrators of the organization.
+4. Choose `Public`, `Internal` or `Private` depending on your needs. The difference between Internal and Private is that by default any ConsenSys member can see your repository if set as Internal, whereas Private will be completely invisible except to GitHub administrators of the organization. _Consider carefully how public you want your docs to be._
 
 5. After creating the repository, navigate to the `Settings` page which is on the far right side of the `<> Code` tab.
 
