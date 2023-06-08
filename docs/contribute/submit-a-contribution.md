@@ -33,6 +33,11 @@ To contribute changes:
 3. [Fork the repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository)
    to your personal account.
 
+   :::note
+   For repositories that don't allow forking, such as [Infura](https://github.com/INFURA/docs), you
+   can skip steps 3–5 and clone the original repository instead.
+   :::
+
 4. [Clone your forked repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository)
    to your computer.
 
@@ -65,9 +70,8 @@ To contribute changes:
    correctly](format-markdown.md).
 
    :::caution important
-   If you delete, rename, or move a documentation file, make sure to add a redirect to the
-   [redirect plugin](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects) in
-   `docusaurus.config.js`.
+   If you delete, rename, or move a documentation file, make sure to add a
+   [redirect](configure-docusaurus.md#redirects).
    :::
 
 8. [Preview your changes locally](preview.md) to check that the changes render correctly.

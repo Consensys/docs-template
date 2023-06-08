@@ -7,8 +7,33 @@ toc_max_heading_level: 3
 # Add images
 
 You can add [screenshots](#screenshots) and [diagrams](#diagrams) to the ConsenSys documentation.
+
 Add your image to an `assets` or `images` folder within the documentation folder, and link to it in
 your doc content using [Markdown syntax](https://docusaurus.io/docs/markdown-features/assets#images).
+You can also use HTML to center the image.
+For example:
+
+<!--tabs-->
+
+# Markdown
+
+```markdown
+<p align="center">
+
+![Snap transaction insights UI](../assets/transaction-insights.png)
+
+</p>
+```
+
+# Rendered
+
+<p align="center">
+
+![Snap transaction insights UI](../assets/transaction-insights.png)
+
+</p>
+
+<!--/tabs-->
 
 ## Screenshots
 
@@ -87,7 +112,7 @@ Hold down **Shift** when drawing, resizing, and rotating to create perfect horiz
 
 - Use font **Roboto** for all text.
 - Use font sizes between 10–18.
-- Use [sentence-style capitalization](https://docs.microsoft.com/en-us/style-guide/capitalization) in labels and titles.
+- Use [sentence case](https://docs.microsoft.com/en-us/style-guide/capitalization) in labels and titles.
 
 #### Arrows and lines
 

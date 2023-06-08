@@ -288,6 +288,6 @@ h4 {
   font-size: 16px;
 }
 
-img {
+img, iframe {
   border-radius: 0.4rem;
 }

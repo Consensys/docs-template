@@ -1,19 +1,15 @@
 ---
-description: Use Markdown and MDX features supported by Docusaurus.
+description: Configure your Docusaurus site and use Docusaurus Markdown features.
 sidebar_position: 4
 ---
 
-# Use Docusaurus features
+# Configure Docusaurus
 
 Most ConsenSys documentation sites are built using [Docusaurus](https://docusaurus.io/).
-See the [Docusaurus documentation](https://docusaurus.io/docs) for detailed guides on using its features.
-
-## Configuration
-
 A Docusaurus site organizes most of its [configuration](https://docusaurus.io/docs/configuration) in
 the `docusaurus.config.js` file, including the following key elements.
 
-### Top navigation
+## Top navigation
 
 Configure the top navigation in the [navbar](https://docusaurus.io/docs/api/themes/configuration#navbar)
 section of the theme configuration.
@@ -67,7 +63,7 @@ module.exports = {
 
 </details>
 
-### Sidebar
+## Sidebar
 
 Pass the [sidebar](https://docusaurus.io/docs/sidebar) to the `sidebarPath` key in your docs
 instance, whether it's to the `docs` section of the [`classic`
@@ -158,7 +154,7 @@ module.exports = {
 
 </details>
 
-### Footer
+## Footer
 
 Configure the footer in the [footer](https://docusaurus.io/docs/api/themes/configuration#footer-1)
 section of the theme configuration.
@@ -231,7 +227,7 @@ module.exports = {
 
 </details>
 
-### Redirects
+## Redirects
 
 Use the [`plugin-client-redirects`](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects)
 plugin to configure redirects.
@@ -264,136 +260,3 @@ module.exports = {
 ```
 
 </details>
-
-## Markdown features
-
-Docusaurus is powered by [MDX](https://mdxjs.com/), an extension to [Markdown](https://www.markdownguide.org/)
-that allows you to use [React JSX](https://www.w3schools.com/react/react_jsx.asp) in your Markdown content.
-See more on [using JSX in Markdown](https://docusaurus.io/docs/markdown-features/react).
-
-ConsenSys documentation commonly uses the following Docusaurus Markdown features.
-
-### Admonitions
-
-Use [admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to include side content
-or highlight important content.
-For example:
-
-<!--tabs-->
-
-# Markdown
-
-```markdown
-:::caution important
-`eth_sign` is deprecated.
-:::
-
-:::note
-MetaMask supports signing transactions using Trezor and Ledger hardware wallets.
-These wallets only support signing data using `personal_sign`.
-If you can't log in to a dapp when using a Ledger or Trezor, the dapp might be requesting you to
-sign data using an unsupported method, in which case we recommend using your standard MetaMask account.
-:::
-```
-
-# Rendered
-
-:::caution important
-`eth_sign` is deprecated.
-:::
-
-:::note
-MetaMask supports signing transactions using Trezor and Ledger hardware wallets.
-These wallets only support signing data using `personal_sign`.
-If you can't log in to a dapp when using a Ledger or Trezor, the dapp might be requesting you to
-sign data using an unsupported method, in which case we recommend using your standard MetaMask account.
-:::
-
-<!--/tabs-->
-
-### Code blocks
-
-Use [code blocks](https://docusaurus.io/docs/markdown-features/code-blocks) to present code samples.
-
-:::tip
-Remember to provide [developer-friendly code samples](style-guide.md#3-write-for-developers).
-:::
-
-A basic code block uses triple back ticks (`` ` ``) and the language name to enable
-[syntax highlighting](https://docusaurus.io/docs/markdown-features/code-blocks#syntax-highlighting).
-For example:
-
-<!--tabs-->
-
-# Markdown
-
-````markdown
-```javascript
-if (typeof window.ethereum !== 'undefined') {
-  console.log('MetaMask is installed!');
-}
-```
-````
-
-# Rendered
-
-```javascript
-if (typeof window.ethereum !== 'undefined') {
-  console.log('MetaMask is installed!');
-}
-```
-
-<!--/tabs-->
-
-### Tabs
-
-The [`remark-docusaurus-tabs`](https://github.com/mccleanp/remark-docusaurus-tabs) plugin allows you
-to add content in [tabs](https://docusaurus.io/docs/markdown-features/tabs) using simplified syntax.
-
-For example, add code blocks to tabs as follows:
-
-````jsx
-<!--tabs-->
-
-# HTML
-
-```html
-<!-- HTML code block -->
-```
-
-# JavaScript
-
-```javascript
-// JavaScript code block
-```
-
-# Markdown
-
-- This is an example Markdown list.
-- This is **bold** and *italicized* text.
-
-<!--/tabs-->
-````
-
-It renders as the following:
-
-<!--tabs-->
-
-# HTML
-
-```html
-<!-- HTML code block -->
-```
-
-# JavaScript
-
-```javascript
-// JavaScript code block
-```
-
-# Markdown
-
-- This is an example Markdown list.
-- This is **bold** and *italicized* text.
-
-<!--/tabs-->

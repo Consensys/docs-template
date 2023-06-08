@@ -7,8 +7,15 @@ sidebar_position: 3
 
 Guidelines for formatting Markdown help writers and reviewers navigate the documentation source code
 and review changes.
-Refer to the following guidelines when formatting Markdown in ConsenSys documentation.
-You can also see how to use [Docusaurus Markdown features](use-docusaurus-features.md#markdown-features).
+They also ensure that Markdown features render properly on the doc site.
+
+Refer to the following guidelines when formatting Markdown in ConsenSys docs.
+
+:::tip note
+The Markdown syntax for [admonitions](#admonitions) and [tabs](#tabs) is specific to Docusaurus.
+See the [Docusaurus Markdown documentation](https://docusaurus.io/docs/markdown-features/) for more
+information on using Markdown features specific to Docusaurus.
+:::
 
 ## File names
 
@@ -29,6 +36,25 @@ concepts/
 ├─ execution-environment.md
 ...
 ```
+
+## Metadata
+
+You can configure metadata for each doc page using [Markdown front
+matter](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs#markdown-front-matter)
+at the top of the page.
+For example:
+
+```markdown
+---
+title: Use MetaMask SDK with React
+sidebar_label: React
+sidebar_position: 2
+description: Import MetaMask SDK into your React dapp.
+max_toc_heading_level: 3
+---
+```
+
+You should provide at least a clear description for each page using front matter.
 
 ## Column limit
 
@@ -87,3 +113,128 @@ Not this:
 You can quickly format tables using [Markdown Table Formatter](http://markdowntable.com/) or
 create tables from scratch using [Tables Generator](https://www.tablesgenerator.com/markdown_tables).
 Some editors also have settings or plugins to auto-format Markdown tables.
+
+## Admonitions
+
+Use [admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to include side content
+or highlight important content.
+For example:
+
+<!--tabs-->
+
+# Markdown
+
+```markdown
+:::caution important
+`eth_sign` is deprecated.
+:::
+
+:::note
+MetaMask supports signing transactions using Trezor and Ledger hardware wallets.
+These wallets only support signing data using `personal_sign`.
+If you can't log in to a dapp when using a Ledger or Trezor, the dapp might be requesting you to
+sign data using an unsupported method, in which case we recommend using your standard MetaMask account.
+:::
+```
+
+# Rendered
+
+:::caution important
+`eth_sign` is deprecated.
+:::
+
+:::note
+MetaMask supports signing transactions using Trezor and Ledger hardware wallets.
+These wallets only support signing data using `personal_sign`.
+If you can't log in to a dapp when using a Ledger or Trezor, the dapp might be requesting you to
+sign data using an unsupported method, in which case we recommend using your standard MetaMask account.
+:::
+
+<!--/tabs-->
+
+## Code blocks
+
+Use [code blocks](https://docusaurus.io/docs/markdown-features/code-blocks) to present code samples.
+
+:::tip
+Remember to provide [developer-friendly code samples](style-guide.md#3-write-for-developers).
+:::
+
+A basic code block uses triple back ticks (`` ` ``) and the language name to enable
+[syntax highlighting](https://docusaurus.io/docs/markdown-features/code-blocks#syntax-highlighting).
+For example:
+
+<!--tabs-->
+
+# Markdown
+
+````markdown
+```javascript
+if (typeof window.ethereum !== 'undefined') {
+  console.log('MetaMask is installed!');
+}
+```
+````
+
+# Rendered
+
+```javascript
+if (typeof window.ethereum !== 'undefined') {
+  console.log('MetaMask is installed!');
+}
+```
+
+<!--/tabs-->
+
+## Tabs
+
+The [`remark-docusaurus-tabs`](https://github.com/mccleanp/remark-docusaurus-tabs) plugin allows you
+to add content in [tabs](https://docusaurus.io/docs/markdown-features/tabs) using simplified syntax.
+
+For example, add code blocks to tabs as follows:
+
+````jsx
+<!--tabs-->
+
+# HTML
+
+```html
+<!-- HTML code block -->
+```
+
+# JavaScript
+
+```javascript
+// JavaScript code block
+```
+
+# Markdown
+
+- This is an example Markdown list.
+- This is **bold** and *italicized* text.
+
+<!--/tabs-->
+````
+
+It renders as the following:
+
+<!--tabs-->
+
+# HTML
+
+```html
+<!-- HTML code block -->
+```
+
+# JavaScript
+
+```javascript
+// JavaScript code block
+```
+
+# Markdown
+
+- This is an example Markdown list.
+- This is **bold** and *italicized* text.
+
+<!--/tabs-->
