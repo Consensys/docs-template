@@ -10,8 +10,8 @@ Refer to the following guides when writing, editing, or reviewing doc content:
 
 - [**Microsoft Writing Style Guide**](https://learn.microsoft.com/en-us/style-guide/welcome/) -
   Refer to this guide for style, voice, grammar, and text formatting guidelines.
-- [**Divio documentation system**](https://documentation.divio.com/) - Refer to this guide for
-  information about function-based docs.
+- [**Diátaxis framework**](https://diataxis.fr/) - Refer to this guide for information about
+  function-based docs.
 - [**ConsenSys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing) -
   Refer to this guide for spelling and usage of blockchain-related terms.
 
@@ -21,20 +21,20 @@ The following section also highlights the top five style tips from these guides.
 
 ### 1. Organize content by function
 
-Write and organize docs [based on function](https://documentation.divio.com/):
+Write and organize docs [based on function](https://diataxis.fr/):
 
-- [How-to guides](https://documentation.divio.com/how-to-guides/) provide instructions to
+- [How-to guides](https://diataxis.fr/how-to-guides/) provide instructions to
   achieve a specific outcome.
   How-to guides assume users already have some basic knowledge or understanding of the product.
-- [Conceptual content](https://documentation.divio.com/explanation/) provides background
+- [Conceptual content](https://diataxis.fr/explanation/), or explanation, provides background
   information about a feature.
   Conceptual content can explain what the feature is, how it works at a high level, why it's needed,
   and when and where it's used.
-- [Tutorials](https://documentation.divio.com/tutorials/) provide a set of end-to-end steps to
+- [Tutorials](https://diataxis.fr/tutorials/) provide a set of end-to-end steps to
   complete a project.
   Tutorials are complete and reproducible.
   They don't assume users have prior knowledge of the subject or required tools.
-- [Reference content](https://documentation.divio.com/reference/) provides technical
+- [Reference content](https://diataxis.fr/reference/) provides technical
   descriptions of APIs, command line options, and other elements of code.
   Reference content is straightforward and doesn't include long explanations or guides.
 
