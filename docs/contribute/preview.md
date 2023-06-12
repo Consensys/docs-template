@@ -5,17 +5,16 @@ sidebar_position: 6
 
 # Preview the docs
 
-You can preview your documentation changes locally before pushing them to your
-remote branch.
+Use [npm](#npm) or [Yarn](#yarn) to preview your documentation changes locally
+before pushing them to your remote branch.
 
 Make sure you have [Node.js version 16+ and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 installed.
 
 :::tip
-If you're using nvm (recommended), run `nvm use` to automatically choose the right Node.js version.
+If you're using Node.js with nvm (recommended), run `nvm use` to automatically choose the right
+Node.js version.
 :::
-
-Use [npm](#npm) or [Yarn](#yarn) to preview the docs locally.
 
 ## npm
 

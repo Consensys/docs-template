@@ -84,6 +84,12 @@ To contribute changes:
      git commit -m "<COMMIT-MESSAGE>"
      git push origin
      ```
+   
+   :::note
+   ConsenSys doc repositories use pre-commit hooks.
+   If you want to include a new word that causes a [spell check](../configure/spell-check.md) error,
+   you can add that word to the `project-words.txt` file.
+   :::
 
 10. On the original repository on GitHub, you’ll see a banner prompting you to create a PR with your
     recent changes.
