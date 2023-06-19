@@ -86,7 +86,7 @@ To contribute changes:
      ```
    
    :::note
-   ConsenSys doc repositories use pre-commit hooks.
+   ConsenSys doc repositories use [pre-commit hooks](../create/run-in-development.md#pre-commit-hooks).
    If you want to include a new word that causes a [spell check](../configure/spell-check.md) error,
    you can add that word to the `project-words.txt` file.
    :::

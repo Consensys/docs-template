@@ -6,223 +6,202 @@ sidebar_position: 2
 
 # Doc site repository structure
 
-The purpose of this page is to describe the function of each file in this repo.
+This page describes the function of each file in your new doc site, based on
+[this repository](https://github.com/ConsenSys/docs-template).
 
-## `.github` folder
+## 📁 `.github` folder
 
-<details>
-  <summary>See folder structure</summary>
+```text title="Folder structure"
+.github
+├── ISSUE_TEMPLATE
+│   └── bug_report.md
+├── pull_request_template.md
+└── workflows
+    ├── build.yml
+    ├── case.yml
+    ├── lint.yml
+    ├── pages-deploy.yaml
+    └── release.yaml
+    
+3 directories, 7 files
+```
 
-    .github
-    ├── ISSUE_TEMPLATE
-    │   └── bug_report.md
-    ├── pull_request_template.md
-    └── workflows
-        ├── build.yml
-        ├── case.yml
-        ├── lint.yml
-        ├── pages-deploy.yaml
-        └── release.yaml
-    3 directories, 7 files
+### 📁 `ISSUE_TEMPLATE` folder
 
-</details>
+Contains the bug report template when opening an issue on GitHub.
+You can customize this to your needs.
+Note that by GitHub convention, you can't change this name.
 
-### `ISSUE_TEMPLATE`
+### 📄 `pull_request_template.md`
 
-Contains the bug report template when opening an Issue on GitHub.
-This can be customized to your needs. Note that by GitHub convention, this name
-cannot be changed.
+Pull request template when opening a pull request on GitHub.
+You can customize this to your needs.
+Note that by GitHub convention, you can't change this name.
 
-### `pull_request_template.md`
+### 📁 `workflows` folder
 
-Pull request template when pull request is opened.
-This can be customized to your needs.
-Note that by GitHub convention, this name cannot be changed.
+Contains all the GitHub actions for the repository.
 
-### `workflows`
+#### 📄 `build.yml`
 
-Contains all the GitHub Actions for the repo.
+Action that builds the docs as they would be built in production, to check for any build errors.
 
-#### `build.yml`
+#### 📄 `case.yml`
 
-Build the docs as it would in production to check for any build errors.
+Action that ensures that all Markdown files have [file names](../contribute/format-markdown.md#file-names)
+which are only lower case letters, digits, dashes, or underscores.
 
-#### `case.yml`
+#### 📄 `lint.yml`
 
-Ensure that all markdown files have names which are only lower case letters,
-digits, dashes or underscores.
+Action that runs `npm run lint` from `package.json`.
+It includes spell checking, TypeScript linting, and CSS styling.
 
-#### `lint.yml`
+#### 📄 `pages-deploy.yaml`
 
-Run `npm run lint` from `package.json`. It includes spell checking, TypeScript
-linting, and CSS styling.
+Action that builds and deploys the docs to GitHub Pages when any commit is made to the `main` branch.
 
-#### `pages-deploy.yaml`
+#### 📄 `release.yaml`
 
-Build and deploy the docs to GitHub Pages when any commit is made to the `main`
-branch.
+Action that checks all recent commits made to `main` branch and automatically cuts a release in line
+with [semantic versioning](https://semver.org/).
+This action reads the configuration in `.releaserc.js` in the root directory of this repository.
 
-#### `release.yaml`
+## 📁 `.husky` folder
 
-Check all recent commits made to `main` branch and automatically cut a release
-in line with [semantic versioning](https://semver.org/).
-The Action will read the configuration in `.releaserc.js` in the root directory
-of this repo.
-
-## 🗂`.husky` folder
-
-:::tip
-[Husky](https://typicode.github.io/husky/#/) manages Git hooks in an easy way
-and it is used in this repository for pre-commit, commit message, and staged
-linting so far.
+:::info
+[Husky](https://typicode.github.io/husky/#/) is a tool to easily manage Git hooks.
+This repository uses it for pre-commits, commit messages, and staged linting.
 :::
 
-<details>
-  <summary>See folder structure</summary>
+```text title="Folder structure"
+.husky
+├── _
+│   └── husky.sh
+├── commit-msg
+├── pre-commit
+└── prepare-commit-msg
 
-    .husky
-    ├── _
-    │   └── husky.sh
-    ├── commit-msg
-    ├── pre-commit
-    └── prepare-commit-msg
+2 directories, 4 files
+```
 
-    2 directories, 4 files
+#### 📄 `commit-msg`
 
-</details>
+On any commit message, `commitlint` is run to ensure that it is compliant.
+This repository uses the
+[`config-conventional`](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/index.js)
+configuration.
+This is specified in `package.json` under the `commitlint` JSON key.
 
-#### `commit-msg`
+#### 📄 `pre-commit`
 
-On any commit message, `commitlint` will be run to ensure that it is compliant.
-The config used in this repo is the `config-conventional` found
-[here](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/index.js).
-This is specified in the `package.json` on the `commitlint` JSON key.
+Before a commit, `lint-staged` is run to check all staged files for spelling errors, TypeScript
+linting, and CSS linting.
+This is specified in `package.json` under the `lint-staged` JSON key.
 
-#### `pre-commit`
+#### 📄 `prepare-commit-msg`
 
-Before a commit, `lint-staged` will be run which will check all staged files for
-spelling errors, TypeScript linting, and CSS linting. Settings for it can be
-found in `package.json` under `lint-staged` JSON key.
-
-#### `prepare-commit-msg`
-
-Commit message will use [git-cz](https://github.com/commitizen/cz-cli), which
-has its settings in `package.json` under `config` JSON key.
+The commit message uses [`git-cz`](https://github.com/commitizen/cz-cli), which is specified in
+`package.json` under the `config` JSON key.
 It uses `cz-conventional-changelog` which is the
 [conventional log standard](https://github.com/conventional-changelog/conventional-changelog).
 
-## `blog` folder
+## 📁 `blog` folder
 
-:::tip
-Contains all the Markdown and related files for the
-[blog](https://docusaurus.io/docs/blog) functionality of Docusaurus.
+Contains all the Markdown and related files for the [blog](https://docusaurus.io/docs/blog)
+functionality of Docusaurus.
+
+## 📁 `docs` folder
+
+Contains all the Markdown and related files for the [docs](https://docusaurus.io/docs/docs-introduction)
+functionality of Docusaurus.
+
+## 📁 `src` folder
+
+Contains all the JSX and CSS files for the [pages](https://docusaurus.io/docs/creating-pages)
+functionality of Docusaurus.
+
+```text title="Folder structure"
+src
+├── components
+│   └── HomepageFeatures
+│       ├── index.tsx
+│       └── styles.module.css
+├── css
+│   └── custom.css
+└── pages
+    ├── index.module.css
+    ├── index.tsx
+    └── markdown-page.md
+
+5 directories, 6 files
+```
+
+### 📁 `components` folder
+
+Contains JSX components for React.js which should live separately from the `pages` folder.
+JSX components are broken up here with `.tsx` extensions and accompanying scoped `.modules.css`.
+You can then import these components into files in the `pages` folder.
+
+### 📁 `css` folder
+
+Contains any non-scoped CSS files.
+
+:::caution important
+We recommend leaving the default `custom.css` file by itself in this folder and not add any other files.
+`custom.css` is the [global styles](https://docusaurus.io/docs/styling-layout#global-styles) file
+that applies to the entire doc site.
 :::
 
-## `docs` folder
+### 📁 `pages`
 
-:::tip
-Contains all the Markdown and related files for the
-[docs](https://docusaurus.io/docs/docs-introduction) functionality of Docusaurus.
-:::
+[Pages](https://docusaurus.io/docs/creating-pages) are one-off standalone pages that don't have
+sidebars by default.
 
-## `src` folder
+You can still [add a Markdown page](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) to
+this folder, and it will be rendered with the file name as the path.
+Routing is file-based for any `.js` and `.tsx` file.
 
-:::tip
-Contains all the JSX and CSS files for
-[pages](https://docusaurus.io/docs/creating-pages) functionality of Docusaurus.
-:::
+## 📁 `static` folder
 
-<details>
-  <summary>See folder structure</summary>
-
-    src
-    ├── components
-    │   └── HomepageFeatures
-    │       ├── index.tsx
-    │       └── styles.module.css
-    ├── css
-    │   └── custom.css
-    └── pages
-        ├── index.module.css
-        ├── index.tsx
-        └── markdown-page.md
-
-    5 directories, 6 files
-
-</details>
-
-### `components`
-
-Contains JSX components for React.js which should live separately from the
-[pages](https://docusaurus.io/docs/creating-pages) folder.
-The pattern should be that JSX components are broken up here with `.tsx`
-extensions and accompanying scoped `.modules.css`.
-These components can then be imported by files in the `pages` folder.
-
-### `css`
-
-Any non-scoped `css` files should live in this folder.
-
-:::caution
-It is recommended to leave the default `custom.css` file by itself in this
-folder and not add any other files.
-The `custom.css` file is referred to as the
-[global](https://docusaurus.io/docs/styling-layout#global-styles) styles file
-which applies to the entire docs site.
-:::
-
-### `pages`
-
-[Pages](https://docusaurus.io/docs/creating-pages) are one-off standalone pages
-which do not have sidebars as default.
-
-Markdown/MDX pages are still
-[supported](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) in
-this folder and will be rendered with the file name as the path.
-
-[Routing](https://docusaurus.io/docs/creating-pages#add-a-markdown-page) is
-file-based for any `.js` and `.tsx` file.
-
-## `static` folder
-
-Any assets which can be directly copied on build output.
+Contains assets that can be directly copied on build output.
 Usually images, stylesheets, favicons, fonts, etc.
 
-More information:
-[Referencing your static asset.](https://docusaurus.io/docs/static-assets#referencing-your-static-asset)
+See how to [reference your static asset](https://docusaurus.io/docs/static-assets#referencing-your-static-asset).
 
-  <details>
-  <summary>See folder structure</summary>
+```text title="Folder structure"
+static
+└── img
+    ├── docusaurus.png
+    ├── favicon.ico
+    ├── logo.svg
+    ├── logo_dark.svg
+    ├── undraw_docusaurus_mountain.svg
+    ├── undraw_docusaurus_react.svg
+    └── undraw_docusaurus_tree.svg
 
-    static
-    └── img
-        ├── docusaurus.png
-        ├── favicon.ico
-        ├── logo.svg
-        ├── logo_dark.svg
-        ├── undraw_docusaurus_mountain.svg
-        ├── undraw_docusaurus_react.svg
-        └── undraw_docusaurus_tree.svg
+2 directories, 7 files
+```
 
-    2 directories, 7 files
+## 📄 `.cspell.json`
 
-  </details>
+A [spell checker](https://cspell.org/) configuration file used in linting to check for misspelling
+in all files.
 
-## `.cspell.json`
-
-A [spell checker](https://cspell.org/) configuration file which is used in linting to check for misspelling in all files.
-
-Configuration JSON file includes basic configuration with `ignorePaths` for paths/files which should not be checked. Additional dictionaries can be added, either default supported, or additional files, such as the `project-words.txt` included in this repository.
+Includes basic configuration with `ignorePaths` for paths/files which should not be checked.
+You can add additional dictionaries, either default supported or additional files, such as the
+`project-words.txt` file included in this repository.
 
 ## 📄 `.editorconfig`
 
-[EditorConfig](https://editorconfig.org/#overview) is supported by most IDEs and text editors to provide consistent coding styles for projects through a config specification.
+[EditorConfig](https://editorconfig.org/#overview) is supported by most IDEs and text editors to
+provide consistent coding styles for projects using a configuration specification.
 
 ## 📄 `.eslintignore`
 
-[ESLint](https://eslint.org/) is used by this project since it contains Javascript, Typescript, and React code and lints the code to provide a consistent style for all developers and contributors.
+[ESLint](https://eslint.org/) is used by this project since it contains Javascript, Typescript, and
+React code, and lints the code to provide a consistent style for all developers and contributors.
 
-The `.eslintignore` file are a list of directories for ESLint to ignore when linting.
+The `.eslintignore` file contains a list of directories for ESLint to ignore when linting.
 
 ## 📄 `.eslintrc.js`
 
@@ -234,21 +213,29 @@ A file containing files and folders for Git to ignore when adding or committing.
 
 ## 📄 `.nvmrc`
 
-Contains the **Node.js** version that we want to use for this project. It requires the installation of [`nvm`](https://github.com/nvm-sh/nvm#installing-and-updating). See [here](set-up-your-site.md#installing-recommended-nodejs-version-with-nvm) for more.
+Contains the Node.js version to use for this project.
+It requires installing [nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
 ## 📄 `.prettierrc`
 
-It is recommended to use [Prettier](https://prettier.io/) to format all files. Whatever is not covered in the `.editorconfig` will be overridden or specified in this Prettier configuration file.
+We recommend using [Prettier](https://prettier.io/) to format all files.
+Anything not covered in `.editorconfig` is overridden or specified in this Prettier configuration file.
 
-When you `git commit` on this repo, `lint-staged` will run `npm run format` which will run Prettier to format and save those changes.
+When you `git commit` on this repo, `lint-staged` runs `npm run format`, which runs Prettier to
+format and save those changes.
 
 ## 📄 `.releaserc.js`
 
-[Semantic Release](https://github.com/semantic-release/semantic-release) is used to easily keep track of version changes to documentation. On push to the `main` branch, the `release` GitHub Action will take all necessary commits based on their type and increment the version according to [semver](https://semver.org/) conventions. However, it is not strictly necessary and can be removed along with its accompanying action if it is not preferred.
+[Semantic Release](https://github.com/semantic-release/semantic-release) is used to easily keep
+track of version changes to documentation.
+On push to the `main` branch, the `release` GitHub action takes all necessary commits based on their
+type and increments the version according to [semver](https://semver.org/) conventions.
+However, this is not strictly necessary, and you can remove this along with its accompanying action.
 
 ## 📄 `.stylelintignore`
 
-[StyleLint](https://stylelint.io/) is used to lint CSS files. This file ignores directories which do not need to be linted.
+[StyleLint](https://stylelint.io/) is used to lint CSS files.
+This file ignores directories which do not need to be linted.
 
 ## 📄 `.stylelintrc.js`
 
@@ -256,36 +243,48 @@ When you `git commit` on this repo, `lint-staged` will run `npm run format` whic
 
 ## 📄 `CHANGELOG.md`
 
-[Semantic Release](https://github.com/semantic-release/semantic-release) automatically updates the CHANGELOG file with release history and commits appended to each release. It should not be modified manually.
+[Semantic Release](https://github.com/semantic-release/semantic-release) automatically updates the
+CHANGELOG file with release history and commits appended to each release.
+You shouldn't modify this manually.
 
 ## 📄 `api.mustache`
 
-This repo by default has the plugin `docusaurus-plugin-openapi-docs` installed to demonstrate how to integrate OpenAPI documentation directly into Docusaurus. The `api.mustache` file contains the API template for the plugin when generating the Markdown files.
+This repository by default has the plugin `docusaurus-plugin-openapi-docs` installed to demonstrate
+how to integrate OpenAPI documentation directly into Docusaurus.
+The `api.mustache` file contains the API template for the plugin when generating the Markdown files.
 
 ## 📄 `babel.config.js`
 
-This is the Babel configuration which is used by Docusaurus. It should not be modified.
+The Babel configuration used by Docusaurus.
+You shouldn't modify this.
 
-## 🦖 `docusaurus.config.js`
+## 📄 `docusaurus.config.js`
 
 Contains all major Docusaurus configuration which is necessary to configure its behavior.
 
-## 🔐 `package-lock.json`
+## 📄 `package-lock.json`
 
-Used by `npm` when `npm install` is used to lock versions and reduce differences between dev environments if this is not committed into the repository. It should not be necessary to edit this file directory.
+Used by npm when `npm install` is used to lock versions and reduce differences between development
+environments if this isn't committed to the repository.
+It should not be necessary to edit this file.
 
-## 📦 `package.json`
+## 📄 `package.json`
 
-Used by [`npm`](https://docs.npmjs.com/cli/v9/configuring-npm/package-json) containing configuration scripts, dependencies, dev dependencies and other related dependency configurations.
+Used by npm and contains configuration scripts, dependencies, development dependencies, and other
+related dependency configurations.
 
-## 📖 `project-words.txt`
+## 📄 `project-words.txt`
 
-Used by `CSpell` in the `.cspell.json` configuration file with additional project words that should not be flagged as misspelling when linting. Please add your project words here periodically as this is the master file that all repos use.
+Used by CSpell in the `.cspell.json` configuration file with additional project words that should
+not be flagged as misspelling when linting.
+Please add your project words here periodically as this is the master file that all repositories use.
 
-## 🦖 `sidebars.js`
+## 📄 `sidebars.js`
 
-Separate `.js` file used by Docusaurus to provide sidebar configuration. It is possible to place this directly into `docusaurus.config.js` but has been separated for clarity and ease-of-use.
+Separate `.js` file used by Docusaurus to provide [sidebar configuration](../contribute/configure-docusaurus.md#sidebar).
 
-## 🦖 `tsconfig.json`
+## 📄 `tsconfig.json`
 
-This project uses Typescript for React. The `tsconfig.json` contains Typescript compiler options but is not used in compilation of the project and only for editor experience.
+This project uses Typescript for React.
+The `tsconfig.json` contains Typescript compiler options but isn't used in compilation of the
+project and is only for editor experience.

@@ -1,160 +1,148 @@
 ---
-Description: Run various commands when developing your documentation site.
+description: Run various commands when developing your documentation site.
 sidebar_label: Run in development
 sidebar_position: 3
 ---
 
 # Run your doc site in development
 
-Once you have cloned your new docs repository, you will want to be able to know how to start previews, lint, build, and do all the necessary things in development.
+Docusaurus is a React-based project and uses npm and or Yarn project workflows.
+This page contains information on [pre-commit hooks](#pre-commit-hooks) and
+[npm commands](#npm-commands-and-scripts) to start previews, lint, build, and do other necessary
+things in development.
 
-Ideally, you would be somewhat acquainted with `npm` or `yarn` project workflows, as Docusaurus is a React-based project.
+## Pre-commit hooks
 
-## 👨‍💻 Committing to your repo
+When you run `npm run prepare` to initialize your repository, you install
+[Husky](https://typicode.github.io/husky/#/) to manage pre-commit hooks.
 
-As part of running `npm run prepare` when initializing this repo, [**`husky`**](https://typicode.github.io/husky/#/) is installed to manage pre-commit hooks.
+`commitlint` lints all commits using the conventional rules specified in `package.json`.
 
-All commits are linted with `commitlint` with the conventional rules found in `package.json`.
-
-`lint-staged` is used to run checks on certain _staged_ Git files when committing. The commands that are run and on what files can be found in the `package.json` under the `lint-staged` key.
+`lint-staged` runs checks on certain _staged_ Git files when committing.
+The commands that are run and on what files are sepcified in `package.json` under the `lint-staged` key.
 
 :::tip
+We recommend using the command `git commit` only after staging files.
 
-It is recommended to use the command `git commit` only after staging files.
-
-You should generally avoid `git commit -m` or similar commands which pass in the command-line or args like `--allow-empty`.
-
+You should generally avoid `git commit -m` or similar commands which pass in the command line or
+arguments such as `--allow-empty`.
 :::
 
-<details>
-  <summary>
-    See example of <b>git commit</b> flow
-  </summary>
-  <div>
-    <img src={require("./img/commit.gif").default} alt="gifExample" />
-  </div>
-</details>
+![git commit flow](./img/commit.gif)
 
-## 📦 `npm` commands and scripts
+## npm commands and scripts
 
-Here is an exhaustive list of what each `npm` script does in the `package.json`.
+The following is a list of npm scripts in `package.json`.
 
-:::caution
+### `npm run start`
 
-This is likely to change every so often and documentation may not be updated to reflect it always.
-
-Please open an issue or PR to address it!
-
-:::
-
-### 🐎 `npm run start`
-
-Run Docusaurus locally on port [http://localhost:3000](http://localhost:3000) to preview and supports automatic refresh when changes are made. This is usually used in development while making changes to Markdown or certain configuration files.
+Runs Docusaurus locally on port [http://localhost:3000](http://localhost:3000) to preview the site.
+Supports automatic refresh when changes are made.
+This is usually used in development while making changes to Markdown or certain configuration files.
 
 :::note
-
-**Not all** changes made are supported by the automatic refresh and may require restarting the command.
-
+Not all changes made are supported by the automatic refresh and may require restarting the command.
 :::
 
-### 👷 `npm run build`
+### `npm run build`
 
-Build Docusaurus for **production** into the `./build` directory of the root folder of this project.
+Builds Docusaurus for production into the `./build` directory of the root folder of this project.
 
-It is usually not necessary to do this in development and is usually only used by CI when building to be deployed.
+It's usually not necessary to do this in development and is usually only used by CI when building to
+be deployed.
 
 :::caution
-
-There is still an open issue regarding proper and stable CSS insertion ordering that may differ between `npm run start` and `npm run build` results.
-
-Please see [**here**](https://github.com/facebook/docusaurus/issues/3678) for more details.
+There's an [open issue](https://github.com/facebook/docusaurus/issues/3678) regarding proper and
+stable CSS insertion ordering that may differ between `npm run start` and `npm run build` results.
 
 This is usually not an issue and can be mitigated with adding `!important` to CSS styles.
-
 :::
 
-### 📑 `npm run build:docs`
+### `npm run build:docs`
 
-If you have chosen to use `docusaurus-plugin-openapi-docs` plugin for integrating OpenAPI to your docs, then this command will clean existing generated Markdown API docs and re-generate them.
+If you use the `docusaurus-plugin-openapi-docs` plugin for integrating OpenAPI to your docs, this
+command cleans existing generated Markdown API docs and re-generates them.
 
 This command is bundled into the `npm run build` command.
 
-You can safely remove this script from the `package.json` if you are not using the plugin.
+You can safely remove this script from the `package.json` if you're not using the plugin.
 
-### 🖋️ `npm run swizzle`
+### `npm run swizzle`
 
-[**Swizzling**](https://docusaurus.io/docs/swizzling) allows more advanced customization of React Components in Docusaurus beyond simple CSS modifications.
+[Swizzles](https://docusaurus.io/docs/swizzling) a component.
+Swizzling allows more advanced customization of React components in Docusaurus beyond simple CSS modifications.
 
-### ✈️ `npm run deploy`
+### `npm run deploy`
 
-Built-in as part of Docusaurus for [deploying](https://docusaurus.io/docs/deployment#deploying-to-github-pages) project.
-
-:::note
-
-This command should not be necessary to use at all.
-
-:::
-
-### ⌦ `npm run clear`
-
-If you are running into some issues with error when running `npm run start`, it is recommended to use the clear command to remove all generated assets, caches or build artifacts.
-
-### 📺 `npm run serve`
-
-This is to be run after the `npm run build` command as it will serve the files generated by the build output from the `./build` directory for local viewing.
+[Deploys](https://docusaurus.io/docs/deployment#deploying-to-github-pages) your Docusaurus project.
 
 :::note
-
-As `npm run build` is for production building or debugging production build issues, it should not be necessary to use `npm runs serve` except where those two scenarios require it.
-
+You don't need to use this command for your doc site.
 :::
 
-### 🌎 `npm run write-translations`
+### `npm run clear`
 
-Only needed where [translations](https://docusaurus.io/docs/cli#docusaurus-write-translations-sitedir) are to be added.
+Removes all generated assets, caches, or build artifacts.
+If you have issues running `npm run start`, we recommend using this command.
 
-### 🌎 `npm run write-heading-ids`
+### `npm run serve`
 
-Only needed where [translations](https://docusaurus.io/docs/cli#docusaurus-write-heading-ids-sitedir) are to be added.
+Serves the files generated by the build output from the `./build` directory for local viewing.
+Run this after the `npm run build` command.
 
-### ⌨️ `npm run typecheck`
+:::note
+Since `npm run build` is for production building or debugging production build issues, you don't need
+to use `npm runs serve` except in those cases.
+:::
 
-Typechecking with TypeScript and `tsconfig.json`.
+### `npm run write-translations`
 
-### ⌨️ `npm run typecheck-staged`
+Only needed where [translations](https://docusaurus.io/docs/cli#docusaurus-write-translations-sitedir)
+are to be added.
 
-Typechecking _staged-only_ files which is used by `lint-staged` when committing.
+### `npm run write-heading-ids`
 
-### 🧼 `npm run lint`
+Only needed where [translations](https://docusaurus.io/docs/cli#docusaurus-write-heading-ids-sitedir)
+are to be added.
+
+### `npm run typecheck`
+
+Typechecks with TypeScript and `tsconfig.json`.
+
+### `npm run typecheck-staged`
+
+Typechecks _staged-only_ files which is used by `lint-staged` when committing.
+
+### `npm run lint`
 
 Combined command which includes spell check, JS/TS linting, and CSS linting.
 
-### 🧼 `npm run lint:js`
+### `npm run lint:js`
 
-Lint JS/TS with ESLint.
+Lints JS/TS with ESLint.
 
-### 🧼 `npm run lint:spelling`
+### `npm run lint:spelling`
 
-Checking spelling with CSpell.
+Checks spelling with CSpell.
 
-#### 📚 Adding new words to the dictionary
+:::tip Add new words to the dictionary
+If you use a word in your content that's not known to the linter, your build or commit fails.
+If the word that the linter caught is correctly spelled, and you wish it to pass the linter's test,
+add it to `project-words.txt`.
+:::
 
-It's possible that you will use a word in your content that is not known to the linter, and your build, or commit, will fail.
+### `npm run lint:style`
 
-If this happens, take a look at `project-words.txt` in the root directory of your project; if the word that the linter caught is correctly spelled, and you wish it to pass the linter's test, add it to `project-words.txt`, save, add and commit those changes, and see if it passes.
+Lints CSS files with specific styling.
 
-### 🧼 `npm run lint:style`
+### `npm run lint:fix`
 
-Lint CSS files with specific styling.
+Passes the `--fix` CLI argument to `npm run lint:js` to attempt to fix issues.
 
-### 🧼 `npm run lint:fix`
+### `npm run format`
 
-Pass the `--fix` CLI argument to `npm run lint:js` to attempt to fix issues.
+Runs Prettier to format code before commit for consistency in the repo.
 
-### 🖨️ `npm run format`
+### `npm run prepare`
 
-Run Prettier to format code before commit for consistency in the repo.
-
-### 🥗 `npm run prepare`
-
-After `npm install` for the very first time, `husky` is installed for Git pre-commit hooks.
+When run after `npm install` for the first time, this command installs Husky for Git pre-commit hooks.

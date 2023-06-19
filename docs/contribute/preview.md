@@ -12,8 +12,8 @@ Make sure you have [Node.js version 16+ and npm](https://docs.npmjs.com/download
 installed.
 
 :::tip
-If you're using Node.js with nvm (recommended), run `nvm use` to automatically choose the right
-Node.js version.
+If you're using Node.js with [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md)
+(recommended), run `nvm use` to automatically choose the right Node.js version.
 :::
 
 ## npm

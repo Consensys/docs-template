@@ -9,7 +9,7 @@ const sidebars = {
       label: "Contribute to the docs",
       link: {
         type: "generated-index",
-        slug: "/contribute"
+        slug: "/contribute",
       },
       items: [
         {
