@@ -1,77 +1,92 @@
 ---
-description: Enable search using Algolia.
+description: Configure search using Algolia.
 sidebar_label: Search
 sidebar_position: 2
 ---
 
 # Configure search
 
-Docusaurus has official support for [Algolia Search](https://docusaurus.io/docs/search#using-algolia-docsearch) as the primary method of integrating search into docs.
+Docusaurus has [official support for Algolia](https://docusaurus.io/docs/search#using-algolia-docsearch)
+as the primary method of integrating search into documentation.
 
-We have an [open-source account](https://docsearch.algolia.com/docs/who-can-apply/) with [Algolia](https://www.algolia.com/) to hold the indexes for our documentation but it is limited to **only** open-source projects (not just the documentation but the originating source code). If your project does not have any source code (general guidelines or tutorials), then it will satisfy the conditions as long as the documentation is open-source.
+ConsenSys has an [open-source account](https://docsearch.algolia.com/docs/who-can-apply/) with
+[Algolia](https://www.algolia.com/) to hold the indexes for our documentation, but it's limited to
+only open-source projects (not just the docs but also the originating source code).
+If your project doesn't have any source code (general guidelines or tutorials), then it satisfies
+the conditions as long as the docs are open source.
 
-:::tip
+This page contains instructions for configuring Algolia for both [open-source](#docs-and-source-code-are-open-source)
+and [closed-source](#source-code-is-not-open-source) projects.
 
-This template repo assumes that the project and its source code is open-source, so it is set up out of the box to be able to integrate Algolia directly.
+## Docs and source code are open source
 
-Please follow the additional instructions below on how to set up local search to avoid an index if you do not satisfy those conditions.
+Follow these steps to configure Algolia in your project:
 
-:::
+1. Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on ConsenSys
+   Slack and ask for Algolia search integration for your doc site.
+   Provide details of your project so we can determine whether you're eligible for the Algolia account.
 
-## Docs and source code is open-source
+2. We will get back to you with the `appId`, `apiKey` (it's ok to expose this), and your `indexName`.
+   Fill those three fields in `docusaurus.config.js`:
 
-Join the [#documentation](https://consensys.slack.com/archives/C0272B5P1CY) Slack channel and ask for Algolia search integration for your docs site. Make sure to provide details of your project so that we can determine whether you are eligible for the Algolia account.
+    ```js {7-10} title="docusaurus.config.js"
+    const config = {
+      themeConfig:
+        /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+        ({
+          algolia: {
+            // The application ID provided by Algolia
+            appId: "NSRFPEJ4NC", # // cspell:disable-line
+            // Public API key: it is safe to commit it
+            apiKey: "cea41b975ad6c9a01408dfda6e0061d3",
+            indexName: "docs-template", // Ping #documentation on Slack for your index name
+          },
+        }),
+    };
+    ```
 
-We will get back to you with the `appId`, `apiKey` (it's ok to expose this) and your `indexName`.
+3. Add the [`algolia-search-scraper`](../../.github/workflows/algolia-search-scraper.yml) to your
+   repository and include an environment `algolia` with secrets for `APPLICATION_ID` and `API_KEY`.
+   Edit the `docs` index in the file to match your repository's index in Algolia.
+   This workflow runs in the background and populates the index that Algolia uses to search.
 
-You will need to fill those three fields in your `docusaurus.config.js` as shown below.
+## Source code is not open source
 
-```js {7-10} title="docusaurus.config.js"
-const config = {
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
-      algolia: {
-        // The application ID provided by Algolia
-        appId: "NSRFPEJ4NC", # // cspell:disable-line
-        // Public API key: it is safe to commit it
-        apiKey: "cea41b975ad6c9a01408dfda6e0061d3",
-        indexName: "docs-template", // Ping #documentation on Slack for your index name
-      },
-    }),
-};
-```
+If your project doesn't satisfy the [Algolia checklist](https://docsearch.algolia.com/docs/who-can-apply/),
+then you can't use Algolia for free.
 
-Add the [algolia-search-scraper](../../.github/workflows/algolia-search-scraper.yml) to your repo and include an environment 'algolia' with secrets for APPLICATION_ID and API_KEY. Edit the `docs` index in the file to match your repo's index in Algolia. This workflow will run in the background and populate the index that algolia uses to search.
+You have two options to configure search:
 
-## Source code is not open-source
+1. Decide if your team has a [budget](https://www.algolia.com/pricing/) for integrating the paid
+   version of Algolia.
+   If you choose this option, and have obtained financial approval, then you can follow the
+   [open-source steps](#docs-and-source-code-are-open-source).
 
-Unfortunately, if your project does not satisfy the [checklist](https://docsearch.algolia.com/docs/who-can-apply/) then we cannot use Algolia (for free).
+2. [Install a local search plugin](#install-local-search-plugin) and don't use Algolia.
+   Note the following caveats with local search:
+   - Search indexing is part of the build.
+     For large doc sites, there might be marginal performance deficits and additional size
+     to the bundle.
+     Usually, the doc site must be very large before it's even a consideration.
+   - Search doesn't work when running in a development environment (`npm run start`).
+     You must run `npm run build` and `npm run serve` to preview the local search.
 
-In this scenario, there are two options:
+### Install local search plugin
 
-1. Make a decision with your team and team lead whether there is [budget](https://www.algolia.com/pricing/) for integrating Algolia Search
-2. Install a [local search plugin](https://github.com/easyops-cn/docusaurus-search-local) and do not use Algolia
+Follow these steps to configure the [`@easyops-cn/docusaurus-search-local`](https://github.com/easyops-cn/docusaurus-search-local)
+local search plugin in your project:
 
-If you decide on _option 1_ and have obtained Finance approval, then you can follow the steps from above and contact us with this information.
+1. In the root of your project, install the plugin:
 
-If you decide on _option 2_, you can easily install the [local search plugin](https://github.com/easyops-cn/docusaurus-search-local). However, please note there are some small caveats.
+    ```bash
+    npm i @easyops-cn/docusaurus-search-local
+    ```
 
-- Local search means that at build-time this is part of the build. For very large documentation sites there may be some marginal performance deficits and additional size to the bundle. Usually, it would require the docs site to be **very large** before it is even a consideration.
-- Search will not work when running in a dev environment (`npm run start`). You must `npm run build` and `npm run serve` locally to get the local search to work.
+2. Remove the entire `algolia` key under `config > themeConfig` in `docusaurus.config.js`.
+   This is to ensure that the Algolia search bar is overridden by the plugin.
 
-### Steps to install plugin for local search
-
-1. `cd` into the root of your repository where your `package.json` is located
-2. Install the plugin with `npm`
-
-```bash
-npm i @easyops-cn/docusaurus-search-local
-```
-
-3. Remove the `algolia` key entirely under `config > themeConfig`.
-
-   ```js title="DELETE ME in docusaurus.config.js"
+   ```js title="docusaurus.config.js"
+   // DELETE the following code
    algolia: {
      // The application ID provided by Algolia
      appId: "NSRFPEJ4NC", # // cspell:disable-line
@@ -90,11 +105,9 @@ npm i @easyops-cn/docusaurus-search-local
    },
    ```
 
-   This is to ensure that Algolia search bar is overridden by the plugin.
+3. Apply the configuration options for the local plugin under `config > themes` in `docusaurus.config.js`:
 
-4. Apply the config options for the local plugin, like below under `config > themes` in `docusaurus.config.js`:
-
-   ```js
+   ```js title="docusaurus.config.js"
    themes: [
      [
        require.resolve("@easyops-cn/docusaurus-search-local"),
@@ -108,8 +121,7 @@ npm i @easyops-cn/docusaurus-search-local
    ],
    ```
 
-:::tip
-
-You can find more options that you supply the plugin for your needs [here](https://github.com/easyops-cn/docusaurus-search-local#theme-options).
-
-:::
+  :::tip
+  See [more plugin options](https://github.com/easyops-cn/docusaurus-search-local#theme-options) you
+  can use.
+  :::

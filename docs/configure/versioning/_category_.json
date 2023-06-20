@@ -2,8 +2,7 @@
   "label": "Versioning",
   "position": 1,
   "link": {
-    "type": "generated-index",
-    "title": "Configure versioning",
-    "slug" : "/configure/versioning"
+    "type": "doc",
+    "id": "configure/versioning/index"
   }
 }

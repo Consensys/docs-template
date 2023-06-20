@@ -226,7 +226,7 @@ format and save those changes.
 
 ## 📄 `.releaserc.js`
 
-[Semantic Release](https://github.com/semantic-release/semantic-release) is used to easily keep
+[`semantic-release`](https://github.com/semantic-release/semantic-release) is used to easily keep
 track of version changes to documentation.
 On push to the `main` branch, the `release` GitHub action takes all necessary commits based on their
 type and increments the version according to [semver](https://semver.org/) conventions.

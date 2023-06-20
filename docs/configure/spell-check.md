@@ -1,30 +1,29 @@
 ---
-description: Configure spell check with CSpell.
+description: Configure spell check using CSpell.
 sidebar_label: Spell check
 sidebar_position: 5
 ---
 
 # Configure spell check
 
-We recommend using [`cspell`](../create/repo-structure.md#-cspelljson) to do
-spell checks for you which is automatically run when you
-[`git commit`](../create/run-in-development.md) or if you manually run
-[`npm run lint:spelling`](../create/run-in-development.md).
+This template repository uses [CSpell](https://cspell.org/) to check for mispelled words
+throughout the documentation.
+CSpell automatically runs when you run [`git commit`](../create/run-in-development.md#pre-commit-hooks)
+or if you manually run [`npm run lint:spelling`](../create/run-in-development.md#npm-run-lintspelling).
 
-You usually don't need to edit the `.cspell.json` file itself.
-However, if there is a need, it is most likely to add ignore paths or files.
+You usually don't need to edit the [`.cspell.json`](../create/repo-structure.md#-cspelljson) file itself.
+However, you can add ignore paths or files if needed.
 
-:::tip
-To avoid CSpell missing any spelling mistakes, we don't recommend disabling
-entire files by placing them into the `.cspell.json` if you can avoid it.
+:::note
+We don't recommend ignoring entire files by placing them into `.cspell.json`.
 
-Instead, we recommend using in-line comments to disable checks.
-This is common where you have a snippet of code which has an example API key
-which CSpell will pick up.
+Instead, we recommend using [in-line comments](https://cspell.org/configuration/document-settings/)
+to disable spell check – for example, if you have a snippet of code with an example API key
+which CSpell picks up.
 
-However, if you have a large API page then it may make more sense to exclude the
-entire file or folder instead of placing in-line comments.
+If you use a new term that causes spell check to fail, you can [add the term to your project's
+dictionary](../create/run-in-development.md#npm-run-lintspelling).
+
+If you have a large API page that causes spell check errors, it may make sense to exclude
+the entire file or folder.
 :::
-
-The in-line document settings can be found
-[here](https://cspell.org/configuration/document-settings/).

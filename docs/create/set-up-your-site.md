@@ -12,6 +12,7 @@ See the [Docusaurus documentation](https://docusaurus.io/docs) for general infor
 creating and maintaining a Docusaurus site.
 
 This page walks you through setting up a Docusaurus site for ConsenSys documentation.
+You'll use this template repository to set up your doc repository.
 
 ## Prerequisites
 
