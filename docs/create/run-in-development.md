@@ -19,7 +19,7 @@ When you run `npm run prepare` to initialize your repository, you install
 `commitlint` lints all commits using the conventional rules specified in `package.json`.
 
 `lint-staged` runs checks on certain _staged_ Git files when committing.
-The commands that are run and on what files are sepcified in `package.json` under the `lint-staged` key.
+The commands that are run and on what files are specified in `package.json` under the `lint-staged` key.
 
 :::tip
 We recommend using the command `git commit` only after staging files.
@@ -123,7 +123,7 @@ Lints JS/TS with ESLint.
 
 ### `npm run lint:spelling`
 
-Checks spelling with [CSpell](../configure/spell-check.md).
+Checks spelling using [CSpell](../configure/spell-check.md).
 
 :::tip Add new words to the dictionary
 If you use a word in your content that's not known to the linter, your build or commit fails.
