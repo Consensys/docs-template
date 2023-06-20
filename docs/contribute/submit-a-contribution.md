@@ -34,8 +34,8 @@ To contribute changes:
    to your personal account.
 
    :::note
-   For repositories that don't allow forking, such as [Infura](https://github.com/INFURA/docs), you
-   can skip steps 3–5 and clone the original repository instead.
+   For repositories that don't allow forking, such as Infura, you can skip steps 3–5 and clone the
+   original repository instead.
    :::
 
 4. [Clone your forked repository](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository)

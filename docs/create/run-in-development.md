@@ -123,7 +123,7 @@ Lints JS/TS with ESLint.
 
 ### `npm run lint:spelling`
 
-Checks spelling with CSpell.
+Checks spelling with [CSpell](../configure/spell-check.md).
 
 :::tip Add new words to the dictionary
 If you use a word in your content that's not known to the linter, your build or commit fails.

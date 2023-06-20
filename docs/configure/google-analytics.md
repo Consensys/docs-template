@@ -1,28 +1,22 @@
 ---
-description: Track metrics for your documentation site by configuring Google Analytics.
+description: Configure Google Analytics to track metrics for your docs.
 sidebar_label: Google Analytics
 sidebar_position: 3
 ---
 
 # Configure Google Analytics
 
-[Google Tag Manager](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-tag-manager) and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag) are Docusaurus plugins available for Google Analytics.
+Docusaurus supports [Google Tag Manager](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-tag-manager)
+and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag) plugins for Google Analytics.
+The plugins are installed by default in this template repository.
 
-:::info
+## Set up Google Tag Manager and GTag
 
-The **Google Tag Manager** and **GTAag** plugin is _pre-installed_ by default with this template repo.
+Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on ConsenSys
+Slack and request your Google Analytics tags.
+Provide information about your project in your request.
 
-:::
-
-:::tip
-
-Please join the [#documentation](https://consensys.slack.com/archives/C0272B5P1CY) Slack channel and request for your tags. Make sure to provide some information about your project in your request.
-
-:::
-
-## Setting up GTag and GTM in `docusaurus.config.js`
-
-Fill in with the provided values in the highlighted lines shown below in the `docusaurus.config.js`.
+After receiving your tags, fill those values in `docusaurus.config.js` in the highlighted lines as follows:
 
 ```js title="docusaurus.config.js" {6,13}
 const config = {
