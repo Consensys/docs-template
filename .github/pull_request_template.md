@@ -6,8 +6,8 @@ Use the following template to make sure your PR fits the ConsenSys documentation
 
 Make sure that:
 
-- [ ] You've read the contribution guidelines of this repository (if any)
-- [ ] You've [previewed your changes locally](https://consensys.github.io/docs-template/getting-started#running-locally).
+- [ ] You've read the contribution guidelines of this repository.
+- [ ] You've previewed your changes locally.
 
 ## Describe the change
 

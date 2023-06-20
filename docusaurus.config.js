@@ -60,9 +60,9 @@ const redocusaurus = [
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "ConsenSys Docs",
+  title: "ConsenSys docs guide",
   tagline:
-    "A template repository to quickly boostrap a Docusaurus application to serve documentation",
+    "A template documentation site repository and contribution guidelines.",
   url: "https://docs-template.consensys.net",
   baseUrl,
   onBrokenLinks: "throw",
@@ -110,20 +110,6 @@ const config = {
           showLastUpdateTime: true,
           includeCurrentVersion: true,
         },
-        blog: {
-          // routeBasePath: '/',
-          path: "blog",
-          editUrl: "https://github.com/ConsenSys/docs-template/tree/main/",
-
-          postsPerPage: 5,
-          feedOptions: {
-            type: "all",
-            copyright: `Copyright © ${new Date().getFullYear()} ConsenSys Software, Inc.`,
-          },
-          blogSidebarCount: "ALL",
-          blogSidebarTitle: "All our posts",
-          showReadingTime: true,
-        },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -158,14 +144,6 @@ const config = {
 
         // ... other Algolia params
       },
-      announcementBar: {
-        id: "announcement_bar",
-        content:
-          "🚧 This is a template site to boostrap your Docusaurus documentation",
-        backgroundColor: "#fafbfc",
-        textColor: "#091E42",
-        isCloseable: false,
-      },
       colorMode: {
         defaultMode: "light",
         disableSwitch: false,
@@ -182,34 +160,15 @@ const config = {
         },
       },
       navbar: {
-        title: "ConsenSys Docs",
+        title: "ConsenSys docs guide",
         logo: {
-          alt: "ConsenSys Docs",
+          alt: "ConsenSys logo",
           src: "img/logo.svg",
           srcDark: "img/logo_dark.svg",
           width: 32,
           height: 32,
         },
         items: [
-          {
-            type: "docSidebar",
-            sidebarId: "docSidebar",
-            docId: "index",
-            position: "left",
-            label: "Documentation",
-          },
-          { to: "blog", label: "Blog", position: "left" },
-          {
-            label: "API",
-            to: "/api/",
-          },
-          // {
-          //   type: "docSidebar",
-          //   sidebarId: "apiSidebar",
-          //   docId: "index",
-          //   position: "left",
-          //   label: "API2",
-          // },
           {
             href: "https://github.com/ConsenSys/docs-template",
             className: "header-github-link",
@@ -220,31 +179,50 @@ const config = {
             className: "header-discord-link",
             position: "right",
           },
-          {
-            href: "https://twitter.com/consensys",
-            className: "header-twitter-link",
-            position: "right",
-          },
-          {
-            href: "https://hub.docker.com/r/consensys",
-            className: "header-dockerhub-link",
-            position: "right",
-          },
         ],
       },
       footer: {
         style: "dark",
         links: [
           {
-            title: "Learn",
+            title: "ConsenSys developer docs",
             items: [
               {
-                label: "Getting Started",
-                to: "/category/getting-started",
+                label: "Overview",
+                to: "/",
               },
               {
-                label: "Style Guide",
-                to: "/getting-started/style-guide",
+                label: "Contribute to the docs",
+                to: "/contribute",
+              },
+              {
+                label: "Create a new doc site",
+                to: "/create",
+              },
+              {
+                label: "Configure advanced features",
+                to: "/configure",
+              },
+            ],
+          },
+          {
+            title: "ConsenSys doc sites",
+            items: [
+              {
+                label: "Teku",
+                href: "https://docs.teku.consensys.net/",
+              },
+              {
+                label: "MetaMask",
+                href: "https://docs.metamask.io/",
+              },
+              {
+                label: "Infura",
+                href: "https://docs.infura.io/",
+              },
+              {
+                label: "See full list",
+                to: "/#list-of-documentation-sites",
               },
             ],
           },
@@ -252,30 +230,25 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "Discord",
+                label: "ConsenSys documentation GitHub",
+                href: "https://github.com/ConsenSys/docs-template",
+              },
+              {
+                label: "ConsenSys Discord",
                 href: "https://discord.com/invite/consensys",
               },
               {
-                label: "Issues",
-                href: "https://github.com/ConsenSys/docs-template/issues",
-              },
-            ],
-          },
-          {
-            title: "More",
-            items: [
-              {
-                label: "GitHub",
-                href: "https://github.com/ConsenSys/protocols-docs-test",
+                label: "ConsenSys Twitter",
+                href: "https://twitter.com/consensys",
               },
               {
-                label: "ConsenSys",
-                href: "https://consensys.net",
+                label: "ConsenSys home",
+                href: "https://consensys.net/",
               },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} ConsenSys, Inc. Built with Docusaurus.`,
+        copyright: `© ${new Date().getFullYear()} ConsenSys, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,
