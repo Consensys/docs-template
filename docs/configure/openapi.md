@@ -11,6 +11,7 @@ OpenAPI documentation directly into the doc site.
 With this plugin, you can manage OpenAPI docs within Docusaurus without linking to a separate site
 and incurring more fragmentation in your doc system.
 
+<!-- markdown-link-check-disable-next-line -->
 See the [demo OpenAPI docs using Redocusaurus](/api).
 
 ## Configure Redocusaurus

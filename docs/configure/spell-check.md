@@ -6,7 +6,7 @@ sidebar_position: 5
 
 # Configure spell check
 
-This template repository uses [CSpell](https://cspell.org/) to check for mispelled words
+This template repository uses [CSpell](https://cspell.org/) to check for misspelled words
 throughout the documentation.
 CSpell automatically runs when you run [`git commit`](../create/run-in-development.md#pre-commit-hooks)
 or if you manually run [`npm run lint:spelling`](../create/run-in-development.md#npm-run-lintspelling).
