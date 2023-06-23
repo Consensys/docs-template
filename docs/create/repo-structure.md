@@ -13,9 +13,6 @@ This page describes the function of each file in your new doc site, based on
 
 ```text title="Folder structure"
 .github
-├── ISSUE_TEMPLATE
-│   └── bug_report.md
-├── pull_request_template.md
 └── workflows
     ├── build.yml
     ├── case.yml
@@ -23,20 +20,8 @@ This page describes the function of each file in your new doc site, based on
     ├── pages-deploy.yaml
     └── release.yaml
     
-3 directories, 7 files
+1 directory, 5 files
 ```
-
-### 📁 `ISSUE_TEMPLATE` folder
-
-Contains the bug report template when opening an issue on GitHub.
-You can customize this to your needs.
-Note that by GitHub convention, you can't change this name.
-
-### 📄 `pull_request_template.md`
-
-Pull request template when opening a pull request on GitHub.
-You can customize this to your needs.
-Note that by GitHub convention, you can't change this name.
 
 ### 📁 `workflows` folder
 
@@ -65,45 +50,6 @@ Action that builds and deploys the docs to GitHub Pages when any commit is made 
 Action that checks all recent commits made to `main` branch and automatically cuts a release in line
 with [semantic versioning](https://semver.org/).
 This action reads the configuration in `.releaserc.js` in the root directory of this repository.
-
-## 📁 `.husky` folder
-
-:::info
-[Husky](https://typicode.github.io/husky/#/) is a tool to easily manage Git hooks.
-This repository uses it for pre-commits, commit messages, and staged linting.
-:::
-
-```text title="Folder structure"
-.husky
-├── _
-│   └── husky.sh
-├── commit-msg
-├── pre-commit
-└── prepare-commit-msg
-
-2 directories, 4 files
-```
-
-#### 📄 `commit-msg`
-
-On any commit message, `commitlint` is run to ensure that it is compliant.
-This repository uses the
-[`config-conventional`](https://github.com/conventional-changelog/commitlint/blob/master/@commitlint/config-conventional/index.js)
-configuration.
-This is specified in `package.json` under the `commitlint` JSON key.
-
-#### 📄 `pre-commit`
-
-Before a commit, `lint-staged` is run to check all staged files for spelling errors, TypeScript
-linting, and CSS linting.
-This is specified in `package.json` under the `lint-staged` JSON key.
-
-#### 📄 `prepare-commit-msg`
-
-The commit message uses [`git-cz`](https://github.com/commitizen/cz-cli), which is specified in
-`package.json` under the `config` JSON key.
-It uses `cz-conventional-changelog` which is the
-[conventional log standard](https://github.com/conventional-changelog/conventional-changelog).
 
 ## 📁 `blog` folder
 
