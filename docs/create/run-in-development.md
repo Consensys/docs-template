@@ -7,28 +7,8 @@ sidebar_position: 3
 # Run your doc site in development
 
 Docusaurus is a React-based project and uses npm and or Yarn project workflows.
-This page contains information on [pre-commit hooks](#pre-commit-hooks) and
-[npm commands](#npm-commands-and-scripts) to start previews, lint, build, and do other necessary
+This page describes npm commands to start previews, lint, build, and do other necessary
 things in development.
-
-## Pre-commit hooks
-
-When you run `npm run prepare` to initialize your repository, you install
-[Husky](https://typicode.github.io/husky/#/) to manage pre-commit hooks.
-
-`commitlint` lints all commits using the conventional rules specified in `package.json`.
-
-`lint-staged` runs checks on certain _staged_ Git files when committing.
-The commands that are run and on what files are specified in `package.json` under the `lint-staged` key.
-
-:::tip
-We recommend using the command `git commit` only after staging files.
-
-You should generally avoid `git commit -m` or similar commands which pass in the command line or
-arguments such as `--allow-empty`.
-:::
-
-![git commit flow](./img/commit.gif)
 
 ## npm commands and scripts
 
@@ -142,7 +122,3 @@ Passes the `--fix` CLI argument to `npm run lint:js` to attempt to fix issues.
 ### `npm run format`
 
 Runs Prettier to format code before commit for consistency in the repo.
-
-### `npm run prepare`
-
-When run after `npm install` for the first time, this command installs Husky for Git pre-commit hooks.
