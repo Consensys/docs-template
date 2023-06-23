@@ -23,7 +23,6 @@ your changes:
 
 ```bash
 npm install
-npm run prepare
 npm start
 ```
 
