@@ -7,7 +7,7 @@ sidebar_position: 3
 # Run your doc site in development
 
 Docusaurus is a React-based project and uses npm and or Yarn project workflows.
-This page describes npm commands to start previews, lint, build, and do other necessary
+This page describes `npm` commands to start previews, lint, build, and do other necessary
 things in development.
 
 ## npm commands and scripts
