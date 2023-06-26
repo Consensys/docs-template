@@ -93,7 +93,7 @@ To contribute changes:
 
 11. If your PR fails any checks, displayed at the bottom of the PR page, fix those errors.
     If you want to include a new word that causes a [spell check](../configure/spell-check.md) error,
-    you can add that word to the `project-words.txt` file.
+    you can add that word to the [`project-words.txt`](../create/repo-structure.md#-project-wordstxt) file.
 
 12. For most doc repositories, specific reviewers are automatically requested when you submit a PR.
     You can request additional reviewers in the right sidebar of your PR – for example, the original
