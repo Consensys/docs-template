@@ -222,7 +222,6 @@ related dependency configurations.
 
 Used by CSpell in the `.cspell.json` configuration file with additional project words that should
 not be flagged as misspelling when linting.
-Please add your project words here periodically as this is the master file that all repositories use.
 
 ## 📄 `sidebars.js`
 
