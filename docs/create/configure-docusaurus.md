@@ -1,6 +1,6 @@
 ---
 description: Configure your Docusaurus site and use Docusaurus Markdown features.
-sidebar_position: 4
+sidebar_position: 1.5
 ---
 
 # Configure Docusaurus

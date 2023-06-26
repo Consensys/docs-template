@@ -71,7 +71,7 @@ To contribute changes:
 
    :::caution important
    If you delete, rename, or move a documentation file, make sure to add a
-   [redirect](configure-docusaurus.md#redirects).
+   [redirect](../create/configure-docusaurus.md#redirects).
    :::
 
 8. [Preview your changes locally](preview.md) to check that the changes render correctly.
