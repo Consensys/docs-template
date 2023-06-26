@@ -14,6 +14,7 @@ Refer to the following guides when writing, editing, or reviewing doc content:
   function-based docs.
 - [**ConsenSys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing) -
   Refer to this guide for spelling and usage of blockchain-related terms.
+  This guide is only available to internal ConsenSys contributors.
 
 The following section also highlights the top five style tips from these guides.
 
