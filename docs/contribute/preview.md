@@ -27,7 +27,7 @@ npm start
 ```
 
 :::note
-If you make changes to the [redirects](configure-docusaurus.md#redirects), you can preview them by
+If you make changes to the [redirects](../create/configure-docusaurus.md#redirects), you can preview them by
 running `npm run build && npm run serve`.
 :::
 
@@ -44,6 +44,6 @@ yarn start
 ```
 
 :::note
-If you make changes to the [redirects](configure-docusaurus.md#redirects), you can preview them by
+If you make changes to the [redirects](../create/configure-docusaurus.md#redirects), you can preview them by
 running `yarn build && yarn serve`.
 :::
