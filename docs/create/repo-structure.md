@@ -167,8 +167,7 @@ It requires installing [nvm](https://github.com/nvm-sh/nvm#installing-and-updati
 We recommend using [Prettier](https://prettier.io/) to format all files.
 Anything not covered in `.editorconfig` is overridden or specified in this Prettier configuration file.
 
-When you `git commit` on this repo, `lint-staged` runs `npm run format`, which runs Prettier to
-format and save those changes.
+Running [`npm run format`](run-in-development.md#npm-run-format) runs Prettier to format and save those changes.
 
 ## 📄 `.releaserc.js`
 
@@ -223,11 +222,10 @@ related dependency configurations.
 
 Used by CSpell in the `.cspell.json` configuration file with additional project words that should
 not be flagged as misspelling when linting.
-Please add your project words here periodically as this is the master file that all repositories use.
 
 ## 📄 `sidebars.js`
 
-Separate `.js` file used by Docusaurus to provide [sidebar configuration](../contribute/configure-docusaurus.md#sidebar).
+Separate `.js` file used by Docusaurus to provide [sidebar configuration](configure-docusaurus.md#sidebar).
 
 ## 📄 `tsconfig.json`
 

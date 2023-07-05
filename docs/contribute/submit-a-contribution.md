@@ -71,7 +71,7 @@ To contribute changes:
 
    :::caution important
    If you delete, rename, or move a documentation file, make sure to add a
-   [redirect](configure-docusaurus.md#redirects).
+   [redirect](../create/configure-docusaurus.md#redirects).
    :::
 
 8. [Preview your changes locally](preview.md) to check that the changes render correctly.
@@ -93,12 +93,12 @@ To contribute changes:
 
 11. If your PR fails any checks, displayed at the bottom of the PR page, fix those errors.
     If you want to include a new word that causes a [spell check](../configure/spell-check.md) error,
-    you can add that word to the `project-words.txt` file.
+    you can add that word to the [`project-words.txt`](../create/repo-structure.md#-project-wordstxt) file.
 
 12. For most doc repositories, specific reviewers are automatically requested when you submit a PR.
     You can request additional reviewers in the right sidebar of your PR – for example, the original
     issue raiser.
-    Make any required changes to your PR based on reviewer feedback, repeating steps 5–7.
+    Make any required changes to your PR based on reviewer feedback, repeating steps 7–9.
 
 13. After your PR is approved by two reviewers, all checks have passed, and your branch has no
     conflicts with the main branch, you can merge your PR.
