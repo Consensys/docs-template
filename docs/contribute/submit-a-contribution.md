@@ -98,7 +98,7 @@ To contribute changes:
 12. For most doc repositories, specific reviewers are automatically requested when you submit a PR.
     You can request additional reviewers in the right sidebar of your PR – for example, the original
     issue raiser.
-    Make any required changes to your PR based on reviewer feedback, repeating steps 5–7.
+    Make any required changes to your PR based on reviewer feedback, repeating steps 7–9.
 
 13. After your PR is approved by two reviewers, all checks have passed, and your branch has no
     conflicts with the main branch, you can merge your PR.
