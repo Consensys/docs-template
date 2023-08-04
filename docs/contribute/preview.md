@@ -16,6 +16,12 @@ If you're using Node.js with [nvm](https://github.com/nvm-sh/nvm/blob/master/REA
 (recommended), run `nvm use` to automatically choose the right Node.js version.
 :::
 
+:::note
+ If you make changes to a versioned doc site (for example, [Teku](https://docs.teku.consensys.net/)), 
+ the changes only appear in the development version of the docs.
+ Switch to the development version of the preview to see those changes.
+:::
+
 ## npm
 
 In the doc repository, run the following commands to start a local development server and preview
