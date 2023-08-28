@@ -18,7 +18,7 @@ the conditions as long as the docs are open source.
 This page contains instructions for configuring Algolia for both [open-source](#docs-and-source-code-are-open-source)
 and [closed-source](#source-code-is-not-open-source) projects.
 
-## Docs and source code are open source
+## For an open source codebase
 
 Follow these steps to configure Algolia in your project:
 
@@ -50,7 +50,7 @@ Follow these steps to configure Algolia in your project:
    Edit the `docs` index in the file to match your repository's index in Algolia.
    This workflow runs in the background and populates the index that Algolia uses to search.
 
-## Source code is not open source
+## For a close source code base
 
 If your project doesn't satisfy the [Algolia checklist](https://docsearch.algolia.com/docs/who-can-apply/),
 then you can't use Algolia for free.

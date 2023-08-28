@@ -93,7 +93,24 @@ const config = {
           // Set a base path separate from default /docs
           editUrl: "https://github.com/ConsenSys/docs-template/tree/main/",
           routeBasePath: "/",
-          path: "docs",
+          path: "./docs",
+          includeCurrentVersion: true,
+          // lastVersion: "23.x",
+          // versions: {
+          //   //defaults to the ./docs folder
+          //   // using 'development' instead of 'next' as path
+          //   current: {
+          //     label: "development",
+          //     path: "development",
+          //   },
+          //   //the last stable release in the versioned_docs/version-stable
+          //   "23.x": {
+          //     label: "stable (23.x)",
+          //   },
+          //   "22.x": {
+          //     label: "22.x",
+          //   },
+          // },
           // @ts-ignore
           // eslint-disable-next-line global-require
           remarkPlugins: [require("remark-docusaurus-tabs")],
@@ -108,7 +125,6 @@ const config = {
           ],
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          includeCurrentVersion: true,
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -275,21 +291,6 @@ const config = {
           language: "nodejs",
           logoClass: "nodejs",
         },
-        // {
-        //  highlight: "ruby",
-        //  language: "ruby",
-        //  logoClass: "ruby",
-        // },
-        // {
-        //   highlight: "csharp",
-        //   language: "csharp",
-        //   logoClass: "csharp",
-        // },
-        // {
-        //   highlight: "php",
-        //   language: "php",
-        //   logoClass: "php",
-        // },
       ],
     }),
   plugins: [
@@ -306,8 +307,33 @@ const config = {
         containerId: "GTM-",
       },
     ],
-  ], // remove if not using docusaurus-plugin-openapi-docs
-  themes: [], // remove if not using docusaurus-plugin-openapi-docs
+    // This is how redirects are done
+    // [
+    //   "@docusaurus/plugin-client-redirects",
+    //   {
+    //     redirects: [
+    //       {
+    //         from: "/HowTo/Get-Started/Installation-Options/Install-Binaries",
+    //         to: "/get-started/install/install-binaries",
+    //       },
+    //     ],
+    //     // its quite odd here in that its back to front - replace(to, from)
+    //     createRedirects(existingPath) {
+    //       if (existingPath.includes("/development")) {
+    //         return [
+    //           existingPath.replace("/development", "/en/latest"),
+    //           existingPath.replace("/development", "/latest"),
+    //         ];
+    //       }
+    //       if (existingPath.includes("/")) {
+    //         return [existingPath.replace("/", "/stable")];
+    //       }
+    //       return undefined; // Return a falsy value: no redirect created
+    //     },
+    //   },
+    // ],
+  ],
+  themes: [],
 };
 
 module.exports = config;
