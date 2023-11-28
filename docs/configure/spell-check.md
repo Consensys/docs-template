@@ -8,7 +8,7 @@ sidebar_position: 5
 
 This template repository uses [CSpell](https://cspell.org/) to check for misspelled words
 throughout the documentation.
-CSpell runs when you run [`npm run lint:spelling`](../create/run-in-development.md#npm-run-lintspelling).
+CSpell runs when you run [`npm run lint:spelling`](../create/run-in-development.md).
 
 You usually don't need to edit the [`.cspell.json`](../create/repo-structure.md#-cspelljson) file itself.
 However, you can add ignore paths or files if needed.

@@ -1,62 +1,8 @@
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = require('prism-react-renderer').themes.github;
+const darkCodeTheme = require('prism-react-renderer').themes.dracula;
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
-
-/**
- * @type {import('redocusaurus').PresetEntry}
- */
-const redocusaurus = [
-  "redocusaurus",
-  {
-    specs: [
-      {
-        id: "using-remote-url",
-        // Remote File
-        spec: "https://raw.githubusercontent.com/rohit-gohri/redocusaurus/main/website/openapi/single-file/openapi.yaml",
-        route: "/api/",
-      },
-    ],
-    theme: {
-      /**
-       * Highlight color for docs
-       */
-      primaryColor: "#3655d5",
-      primaryColorDark: "#a2aeec",
-      /**
-       * Options to pass to redoc
-       * @see https://github.com/redocly/redoc#redoc-options-object
-       */
-      options: { disableSearch: true },
-      /**
-       * Options to pass to override RedocThemeObject
-       * @see https://github.com/Redocly/redoc#redoc-theme-object
-       */
-      theme: {},
-    },
-  },
-];
-
-// const docusaurusApi2 = [
-//   "docusaurus-plugin-openapi-docs",
-//   {
-//     id: "openapi",
-//     docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
-//     config: {
-//       api: {
-//         specPath:
-//           "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path or URL to the OpenAPI spec
-//         outputDir: "docs/test-api", // output directory for generated *.mdx and sidebar.js files
-//         template: "api.mustache", // Customize API MDX with mustache template
-//         sidebarOptions: {
-//           groupPathsBy: "tag",
-//           categoryLinkSource: "tag",
-//         },
-//       },
-//     },
-//   },
-// ];
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -131,7 +77,6 @@ const config = {
         },
       },
     ],
-    redocusaurus, // remove if not using redocusaurus
   ],
 
   themeConfig:
@@ -307,6 +252,24 @@ const config = {
         containerId: "GTM-",
       },
     ],
+    [
+      'docusaurus-plugin-openapi-docs',
+      {
+        id: "api", // plugin id
+        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
+        config: {
+          api: {
+            specPath: "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path to OpenAPI spec, URLs supported
+            outputDir: "docs/api",
+            template: "api.mustache",
+            sidebarOptions: { 
+              groupPathsBy: "tag", 
+              categoryLinkSource: "tag",
+            },
+          }
+        }
+      },
+    ]
     // This is how redirects are done
     // [
     //   "@docusaurus/plugin-client-redirects",
@@ -333,7 +296,7 @@ const config = {
     //   },
     // ],
   ],
-  themes: [],
+  themes: ["docusaurus-theme-openapi-docs"],
 };
 
 module.exports = config;
