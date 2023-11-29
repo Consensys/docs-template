@@ -9,7 +9,7 @@ const config = {
   title: "ConsenSys docs guide",
   tagline:
     "A template documentation site repository and contribution guidelines.",
-  url: "https://docs-template.consensys.net",
+  url: "https://docs-template.consensys.io",
   baseUrl,
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "throw",
