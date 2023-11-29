@@ -3,6 +3,9 @@ description: Follow these guidelines for formatting Markdown content.
 sidebar_position: 3
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Format Markdown
 
 Guidelines for formatting Markdown help writers and reviewers navigate the documentation source code
@@ -62,9 +65,9 @@ Each Markdown line should be (roughly) [limited to 100 columns
 long](https://google.github.io/styleguide/javaguide.html#s4.4-column-limit) to be readable on any editor.
 For example:
 
-<!--tabs-->
+<Tabs>
 
-# Markdown
+  <TabItem value="Markdown" label="Markdown" default>
 
 ```markdown
 In this example, this first sentence exceeds 100 characters, so we recommend wrapping it into
@@ -76,7 +79,8 @@ You can set a [vertical ruler](https://dev.to/brad_beggs/vs-code-vertical-rulers
 in your text editor as a heuristic.
 ```
 
-# Rendered
+  </TabItem>
+  <TabItem value="Rendered" label="Rendered">
 
 In this example, this first sentence exceeds 100 characters, so we recommend wrapping it into
 multiple lines.
@@ -86,7 +90,8 @@ We also recommend starting each new sentence on a new line, even if the previous
 You can set a [vertical ruler](https://dev.to/brad_beggs/vs-code-vertical-rulers-for-prettier-code-3gp3)
 in your text editor as a heuristic.
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 ## Tables
 
@@ -120,9 +125,9 @@ Use [admonitions](https://docusaurus.io/docs/markdown-features/admonitions) to i
 or highlight important content.
 For example:
 
-<!--tabs-->
+<Tabs>
 
-# Markdown
+  <TabItem value="Markdown" label="Markdown" default>
 
 ```markdown
 :::caution important
@@ -137,7 +142,8 @@ sign data using an unsupported method, in which case we recommend using your sta
 :::
 ```
 
-# Rendered
+  </TabItem>
+  <TabItem value="Rendered" label="Rendered">
 
 :::caution important
 `eth_sign` is deprecated.
@@ -150,7 +156,8 @@ If you can't log in to a dapp when using a Ledger or Trezor, the dapp might be r
 sign data using an unsupported method, in which case we recommend using your standard MetaMask account.
 :::
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 ## Code blocks
 
@@ -164,9 +171,9 @@ A basic code block uses triple back ticks (`` ` ``) and the language name to ena
 [syntax highlighting](https://docusaurus.io/docs/markdown-features/code-blocks#syntax-highlighting).
 For example:
 
-<!--tabs-->
+<Tabs>
 
-# Markdown
+  <TabItem value="Markdown" label="Markdown" default>
 
 ````markdown
 ```javascript
@@ -176,7 +183,8 @@ if (typeof window.ethereum !== 'undefined') {
 ```
 ````
 
-# Rendered
+  </TabItem>
+  <TabItem value="Rendered" label="Rendered">
 
 ```javascript
 if (typeof window.ethereum !== 'undefined') {
@@ -184,7 +192,8 @@ if (typeof window.ethereum !== 'undefined') {
 }
 ```
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 ## Tabs
 
@@ -194,47 +203,55 @@ to add content in [tabs](https://docusaurus.io/docs/markdown-features/tabs) usin
 For example, add code blocks to tabs as follows:
 
 ````jsx
-<!--tabs-->
+<Tabs>
 
-# HTML
+  <TabItem value="HTML" label="HTML" default>
 
 ```html
 <!-- HTML code block -->
 ```
 
-# JavaScript
+  </TabItem>
+  <TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 // JavaScript code block
 ```
 
-# Markdown
+  </TabItem>
+  <TabItem value="Markdown" label="Markdown">
 
-- This is an example Markdown list.
-- This is **bold** and *italicized* text.
+  - This is an example Markdown list.
+  - This is **bold** and *italicized* text.
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 ````
 
 It renders as the following:
 
-<!--tabs-->
+<Tabs>
 
-# HTML
+  <TabItem value="HTML" label="HTML" default>
 
 ```html
 <!-- HTML code block -->
 ```
 
-# JavaScript
+  </TabItem>
+  <TabItem value="JavaScript" label="JavaScript">
 
 ```javascript
 // JavaScript code block
 ```
 
-# Markdown
+  </TabItem>
+  <TabItem value="Markdown" label="Markdown">
 
+```markdown
 - This is an example Markdown list.
 - This is **bold** and *italicized* text.
+```
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>

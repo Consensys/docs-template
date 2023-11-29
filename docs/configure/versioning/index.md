@@ -2,6 +2,8 @@
 description: Support and manage multiple documentation versions.
 sidebar_position: 1
 ---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 # Configure and use versioning
 
@@ -59,33 +61,34 @@ the `current` version is given a `label` and `path` attribute.
 
 In the following steps, we'll release the `1.0` version of the documentation (`./docs`) as an example.
 
-<!--tabs-->
+<Tabs>
+  <TabItem value="Syntax" label="Syntax">
 
-# Syntax
+    ```bash
+    npm run docusaurus docs:version <VERSION-NUMBER>
+    ```
 
-```bash
-npm run docusaurus docs:version <VERSION-NUMBER>
-```
+    This command:
 
-This command:
+    - Copies the full `docs/` directory into a new `version-<VERSION-NUMBER>` directory in the `versioned_docs` directory.
+    - Creates a new `versioned_sidebars/version-<VERSION-NUMBER>-sidebars.json` file.
+    - Appends the new version number to the `versions.json` file.
 
-- Copies the full `docs/` directory into a new `version-<VERSION-NUMBER>` directory in the `versioned_docs` directory.
-- Creates a new `versioned_sidebars/version-<VERSION-NUMBER>-sidebars.json` file.
-- Appends the new version number to the `versions.json` file.
+  </TabItem>
+  <TabItem value="Example" label="Example">
 
-# Example
+    ```bash
+    npm run docusaurus docs:version 1.0
+    ```
 
-```bash
-npm run docusaurus docs:version 1.0
-```
+    This command:
 
-This command:
+    - Copies the full `docs/` directory into a new `version-1.0` directory in the `versioned_docs` directory.
+    - Creates a new `versioned_sidebars/version-1.0-sidebars.json` file.
+    - Appends the new version number to the `versions.json` file.
 
-- Copies the full `docs/` directory into a new `version-1.0` directory in the `versioned_docs` directory.
-- Creates a new `versioned_sidebars/version-1.0-sidebars.json` file.
-- Appends the new version number to the `versions.json` file.
-
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 Your docs now have two versions:
 
