@@ -20,8 +20,7 @@ Instead, we recommend using [in-line comments](https://cspell.org/configuration/
 to disable spell check – for example, if you have a snippet of code with an example API key
 which CSpell picks up.
 
-If you use a new term that causes spell check to fail, you can [add the term to your project's
-dictionary](../create/run-in-development.md#npm-run-lintspelling).
+If you use a new term that causes spell check to fail, you can [add the term to your project's dictionary](../create/run-in-development.md#npm-run-lintspelling).
 
 If you have a large API page that causes spell check errors, it may make sense to exclude
 the entire file or folder.

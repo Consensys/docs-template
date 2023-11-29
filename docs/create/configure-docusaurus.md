@@ -3,6 +3,9 @@ description: Configure your Docusaurus site and use Docusaurus Markdown features
 sidebar_position: 1.5
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Configure Docusaurus
 
 Most ConsenSys documentation sites are built using [Docusaurus](https://docusaurus.io/).
@@ -79,9 +82,9 @@ individual pages if you want to configure relative position, custom label, custo
 <details>
 <summary>Example sidebar configuration</summary>
 
-<!--tabs-->
+<Tabs>
 
-# sidebars.js
+ <TabItem value="sidebars.js" label="sidebars.js" default>
 
 ```js
 module.exports = {
@@ -133,7 +136,8 @@ module.exports = {
 };
 ```
 
-# docusaurus.config.js
+  </TabItem>
+  <TabItem value="docusaurus.config.js" label="docusaurus.config.js">
 
 ```js
 module.exports = {
@@ -150,7 +154,8 @@ module.exports = {
 };
 ```
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 </details>
 

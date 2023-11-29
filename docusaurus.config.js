@@ -1,5 +1,5 @@
-const lightCodeTheme = require('prism-react-renderer').themes.github;
-const darkCodeTheme = require('prism-react-renderer').themes.dracula;
+const lightCodeTheme = require("prism-react-renderer").themes.github;
+const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
@@ -59,9 +59,6 @@ const config = {
           // },
           // @ts-ignore
           // eslint-disable-next-line global-require
-          remarkPlugins: [require("remark-docusaurus-tabs")],
-          // docLayoutComponent: "@theme/DocPage", // Remove if not using docusaurus-plugin-openapi-docs
-          // docItemComponent: "@theme/ApiItem", // Remove if not using docusaurus-plugin-openapi-docs
           include: ["**/*.md", "**/*.mdx"],
           exclude: [
             "**/_*.{js,jsx,ts,tsx,md,mdx}",
@@ -252,24 +249,6 @@ const config = {
         containerId: "GTM-",
       },
     ],
-    [
-      'docusaurus-plugin-openapi-docs',
-      {
-        id: "api", // plugin id
-        docsPluginId: "classic", // id of plugin-content-docs or preset for rendering docs
-        config: {
-          api: {
-            specPath: "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path to OpenAPI spec, URLs supported
-            outputDir: "docs/api",
-            template: "api.mustache",
-            sidebarOptions: { 
-              groupPathsBy: "tag", 
-              categoryLinkSource: "tag",
-            },
-          }
-        }
-      },
-    ]
     // This is how redirects are done
     // [
     //   "@docusaurus/plugin-client-redirects",
@@ -296,7 +275,7 @@ const config = {
     //   },
     // ],
   ],
-  themes: ["docusaurus-theme-openapi-docs"],
+  themes: [],
 };
 
 module.exports = config;

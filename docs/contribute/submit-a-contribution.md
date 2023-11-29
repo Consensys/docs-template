@@ -66,8 +66,7 @@ To contribute changes:
 
 7. Open the repository in a text editor of your choice (for example, [VS Code](https://code.visualstudio.com/))
    and make your documentation changes.
-   Make sure to [follow the style guidelines](style-guide.md) and [format your Markdown
-   correctly](./format-markdown.md).
+   Make sure to [follow the style guidelines](style-guide.md) and [format your Markdown correctly](./format-markdown.md).
 
    :::caution important
    If you delete, rename, or move a documentation file, make sure to add a
