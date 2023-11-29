@@ -1,62 +1,8 @@
-const lightCodeTheme = require("prism-react-renderer/themes/github");
-const darkCodeTheme = require("prism-react-renderer/themes/dracula");
+const lightCodeTheme = require("prism-react-renderer").themes.github;
+const darkCodeTheme = require("prism-react-renderer").themes.dracula;
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
-
-/**
- * @type {import('redocusaurus').PresetEntry}
- */
-const redocusaurus = [
-  "redocusaurus",
-  {
-    specs: [
-      {
-        id: "using-remote-url",
-        // Remote File
-        spec: "https://raw.githubusercontent.com/rohit-gohri/redocusaurus/main/website/openapi/single-file/openapi.yaml",
-        route: "/api/",
-      },
-    ],
-    theme: {
-      /**
-       * Highlight color for docs
-       */
-      primaryColor: "#3655d5",
-      primaryColorDark: "#a2aeec",
-      /**
-       * Options to pass to redoc
-       * @see https://github.com/redocly/redoc#redoc-options-object
-       */
-      options: { disableSearch: true },
-      /**
-       * Options to pass to override RedocThemeObject
-       * @see https://github.com/Redocly/redoc#redoc-theme-object
-       */
-      theme: {},
-    },
-  },
-];
-
-// const docusaurusApi2 = [
-//   "docusaurus-plugin-openapi-docs",
-//   {
-//     id: "openapi",
-//     docsPluginId: "classic", // e.g. "classic" or the plugin-content-docs id
-//     config: {
-//       api: {
-//         specPath:
-//           "https://raw.githubusercontent.com/PaloAltoNetworks/docusaurus-openapi-docs/main/demo/examples/petstore.yaml", // path or URL to the OpenAPI spec
-//         outputDir: "docs/test-api", // output directory for generated *.mdx and sidebar.js files
-//         template: "api.mustache", // Customize API MDX with mustache template
-//         sidebarOptions: {
-//           groupPathsBy: "tag",
-//           categoryLinkSource: "tag",
-//         },
-//       },
-//     },
-//   },
-// ];
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -113,9 +59,6 @@ const config = {
           // },
           // @ts-ignore
           // eslint-disable-next-line global-require
-          remarkPlugins: [require("remark-docusaurus-tabs")],
-          // docLayoutComponent: "@theme/DocPage", // Remove if not using docusaurus-plugin-openapi-docs
-          // docItemComponent: "@theme/ApiItem", // Remove if not using docusaurus-plugin-openapi-docs
           include: ["**/*.md", "**/*.mdx"],
           exclude: [
             "**/_*.{js,jsx,ts,tsx,md,mdx}",
@@ -131,7 +74,6 @@ const config = {
         },
       },
     ],
-    redocusaurus, // remove if not using redocusaurus
   ],
 
   themeConfig:

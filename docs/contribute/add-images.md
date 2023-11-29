@@ -4,6 +4,9 @@ sidebar_position: 5
 toc_max_heading_level: 3
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Add images
 
 You can add [screenshots](#screenshots) and [diagrams](#diagrams) to the ConsenSys documentation.
@@ -13,9 +16,9 @@ your doc content using [Markdown syntax](https://docusaurus.io/docs/markdown-fea
 You can also use HTML to center the image.
 For example:
 
-<!--tabs-->
+<Tabs>
 
-# Markdown
+  <TabItem value="markdown" label="markdown">
 
 ```markdown
 <p align="center">
@@ -25,7 +28,8 @@ For example:
 </p>
 ```
 
-# Rendered
+  </TabItem>
+  <TabItem value="Rendered" label="Rendered">
 
 <p align="center">
 
@@ -33,7 +37,8 @@ For example:
 
 </p>
 
-<!--/tabs-->
+  </TabItem>
+</Tabs>
 
 ## Screenshots
 
