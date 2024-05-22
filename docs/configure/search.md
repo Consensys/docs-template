@@ -9,7 +9,7 @@ sidebar_position: 2
 Docusaurus has [official support for Algolia](https://docusaurus.io/docs/search#using-algolia-docsearch)
 as the primary method of integrating search into documentation.
 
-ConsenSys has an [open-source account](https://docsearch.algolia.com/docs/who-can-apply/) with
+Consensys has an [open-source account](https://docsearch.algolia.com/docs/who-can-apply/) with
 [Algolia](https://www.algolia.com/) to hold the indexes for our documentation, but it's limited to
 only open-source projects (not just the docs but also the originating source code).
 If your project doesn't have any source code (general guidelines or tutorials), then it satisfies
@@ -22,7 +22,7 @@ and [closed-source](#source-code-is-not-open-source) projects.
 
 Follow these steps to configure Algolia in your project:
 
-1. Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on ConsenSys
+1. Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on Consensys
    Slack and ask for Algolia search integration for your doc site.
    Provide details of your project so we can determine whether you're eligible for the Algolia account.
 

@@ -1,12 +1,13 @@
-const lightCodeTheme = require("prism-react-renderer").themes.github;
-const darkCodeTheme = require("prism-react-renderer").themes.dracula;
+const {themes} = require("prism-react-renderer");
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: "ConsenSys docs guide",
+  title: "Consensys docs guide",
   tagline:
     "A template documentation site repository and contribution guidelines.",
   url: "https://docs-template.consensys.io",
@@ -18,7 +19,7 @@ const config = {
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "ConsenSys", // Usually your GitHub org/user name.
+  organizationName: "Consensys", // Usually your GitHub org/user name.
   projectName: "docs-template", // Usually your repo name.
   deploymentBranch: "gh-pages", // Github Pages deploying branch
 

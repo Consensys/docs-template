@@ -12,7 +12,7 @@ Guidelines for formatting Markdown help writers and reviewers navigate the docum
 and review changes.
 They also ensure that Markdown features render properly on the doc site.
 
-Refer to the following guidelines when formatting Markdown in ConsenSys docs.
+Refer to the following guidelines when formatting Markdown in Consensys docs.
 
 :::tip note
 The Markdown syntax for [admonitions](#admonitions) and [tabs](#tabs) is specific to Docusaurus.
@@ -159,13 +159,9 @@ sign data using an unsupported method, in which case we recommend using your sta
   </TabItem>
 </Tabs>
 
-## Code blocks
+## Code samples
 
 Use [code blocks](https://docusaurus.io/docs/markdown-features/code-blocks) to present code samples.
-
-:::tip
-Remember to provide [developer-friendly code samples](style-guide.md#3-write-for-developers).
-:::
 
 A basic code block uses triple back ticks (`` ` ``) and the language name to enable
 [syntax highlighting](https://docusaurus.io/docs/markdown-features/code-blocks#syntax-highlighting).
@@ -177,8 +173,8 @@ For example:
 
 ````markdown
 ```javascript
-if (typeof window.ethereum !== 'undefined') {
-  console.log('MetaMask is installed!');
+if (typeof window.ethereum !== "undefined") {
+  console.log("MetaMask is installed!");
 }
 ```
 ````
@@ -187,71 +183,109 @@ if (typeof window.ethereum !== 'undefined') {
   <TabItem value="Rendered" label="Rendered">
 
 ```javascript
-if (typeof window.ethereum !== 'undefined') {
-  console.log('MetaMask is installed!');
+if (typeof window.ethereum !== "undefined") {
+  console.log("MetaMask is installed!");
 }
 ```
 
   </TabItem>
 </Tabs>
 
+### Code sample style guide
+
+Make sure to provide developer-friendly code samples.
+The following are some rules used throughout the Consensys docs:
+
+- Use double quotes (`"`) instead of single quotes (`'`).
+- Indent lines using two spaces instead of four.
+- Write code samples that can be easily copied and pasted, and work as expected.
+- Follow the style guide of the programming language used in the code sample.
+
+:::info example
+
+❌ *To start Teku, run the following command:*
+
+```bash
+// Set --ee-endpoint to the URL of your execution engine and
+// --ee-jwt-secret-file to the path to your JWT secret file.
+user@mycomputer Develop % teku --ee-endpoint=http://localhost:8550 --ee-jwt-secret-file=my-jwt-secret.hex --metrics-enabled=true --rest-api-enabled=true
+```
+
+✅ *To start Teku, run the following command:*
+
+```bash
+teku \
+  --ee-endpoint=<URL of execution engine>        \
+  --ee-jwt-secret-file=<path to JWT secret file> \
+  --metrics-enabled=true                         \
+  --rest-api-enabled=true
+```
+
+:::
+
+See the
+[Microsoft Writing Style Guide](https://learn.microsoft.com/en-us/style-guide/developer-content/code-examples)
+for more guidelines for writing code examples.
+
 ## Tabs
 
-The [`remark-docusaurus-tabs`](https://github.com/mccleanp/remark-docusaurus-tabs) plugin allows you
-to add content in [tabs](https://docusaurus.io/docs/markdown-features/tabs) using simplified syntax.
-
-For example, add code blocks to tabs as follows:
+Use [tabs](https://docusaurus.io/docs/markdown-features/tabs) to display certain content, such as
+code samples in different languages.
+For example:
 
 ````jsx
-<Tabs>
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
-  <TabItem value="HTML" label="HTML" default>
+<Tabs>
+<TabItem value="HTML">
 
 ```html
 <!-- HTML code block -->
 ```
 
-  </TabItem>
-  <TabItem value="JavaScript" label="JavaScript">
+</TabItem>
+<TabItem value="JavaScript">
 
 ```javascript
 // JavaScript code block
 ```
 
-  </TabItem>
-  <TabItem value="Markdown" label="Markdown">
-
-  - This is an example Markdown list.
-  - This is **bold** and *italicized* text.
-
-  </TabItem>
-</Tabs>
-````
-
-It renders as the following:
-
-<Tabs>
-
-  <TabItem value="HTML" label="HTML" default>
-
-```html
-<!-- HTML code block -->
-```
-
-  </TabItem>
-  <TabItem value="JavaScript" label="JavaScript">
-
-```javascript
-// JavaScript code block
-```
-
-  </TabItem>
-  <TabItem value="Markdown" label="Markdown">
+</TabItem>
+<TabItem value="Markdown">
 
 ```markdown
 - This is an example Markdown list.
 - This is **bold** and *italicized* text.
 ```
 
-  </TabItem>
+</TabItem>
+</Tabs>
+````
+
+This renders as the following:
+
+<Tabs>
+<TabItem value="HTML">
+
+```html
+<!-- HTML code block -->
+```
+
+</TabItem>
+<TabItem value="JavaScript">
+
+```javascript
+// JavaScript code block
+```
+
+</TabItem>
+<TabItem value="Markdown">
+
+```markdown
+- This is an example Markdown list.
+- This is **bold** and *italicized* text.
+```
+
+</TabItem>
 </Tabs>
