@@ -5,16 +5,16 @@ sidebar_position: 2
 
 # Style guide
 
-Style guidelines help keep the ConsenSys documentation consistent, concise, and readable.
+Style guidelines help keep the Consensys documentation consistent, concise, and readable.
 Refer to the following guides when writing, editing, or reviewing doc content:
 
 - [**Microsoft Writing Style Guide**](https://learn.microsoft.com/en-us/style-guide/welcome/) -
   Refer to this guide for style, voice, grammar, and text formatting guidelines.
 - [**Diátaxis framework**](https://diataxis.fr/) - Refer to this guide for information about
   function-based docs.
-- [**ConsenSys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing) -
+- [**Consensys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing) -
   Refer to this guide for spelling and usage of blockchain-related terms.
-  This guide is only available to internal ConsenSys contributors.
+  This guide is only available to internal Consensys contributors.
 
 The following section also highlights the top five style tips from these guides.
 
@@ -72,8 +72,8 @@ Write for a [developer audience](https://learn.microsoft.com/en-us/style-guide/d
   that quickly.
 - List prerequisites and suggest good practices.
   For example, instruct readers to secure private keys and protect RPC endpoints in production environments.
-- Write [code samples](https://learn.microsoft.com/en-us/style-guide/developer-content/code-examples)
-  that are readable, can be easily copied and pasted, and work as expected.
+- Write [code samples](format-markdown.md#code-sample-style-guide) that are readable, can be easily
+  copied and pasted, and work as expected.
 
 :::info example
 

@@ -9,7 +9,7 @@ import TabItem from '@theme/TabItem';
 
 # Add images
 
-You can add [screenshots](#screenshots) and [diagrams](#diagrams) to the ConsenSys documentation.
+You can add [screenshots](#screenshots) and [diagrams](#diagrams) to the Consensys documentation.
 
 Add your image to an `assets` or `images` folder within the documentation folder, and link to it in
 your doc content using [Markdown syntax](https://docusaurus.io/docs/markdown-features/assets#images).
@@ -43,7 +43,7 @@ For example:
 ## Screenshots
 
 Follow the [Rackspace screenshot guidelines](https://docs.rackspace.com/docs/style-guide/screenshots/screenshot-guidelines)
-when adding screenshots to the ConsenSys docs.
+when adding screenshots to the Consensys docs.
 
 You might need to re-size your screenshots to make them easy to view and to minimize the file size
 for faster page loading:
@@ -53,8 +53,8 @@ for faster page loading:
 
 ## Diagrams
 
-ConsenSys doc sites contain diagrams created using [Figma](https://figma.com/).
-You must have access to the ConsenSys **Quorum Diagrams** template files on Figma to create a diagram.
+Consensys doc sites contain diagrams created using [Figma](https://figma.com/).
+You must have access to the Consensys **Quorum Diagrams** template files on Figma to create a diagram.
 
 Diagrams can illustrate:
 
@@ -72,7 +72,7 @@ The following video demonstrates creating a diagram for the GoQuorum documentati
 
 ### Create your Figma diagram
 
-Use the following general guidelines when creating ConsenSys diagrams on Figma.
+Use the following general guidelines when creating Consensys diagrams on Figma.
 Refer to the [Figma help website](https://help.figma.com/hc/en-us) for more information on getting started with Figma,
 Figma design elements, and more.
 

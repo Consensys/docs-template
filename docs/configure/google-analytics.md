@@ -12,7 +12,7 @@ The plugins are installed by default in this template repository.
 
 ## Set up Google Tag Manager and GTag
 
-Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on ConsenSys
+Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on Consensys
 Slack and request your Google Analytics tags.
 Provide information about your project in your request.
 
