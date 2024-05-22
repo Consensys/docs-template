@@ -34,7 +34,7 @@ To contribute changes:
    to your personal account.
 
    :::note
-   For repositories that don't allow forking, such as Infura, you can skip steps 3–5 and clone the
+   For repositories that don't allow forking, such as Infura, you can skip steps 3–6 and clone the
    original repository instead.
    :::
 
