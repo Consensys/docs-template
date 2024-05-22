@@ -65,7 +65,7 @@ If you don't have permission, request it from Consensys Help Desk, which adminis
    Select **Add teams**, and add **protocol-pliny** to add the Consensys developer docs team.
    Add any other teams, such as your own, as needed.
 
-7. It's currently not possible to easily use branch protection on `main` when using the
+7. Currently, it's not possible to easily use branch protection on `main` when using the
    `semantic-release` plugin.
    If you disable this, then you can enable branch protection.
 
