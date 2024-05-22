@@ -42,7 +42,7 @@ For example:
 
 ## Screenshots
 
-Follow the [Rackspace screenshot guidelines](https://docs.rackspace.com/docs/style-guide/screenshots/screenshot-guidelines)
+Follow the [Archbee screenshot guidelines](https://www.archbee.com/blog/screenshots-in-technical-documentation)
 when adding screenshots to the Consensys docs.
 
 You might need to re-size your screenshots to make them easy to view and to minimize the file size
