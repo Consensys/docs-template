@@ -48,7 +48,7 @@ To contribute changes:
 5. Change directories into the cloned forked repository.
 
     ```bash
-    cd <name-of-your-forked-repo>
+    cd <FORKED-REPO-NAME>
     ```
      
 6. [Add an upstream remote.](https://docs.github.com/en/get-started/quickstart/fork-a-repo#configuring-git-to-sync-your-fork-with-the-upstream-repository)
