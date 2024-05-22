@@ -7,7 +7,7 @@ sidebar_position: 2
 # Doc site repository structure
 
 This page describes the function of each file in your new doc site, based on
-[this repository](https://github.com/ConsenSys/docs-template).
+[this repository](https://github.com/consensys/docs-template).
 
 ## 📁 `.github` folder
 

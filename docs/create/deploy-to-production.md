@@ -6,7 +6,7 @@ sidebar_position: 4
 
 # Deploy your doc site to production
 
-Most ConsenSys documentation sites use [Vercel](https://vercel.com/) as a hosting platform.
+Most Consensys documentation sites use [Vercel](https://vercel.com/) as a hosting platform.
 
 The main benefits of using Vercel instead GitHub Pages for hosting include:
 
@@ -25,7 +25,7 @@ Follow these steps to deploy your public GitHub repository to Vercel:
    documentation repository.
 
    :::note
-   This file contains some URL redirects from older MkDocs docs before we migrated most ConsenSys
+   This file contains some URL redirects from older MkDocs docs before we migrated most Consensys
    docs to Docusaurus.
    If your docs did not pre-exist in MkDocs, then you can remove these fields.
    :::
@@ -40,7 +40,7 @@ Follow these steps to deploy your public GitHub repository to Vercel:
    You can customize this to your needs.
 
 3. Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on
-   ConsenSys Slack and ask for Vercel integration for your repository.
+   Consensys Slack and ask for Vercel integration for your repository.
    Provide a link to your repository in your message.
 
 Once your repository is integrated with Vercel, any new PRs should have a Vercel bot update with a
@@ -53,7 +53,7 @@ preview link on all new commits to that PR.
 Follow these steps to deploy your private GitHub repository to Vercel:
 
 1. Join the [**#documentation**](https://consensys.slack.com/archives/C0272B5P1CY) channel on
-   ConsenSys Slack and ask for Vercel integration for your private repository.
+   Consensys Slack and ask for Vercel integration for your private repository.
    Provide a link to your repository in your message.
 
 2. Your `build.yml` file in the `.github/workflows` directory will be modified to look like the
@@ -86,7 +86,7 @@ Follow these steps to deploy your private GitHub repository to Vercel:
         steps:
           - uses: actions/checkout@v3
           - name: Build
-            uses: ConsenSys/docs-gha/build@main
+            uses: consensys/docs-gha/build@main
             with:
               GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           - run: cp vercel.json ./build
@@ -138,7 +138,7 @@ Follow these steps to deploy your private GitHub repository to Vercel:
    If you lose it, it must be deleted and regenerated.
    There's also a security concern, since these tokens have access to the entire **Infura Web** account.
 7. Navigate to your environments setting in GitHub:
-   `https://github.com/ConsenSys/<DOC_REPO>/settings/environments`.
+   `https://github.com/consensys/<DOC_REPO>/settings/environments`.
 8. Create a new environment titled `vercel`.
 9. Add three new environment secrets to the `vercel` environment:
    1. `ORG_ID` - `orgId` in `project.json` in the `.vercel` directory.

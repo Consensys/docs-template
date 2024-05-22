@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Configure Docusaurus
 
-Most ConsenSys documentation sites are built using [Docusaurus](https://docusaurus.io/).
+Most Consensys documentation sites are built using [Docusaurus](https://docusaurus.io/).
 A Docusaurus site organizes most of its [configuration](https://docusaurus.io/docs/configuration) in
 the `docusaurus.config.js` file, including the following key elements.
 
@@ -210,21 +210,21 @@ module.exports = {
           title: "Community",
           items: [
             {
-              label: "ConsenSys Discord",
+              label: "Consensys Discord",
               href: "https://discord.gg/ChtFaC4",
             },
             {
               label: "Teku GitHub",
-              href: "https://github.com/ConsenSys/teku",
+              href: "https://github.com/consensys/teku",
             },
             {
               label: "Teku documentation GitHub",
-              href: "https://github.com/ConsenSys/doc.teku",
+              href: "https://github.com/consensys/doc.teku",
             },
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} ConsenSys, Inc.`,
+      copyright: `© ${new Date().getFullYear()} Consensys, Inc.`,
     },
   },
 };

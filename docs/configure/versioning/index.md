@@ -113,7 +113,7 @@ presets: [
       docs: {
         sidebarPath: require.resolve("./sidebars.js"),
         // Set a base path separate from default /docs
-        editUrl: "https://github.com/ConsenSys/doc.teku/tree/master/",
+        editUrl: "https://github.com/consensys/doc.teku/tree/master/",
         routeBasePath: "/",
         path: "./docs",
         includeCurrentVersion: true,

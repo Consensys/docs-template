@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Submit a contribution
 
-The ConsenSys documentation uses a [docs-as-code](https://www.writethedocs.org/guide/docs-as-code/)
+The Consensys documentation uses a [docs-as-code](https://www.writethedocs.org/guide/docs-as-code/)
 approach, meaning documentation is created using the same tools as code.
 The contribution workflow involves proposing changes to the docs by creating [forks and pull
 requests (PRs)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model)
@@ -17,7 +17,7 @@ This facilitates open contributions, testing, and review.
 To contribute changes:
 
 1. Choose the repository you'd like to contribute to.
-   See the [list of ConsenSys documentation repositories](../index.md#list-of-documentation-sites).
+   See the [list of Consensys documentation repositories](../index.md#list-of-documentation-sites).
 
    :::note
    These steps only apply to the doc sites that use Docusaurus.
