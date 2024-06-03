@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Release
-        uses: ConsenSys/docs-gha/release@main
+        uses: Consensys/docs-gha/release@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SEMANTIC_RELEASE: true
