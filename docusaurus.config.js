@@ -38,7 +38,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           // Set a base path separate from default /docs
-          editUrl: "https://github.com/ConsenSys/docs-template/tree/main/",
+          editUrl: "https://github.com/Consensys/docs-template/tree/main/",
           routeBasePath: "/",
           path: "./docs",
           includeCurrentVersion: true,
@@ -119,9 +119,9 @@ const config = {
         },
       },
       navbar: {
-        title: "ConsenSys docs guide",
+        title: "Consensys docs guide",
         logo: {
-          alt: "ConsenSys logo",
+          alt: "Consensys logo",
           src: "img/logo.svg",
           srcDark: "img/logo_dark.svg",
           width: 32,
@@ -129,7 +129,7 @@ const config = {
         },
         items: [
           {
-            href: "https://github.com/ConsenSys/docs-template",
+            href: "https://github.com/Consensys/docs-template",
             className: "header-github-link",
             position: "right",
           },
@@ -144,7 +144,7 @@ const config = {
         style: "dark",
         links: [
           {
-            title: "ConsenSys developer docs",
+            title: "Consensys developer docs",
             items: [
               {
                 label: "Overview",
@@ -165,7 +165,7 @@ const config = {
             ],
           },
           {
-            title: "ConsenSys doc sites",
+            title: "Consensys doc sites",
             items: [
               {
                 label: "Teku",
@@ -189,25 +189,25 @@ const config = {
             title: "Community",
             items: [
               {
-                label: "ConsenSys documentation GitHub",
-                href: "https://github.com/ConsenSys/docs-template",
+                label: "Consensys documentation GitHub",
+                href: "https://github.com/Consensys/docs-template",
               },
               {
-                label: "ConsenSys Discord",
+                label: "Consensys Discord",
                 href: "https://discord.com/invite/consensys",
               },
               {
-                label: "ConsenSys Twitter",
+                label: "Consensys Twitter",
                 href: "https://twitter.com/consensys",
               },
               {
-                label: "ConsenSys home",
+                label: "Consensys home",
                 href: "https://consensys.net/",
               },
             ],
           },
         ],
-        copyright: `© ${new Date().getFullYear()} ConsenSys, Inc.`,
+        copyright: `© ${new Date().getFullYear()} Consensys, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,
