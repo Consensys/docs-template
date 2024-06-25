@@ -21,7 +21,7 @@ You may or may not want to disable `semantic-release` for the following reasons:
   manually to match your application release cycle.
 - Locking the release of the docs to the application makes it more difficult to amend versions after
   the fact.
-  With `semantic-release`, the releases are more flexible and relies on Docusaurus versioning
+  With `semantic-release`, the releases are more flexible and rely on Docusaurus versioning
   for different application versions.
 :::
 
