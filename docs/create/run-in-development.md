@@ -40,7 +40,7 @@ This is usually not an issue and can be mitigated with adding `!important` to CS
 
 ### `npm run build:docs`
 
-If you use the `docusaurus-plugin-openapi-docs` plugin for integrating OpenAPI to your docs, this
+If you use the `docusaurus-plugin-openapi-docs` plugin for integrating OpenAPI into your docs, this
 command cleans existing generated Markdown API docs and re-generates them.
 
 This command is bundled into the `npm run build` command.
