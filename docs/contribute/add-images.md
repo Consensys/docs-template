@@ -79,7 +79,7 @@ Figma design elements, and more.
 #### Basics
 
 - In the **Quorum Diagrams** file on Figma, each page contains diagrams for a different product.
-- When creating a new diagram, create a new white frame in the product's page.
+- When creating a new diagram, create a new white frame on the product's page.
   Add frames within the white frame for each iteration of the diagram.
   - For each diagram, create a frame 756px wide using the **Global Background** color (#F6F6F6).
 - You can resize a diagram's height, but keep the width at 756px.
