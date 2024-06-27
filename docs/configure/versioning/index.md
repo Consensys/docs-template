@@ -153,7 +153,7 @@ Please remember to remove any old versions that you are not required in this fil
 
 ### 4. Delete the previous doc versions (if needed)
 
-If you have deleted a version in step 3, also delete the artifacts for that version. For example, if deleting version `0.2` that would mean deleting the following:
+If you have deleted a version in step 3, also delete the artifacts for that version. For example, if deleting version `0.2` would mean deleting the following:
 
 1. In the `versioned_docs` directory, delete the `version-0.2` folder
 2. In the `versioned_sidebars` directory, delete the `version-0.2-sidebars.json` file.

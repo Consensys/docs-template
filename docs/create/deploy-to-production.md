@@ -21,7 +21,7 @@ Private repositories require a little more setup.
 
 Follow these steps to deploy your public GitHub repository to Vercel:
 
-1. Copy the `vercel.json` file in the root of this template repository to the root of your
+1. Copy the `vercel.json` file from the root of this template repository to the root of your
    documentation repository.
 
    :::note

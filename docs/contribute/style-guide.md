@@ -73,7 +73,7 @@ Write for a [developer audience](https://learn.microsoft.com/en-us/style-guide/d
 - List prerequisites and suggest good practices.
   For example, instruct readers to secure private keys and protect RPC endpoints in production environments.
 - Write [code samples](format-markdown.md#code-sample-style-guide) that are readable, can be easily
-  copied and pasted, and work as expected.
+  copied and pasted, and worked as expected.
 
 :::info example
 
