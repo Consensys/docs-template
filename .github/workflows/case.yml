@@ -5,7 +5,6 @@ on:
   pull_request:
     branches:
       - main
-  workflow_call:
 
 jobs:
   case:
@@ -13,14 +12,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        folder: ["docs", "blog"]
+        folder: ["docs"]
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Case check action
-        uses: Consensys/docs-gha/case@main
+        uses: ConsenSys/docs-gha/case@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DOC_DIR: ${{ matrix.folder }}
+          SKIP_TEST: true

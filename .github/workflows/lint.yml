@@ -1,23 +1,22 @@
 ---
-name: Check for lint/build errors
+name: Check for lint, spelling and link errors
 
 on:
   pull_request:
     branches:
       - main
-  workflow_call:
 
 jobs:
   lint:
-    name: Lint Code Base, Spelling
+    name: Lint Code Base, Spelling, Link Check
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Lint
-        uses: Consensys/docs-gha/lint@main
+        uses: ConsenSys/docs-gha/lint@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -28,8 +27,8 @@ jobs:
       matrix:
         file-extensions: [".md", ".mdx"]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: LinkCheck
-        uses: Consensys/docs-gha/linkcheck@main
+        uses: ConsenSys/docs-gha/linkcheck@main
         with:
           FILE_EXTENSION: ${{ matrix.file-extensions }}
