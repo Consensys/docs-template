@@ -17,7 +17,8 @@ If you're using Node.js with [nvm](https://github.com/nvm-sh/nvm/blob/master/REA
 :::
 
 :::note
-If you make changes to a versioned doc site (for example, [Teku](https://docs.teku.consensys.net/)), 
+If you make changes to a versioned doc site
+(for example, [Teku](https://docs.teku.consensys.net/)),
 the changes only appear in the development version of the docs.
 Switch to the development version of the preview to see those changes.
 :::
@@ -33,8 +34,8 @@ npm start
 ```
 
 :::note
-If you make changes to the [redirects](../create/configure-docusaurus.md#redirects), you can preview them by
-running `npm run build && npm run serve`.
+If you make changes to the [redirects](../create/configure-docusaurus.md#redirects),
+you can preview them by running `npm run build && npm run serve`.
 :::
 
 ## Yarn
@@ -50,6 +51,6 @@ yarn start
 ```
 
 :::note
-If you make changes to the [redirects](../create/configure-docusaurus.md#redirects), you can preview them by
-running `yarn build && yarn serve`.
+If you make changes to the [redirects](../create/configure-docusaurus.md#redirects),
+you can preview them by running `yarn build && yarn serve`.
 :::

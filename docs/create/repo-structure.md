@@ -151,7 +151,8 @@ The `.eslintignore` file contains a list of directories for ESLint to ignore whe
 
 ## 📄 `.eslintrc.js`
 
-Configuration for [ESLint](https://eslint.org/) and accompanying plugins used by it to parse and lint the code.
+Configuration for [ESLint](https://eslint.org/) and accompanying plugins used by it to parse and
+lint the code.
 
 ## 📄 `.gitignore`
 
@@ -167,7 +168,8 @@ It requires installing [nvm](https://github.com/nvm-sh/nvm#installing-and-updati
 We recommend using [Prettier](https://prettier.io/) to format all files.
 Anything not covered in `.editorconfig` is overridden or specified in this Prettier configuration file.
 
-Running [`npm run format`](run-in-development.md#npm-run-format) runs Prettier to format and save those changes.
+Running [`npm run format`](run-in-development.md#npm-run-format) runs Prettier to
+format and save those changes.
 
 ## 📄 `.releaserc.js`
 
