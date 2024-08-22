@@ -15,7 +15,7 @@ only open-source projects (not just the docs but also the originating source cod
 If your project doesn't have any source code (general guidelines or tutorials), then it satisfies
 the conditions as long as the docs are open source.
 
-This page contains instructions for configuring Algolia for both open-source closed-sourc projects.
+This page contains instructions for configuring Algolia for both open-source closed-source projects.
 
 ## For an open source codebase
 
