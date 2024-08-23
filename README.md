@@ -9,4 +9,8 @@ testing new doc sites, published at
 
 ## Linting
 
-Vale is wip here for linting.
+Vale is wip here for linting: .github/workflows/lint.yml uses actions setup on ConsenSys/docs-gha/lint@main. 
+
+WIP: That gha repo should be setup to apply the [Vale linting set](https://github.com/Consensys/docs-gha/tree/main/spelling).
+
+
