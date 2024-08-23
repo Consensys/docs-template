@@ -7,6 +7,7 @@ It also contains a written guide for contributing to Consensys docs, and creatin
 testing new doc sites, published at
 [`docs-template.consensys.net`](https://docs-template.consensys.net/).
 
+
 ## Linting
 
 Vale is wip here for linting: .github/workflows/lint.yml uses actions setup on ConsenSys/docs-gha/lint@main. 
