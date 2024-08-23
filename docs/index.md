@@ -31,6 +31,7 @@ and hosted on [Vercel](https://vercel.com/).
 
 The following table shows the full list of developer documentation sites supported by Consensys.
 
+<!-- markdownlint-disable -->
 | Doc site                                                                | GitHub repository                                                         | Site platform | Hosting platform | Description                                                                                                                                                              |
 |-------------------------------------------------------------------------|---------------------------------------------------------------------------|---------------|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [Teku](https://docs.teku.consensys.net/)                                | [`consensys/doc.teku`](https://github.com/consensys/doc.teku)             | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
@@ -47,3 +48,4 @@ The following table shows the full list of developer documentation sites support
 | [EthSigner](https://docs.ethsigner.consensys.net/)                      | [`consensys/doc.ethsigner`](https://github.com/consensys/doc.ethsigner)   | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
 | [gnark](https://docs.gnark.consensys.net/)                              | [`consensys/doc.gnark`](https://github.com/consensys/doc.gnark)           | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
 | [Documentation guide](https://docs-template.consensys.net/) (this site) | [`consensys/docs-template`](https://github.com/consensys/docs-template)   | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
+<!-- markdownlint-restore -->

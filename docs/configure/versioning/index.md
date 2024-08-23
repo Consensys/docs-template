@@ -2,10 +2,11 @@
 description: Support and manage multiple documentation versions.
 sidebar_position: 1
 ---
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
 
 # Configure and use versioning
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Docusaurus can manage multiple versions of your documentation.
 See the [Docusaurus versioning documentation](https://docusaurus.io/docs/next/versioning) for
@@ -13,11 +14,11 @@ detailed context and instructions on managing versions.
 
 The following instructions are for documentation that uses n versions that can be accessed like so:
 
-| Path	                               | Version        | URL                | 
+| Path                                | Version        | URL                |
 |:-----------------------------------  |:-------------  |:-------------------|
-|versioned_docs/version-0.x/hello.md   | 0.x	          | /0.x/hello        |
-|versioned_docs/version-1.0/hello.md   | 1.0 (latest)   |	/hello             |
-|docs/hello.md	                       | development    |	/development/hello |
+|versioned_docs/version-0.x/hello.md   | 0.x            | /0.x/hello        |
+|versioned_docs/version-1.0/hello.md   | 1.0 (latest)   |  /hello             |
+|docs/hello.md                         | development    |  /development/hello |
 
 :::info
 Please note that unlike Read the Docs (RTD) that versions by tags on the code base, in Docusaurus,
@@ -57,29 +58,39 @@ the `current` version is given a `label` and `path` attribute.
 
 ## Release a new docs version
 
-### 1. Create a new version of the documentation:
+### 1. Create a new version of the documentation
 
 In the following steps, we'll release the `1.0` version of the documentation (`./docs`) as an example.
 
 <Tabs>
   <TabItem value="Syntax" label="Syntax">
 
+    <!-- markdownlint-disable -->
+
     ```bash
     npm run docusaurus docs:version <VERSION-NUMBER>
     ```
 
+    <!-- markdownlint-restore -->
+
+
     This command:
 
-    - Copies the full `docs/` directory into a new `version-<VERSION-NUMBER>` directory in the `versioned_docs` directory.
+    - Copies the full `docs/` directory into a new `version-<VERSION-NUMBER>` directory in 
+      the `versioned_docs` directory.
     - Creates a new `versioned_sidebars/version-<VERSION-NUMBER>-sidebars.json` file.
     - Appends the new version number to the `versions.json` file.
 
   </TabItem>
   <TabItem value="Example" label="Example">
 
+    <!-- markdownlint-disable -->
+
     ```bash
     npm run docusaurus docs:version 1.0
     ```
+
+    <!-- markdownlint-restore -->
 
     This command:
 
@@ -153,7 +164,8 @@ Please remember to remove any old versions that you are not required in this fil
 
 ### 4. Delete the previous doc versions (if needed)
 
-If you have deleted a version in step 3, also delete the artifacts for that version. For example, if deleting version `0.2` that would mean deleting the following:
+If you have deleted a version in step 3, also delete the artifacts for that version. For example,
+if deleting version `0.2` that would mean deleting the following:
 
 1. In the `versioned_docs` directory, delete the `version-0.2` folder
 2. In the `versioned_sidebars` directory, delete the `version-0.2-sidebars.json` file.

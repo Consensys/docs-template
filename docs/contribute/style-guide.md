@@ -12,8 +12,8 @@ Refer to the following guides when writing, editing, or reviewing doc content:
   Refer to this guide for style, voice, grammar, and text formatting guidelines.
 - [**Diátaxis framework**](https://diataxis.fr/) - Refer to this guide for information about
   function-based docs.
-- [**Consensys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing) -
-  Refer to this guide for spelling and usage of blockchain-related terms.
+- [**Consensys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing)
+  - Refer to this guide for spelling and usage of blockchain-related terms.
   This guide is only available to internal Consensys contributors.
 
 The following section also highlights the top five style tips from these guides.
@@ -78,14 +78,20 @@ Write for a [developer audience](https://learn.microsoft.com/en-us/style-guide/d
 :::info example
 
 ❌ *To start Teku, run the following command:*
-```
+
+```bash
 // Set --ee-endpoint to the URL of your execution engine and
 // --ee-jwt-secret-file to the path to your JWT secret file.
-user@mycomputer Develop % teku --ee-endpoint=http://localhost:8550 --ee-jwt-secret-file=my-jwt-secret.hex --metrics-enabled=true --rest-api-enabled=true
+teku \
+  --ee-endpoint=http://localhost:8550 \
+  --ee-jwt-secret-file=my-jwt-secret.hex \
+  --metrics-enabled=true \
+  --rest-api-enabled=true
 ```
 
 ✅ *To start Teku, run the following command:*
-```
+
+```bash
 teku \
   --ee-endpoint=<URL of execution engine>        \
   --ee-jwt-secret-file=<path to JWT secret file> \
@@ -103,7 +109,8 @@ Make sure readers can [effectively scan your content](https://learn.microsoft.co
   and make your point clear.
 - [Use short, simple sentences.](https://learn.microsoft.com/en-us/style-guide/word-choice/use-simple-words-concise-sentences)
   Remove nonessential, redundant, or non-specific words and sentences.
-- Break up three or more paragraphs of text with subheadings, admonitions, lists, tables, code samples, or images.
+- Break up three or more paragraphs of text with subheadings, admonitions, lists, tables, code samples,
+  or images.
 - [Establish patterns in content.](https://learn.microsoft.com/en-us/style-guide/scannable-content/#establish-patterns-in-content)
   Use consistent language across list items and page titles.
   Use consistent content structure across different pages.
