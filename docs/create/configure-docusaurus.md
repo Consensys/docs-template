@@ -3,10 +3,10 @@ description: Configure your Docusaurus site and use Docusaurus Markdown features
 sidebar_position: 1.5
 ---
 
+# Configure Docusaurus
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Configure Docusaurus
 
 Most Consensys documentation sites are built using [Docusaurus](https://docusaurus.io/).
 A Docusaurus site organizes most of its [configuration](https://docusaurus.io/docs/configuration) in

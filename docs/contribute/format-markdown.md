@@ -3,10 +3,10 @@ description: Follow these guidelines for formatting Markdown content.
 sidebar_position: 3
 ---
 
+# Format Markdown
+
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Format Markdown
 
 Guidelines for formatting Markdown help writers and reviewers navigate the documentation source code
 and review changes.
@@ -208,7 +208,7 @@ The following are some rules used throughout the Consensys docs:
 ```bash
 // Set --ee-endpoint to the URL of your execution engine and
 // --ee-jwt-secret-file to the path to your JWT secret file.
-user@mycomputer Develop % teku --ee-endpoint=http://localhost:8550 --ee-jwt-secret-file=my-jwt-secret.hex --metrics-enabled=true --rest-api-enabled=true
+user@mycomputer Develop % teku --ee-endpoint=http://localhost:8550 --ee-jwt-secret-file=my-jwt-secret.hex
 ```
 
 ✅ *To start Teku, run the following command:*
