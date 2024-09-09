@@ -7,7 +7,8 @@ sidebar_position: 3
 # Configure Google Analytics
 
 Docusaurus supports [Google Tag Manager](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-tag-manager)
-and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag) plugins for Google Analytics.
+and [GTag](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-google-gtag)
+plugins for Google Analytics.
 The plugins are installed by default in this template repository.
 
 ## Set up Google Tag Manager and GTag

@@ -15,8 +15,7 @@ only open-source projects (not just the docs but also the originating source cod
 If your project doesn't have any source code (general guidelines or tutorials), then it satisfies
 the conditions as long as the docs are open source.
 
-This page contains instructions for configuring Algolia for both [open-source](#docs-and-source-code-are-open-source)
-and [closed-source](#source-code-is-not-open-source) projects.
+This page contains instructions for configuring Algolia for both open-source closed-source projects.
 
 ## For an open source codebase
 
@@ -60,7 +59,7 @@ You have two options to configure search:
 1. Decide if your team has a [budget](https://www.algolia.com/pricing/) for integrating the paid
    version of Algolia.
    If you choose this option, and have obtained financial approval, then you can follow the
-   [open-source steps](#docs-and-source-code-are-open-source).
+    open source steps.
 
 2. [Install a local search plugin](#install-local-search-plugin) and don't use Algolia.
    Note the following caveats with local search:
@@ -95,7 +94,9 @@ local search plugin in your project:
      indexName: "docs-template", // Ping #documentation on Slack for your index name
      // Optional: see doc section below
      contextualSearch: true,
-     // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+     // Optional: Specify domains where the navigation should occur through window.location 
+     //instead on history.push. Useful when our Algolia config crawls multiple documentation
+     // sites and we want to navigate with window.location.href to them.
      externalUrlRegex: "external\\.com|domain\\.com",
      // Optional: Algolia search parameters
      searchParameters: {},
