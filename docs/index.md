@@ -5,7 +5,7 @@ title: Overview
 # Consensys documentation guide
 
 Welcome to the Consensys documentation guide.
-This guide contains information about contributing to Consensys developer documentation sites and
+This guide presents information about contributing to Consensys developer documentation sites and
 creating new documentation sites.
 
 ## Overview
