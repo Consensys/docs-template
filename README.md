@@ -17,5 +17,6 @@ WIP: That GHA repo should be set up to apply the [Vale linting set](https://gith
 ### Let's Upset Vale
 
 The title should do it, so should:
+
 - Metamask
 - ConsenSys
