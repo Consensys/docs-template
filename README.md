@@ -11,7 +11,7 @@ testing new doc sites, published at
 ## Linting
 
 Vale is a work in progress (WIP) for linting: `.github/workflows/lint.yml` uses actions set up on
-ConsenSys/docs-gha/lint@main.
+Consensys/docs-gha/lint@main.
 
 WIP: That GHA repo should be set up to apply the [Vale linting set](https://github.com/ConsenSys/docs-gha/tree/main/spelling).
 
