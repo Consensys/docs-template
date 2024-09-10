@@ -14,7 +14,6 @@ jobs:
       contents: read
     steps:
       - uses: actions/checkout@v4
-
       - name: Lint
         uses: ConsenSys/docs-gha/lint@main
         with:
