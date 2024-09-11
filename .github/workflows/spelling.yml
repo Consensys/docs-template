@@ -20,4 +20,5 @@ jobs:
         uses: Consensys/docs-gha/spelling@vale
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILEPATHS: "docs"
 
