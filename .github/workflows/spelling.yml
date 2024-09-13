@@ -5,7 +5,6 @@ on:
   pull_request:
     branches:
       - main
-      - vale
 
 jobs:
   vale:
@@ -20,4 +19,5 @@ jobs:
         uses: Consensys/docs-gha/spelling@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILEPATHS: "docs"
 
