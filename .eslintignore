@@ -3,4 +3,6 @@ build/
 .eslintrc.md.js
 docs/test-api
 ./node_modules/*
+*.md
+*.mdx
 LICENSE
