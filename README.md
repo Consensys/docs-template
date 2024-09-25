@@ -18,11 +18,11 @@ WIP: That GHA repo should be set up to apply the [Vale linting set](https://gith
 
 The title should do it, so should:
 
+The diff is not capturing this!
 - Metamask
 - ConsenSys
 
 ### Let's test moving terms from accept to project words in Vale
-
 
 Broadcast
 broadcasting
