@@ -17,14 +17,7 @@ WIP: That GHA repo should be set up to apply the [Vale linting set](https://gith
 
 ### Let's Upset Vale
 
-The title should do it, so should:
+## Test This
 
-- Metamask.
-- ConsenSys.
-
-### Let's test moving terms to ignore/project words in Vale
-
-Broadcast
-broadcasting
-broadcasted
-
+title should trigger
+ConsenSys should trigger
