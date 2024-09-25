@@ -20,3 +20,11 @@ The title should do it, so should:
 
 - Metamask
 - ConsenSys
+
+### Let's test moving terms from accept to project words in Vale
+
+
+Broadcast
+broadcasting
+broadcasted
+
