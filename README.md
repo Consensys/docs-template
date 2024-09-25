@@ -19,8 +19,8 @@ WIP: That GHA repo should be set up to apply the [Vale linting set](https://gith
 
 The title should do it, so should:
 
-- Metamask
-- ConsenSys
+- Metamask.
+- ConsenSys.
 
 ### Let's test moving terms to ignore/project words in Vale
 
