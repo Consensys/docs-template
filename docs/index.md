@@ -8,6 +8,22 @@ Welcome to the Consensys documentation guide.
 This guide contains information about contributing to Consensys developer documentation sites and
 creating new documentation sites.
 
+### Let us Upset Vale
+
+Should trigger
+With off brand Metamask 
+  ′
+  ″
+  zk-EVM
+
+Shouldn't trigger
+goerli
+Goerli
+booleans
+celo
+whitelist
+
+
 ## Overview
 
 Each Consensys developer product has a documentation site, maintained by the [Consensys developer
