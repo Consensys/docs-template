@@ -1,6 +1,6 @@
 ---
 description: Add screenshots and diagrams to the documentation.
-sidebar_position: 5
+sidebar_position: 4
 toc_max_heading_level: 3
 ---
 
@@ -12,13 +12,13 @@ import TabItem from '@theme/TabItem';
 You can add [screenshots](#screenshots) and [diagrams](#diagrams) to the Consensys documentation.
 
 Add your image to an `assets` or `images` folder within the documentation folder, and link to it in
-your doc content using [Markdown syntax](https://docusaurus.io/docs/markdown-features/assets#images).
+your doc content using
+[Markdown, CommonJS require, or ES imports](https://docusaurus.io/docs/markdown-features/assets#images).
 You can also use HTML to center the image.
 For example:
 
 <Tabs>
-
-  <TabItem value="markdown" label="markdown">
+<TabItem value="Markdown">
 
 ```markdown
 <p align="center">
@@ -28,8 +28,34 @@ For example:
 </p>
 ```
 
-  </TabItem>
-  <TabItem value="Rendered" label="Rendered">
+</TabItem>
+<TabItem value="CommonJS require">
+
+```jsx
+<p align="center">
+  <img 
+    src={require("../assets/transaction-insights.png").default} 
+    alt="Snap transaction insights UI" 
+  />
+</p>
+```
+
+</TabItem>
+<TabItem value="ES imports">
+
+```jsx
+import txnInsights from "../assets/transaction-insights.png";
+
+<p align="center">
+  <img 
+    src={txnInsights} 
+    alt="Snap transaction insights UI" 
+  />
+</p>
+```
+
+</TabItem>
+<TabItem value="Rendered" label="Rendered">
 
 <p align="center">
 
@@ -37,7 +63,7 @@ For example:
 
 </p>
 
-  </TabItem>
+</TabItem>
 </Tabs>
 
 ## Screenshots
@@ -53,18 +79,25 @@ for faster page loading:
 
 ## Diagrams
 
-Consensys doc sites contain diagrams created using [Figma](https://figma.com/).
-You must have access to the Consensys **Quorum Diagrams** template files on Figma to create a diagram.
+Consensys doc sites contain diagrams created using [Mermaid](https://mermaid.js.org/) and
+[Figma](https://figma.com/).
 
-Diagrams can illustrate:
+Use diagrams to illustrate:
 
 - Detailed or simplified product architecture.
 - Technical processes and flows.
 - Concept charts and tables.
 
-### Demo
+### Mermaid
 
-The following video demonstrates creating a diagram for the GoQuorum documentation using Figma:
+To use Mermaid diagrams in your site,
+[install the Mermaid theme plugin](https://docusaurus.io/docs/markdown-features/diagrams) and use
+the Mermaid diagram syntax, for example, for [flowcharts](https://mermaid.js.org/syntax/flowchart.html)
+or [sequence diagrams](https://mermaid.js.org/syntax/sequenceDiagram.html).
+
+### Figma
+
+The following video demonstrates creating a Figma diagram for the GoQuorum documentation:
 
 <!-- markdownlint-disable -->
 <p align="center">
@@ -72,9 +105,8 @@ The following video demonstrates creating a diagram for the GoQuorum documentati
 </p>
 <!-- markdownlint-restore -->
 
-### Create your Figma diagram
-
-Use the following general guidelines when creating Consensys diagrams on Figma.
+To create a Figma diagram, you must have access to the **Developer docs diagrams** template files on
+Figma, and use the following general guidelines.
 Refer to the [Figma help website](https://help.figma.com/hc/en-us) for more information on
 getting started with Figma, Figma design elements, and more.
 
@@ -151,7 +183,7 @@ See the
 [Figma documentation on the Arrow Tool](https://help.figma.com/hc/en-us/articles/360040450133-Using-Shape-Tools#h_677f8eba-73c4-4987-a64b-c0226aaec392)
 for more information.
 
-### Export your Figma diagram
+#### Export your Figma diagram
 
 1. Select the frame of your diagram.
    Make sure all elements of your diagram are contained in the frame.

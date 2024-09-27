@@ -10,6 +10,10 @@ Docusaurus is a React-based project and uses npm and or Yarn project workflows.
 This page describes `npm` commands to start previews, lint, build, and do other necessary
 things in development.
 
+:::note
+Periodically run `npm install` before running Docusaurus to install or update dependencies.
+:::
+
 ## npm commands and scripts
 
 The following is a list of npm scripts in `package.json`.

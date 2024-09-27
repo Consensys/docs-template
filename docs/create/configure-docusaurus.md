@@ -3,19 +3,21 @@ description: Configure your Docusaurus site and use Docusaurus Markdown features
 sidebar_position: 1.5
 ---
 
-# Configure Docusaurus
+# Configure your site
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Most Consensys documentation sites are built using [Docusaurus](https://docusaurus.io/).
-A Docusaurus site organizes most of its [configuration](https://docusaurus.io/docs/configuration) in
-the `docusaurus.config.js` file, including the following key elements.
+Most Consensys documentation sites are built using [Docusaurus](https://docusaurus.io/) and hosted
+on [Vercel](https://vercel.com/).
+
+You can configure site components, including the top navigation, sidebar, and footer, in the
+`docusaurus.config.js` file, and server-side redirects in the `vercel.json` file.
 
 ## Top navigation
 
-Configure the top navigation in the [navbar](https://docusaurus.io/docs/api/themes/configuration#navbar)
-section of the theme configuration.
+In `docusaurus.config.js`, configure the top navigation in the
+[navbar](https://docusaurus.io/docs/api/themes/configuration#navbar) section of the theme configuration.
 
 <details>
 <summary>Example navbar configuration</summary>
@@ -68,8 +70,8 @@ module.exports = {
 
 ## Sidebar
 
-Pass the [sidebar](https://docusaurus.io/docs/sidebar) to the `sidebarPath` key in your docs
-instance, whether it's to the `docs` section of the [`classic`
+In `docusaurus.config.js`, pass the [sidebar](https://docusaurus.io/docs/sidebar) to the
+`sidebarPath` key in your docs instance, whether it's to the `docs` section of the [`classic`
 preset](https://docusaurus.io/docs/using-plugins#docusauruspreset-classic) or directly to the
 [`content-docs` plugin](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-docs).
 Define and customize your sidebar in a separate sidebar file (`sidebars.js` by default).
@@ -161,8 +163,8 @@ module.exports = {
 
 ## Footer
 
-Configure the footer in the [footer](https://docusaurus.io/docs/api/themes/configuration#footer-1)
-section of the theme configuration.
+In `docusaurus.config.js`, configure the footer in the
+[footer](https://docusaurus.io/docs/api/themes/configuration#footer-1) section of the theme configuration.
 
 <details>
 <summary>Example footer configuration</summary>
@@ -234,34 +236,31 @@ module.exports = {
 
 ## Redirects
 
-Use the [`plugin-client-redirects`](https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-client-redirects)
-plugin to configure redirects.
+Use the Vercel configuration file `vercel.json` to configure
+[server-side redirects](https://vercel.com/docs/edge-network/redirects).
 
 <details>
 <summary>Example redirects configuration</summary>
 
-```js title="docusaurus.config.js"
-module.exports = {
-  plugins: [
-    [
-      '@docusaurus/plugin-client-redirects',
-      {
-        redirects: [
-          // /docs/oldDoc -> /docs/newDoc
-          {
-            to: '/docs/newDoc',
-            from: '/docs/oldDoc',
-          },
-          // Redirect from multiple old paths to the new path
-          {
-            to: '/docs/newDoc2',
-            from: ['/docs/oldDocFrom2019', '/docs/legacyDocFrom2016'],
-          },
-        ],
-      },
-    ],
-  ],
-};
+```js title="vercel.json"
+{
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/guide/",
+      "destination": "/wallet/"
+    },
+    {
+      "source": "/guide/common-terms/",
+      "destination": "/wallet/"
+    },
+    {
+      "source": "/guide/contributors/",
+      "destination": "/wallet/"
+    }
+  ]
+}
 ```
 
 </details>
