@@ -7,6 +7,7 @@ const sidebars = {
     {
       type: "category",
       label: "Contribute to the docs",
+      collapsed: false,
       link: {
         type: "generated-index",
         slug: "/contribute",
