@@ -11,8 +11,8 @@ creating new documentation sites.
 ## Overview
 
 Each Consensys developer product has a documentation site, maintained by the [Consensys developer
-documentation team](https://consensyssoftware.atlassian.net/wiki/spaces/PEG/pages/398159216798/Documentation+Pliny)
-and/or a product team.
+documentation team](https://www.notion.so/consensys/Developer-documentation-team-Pliny-8965c72cd62648719e35a16935236194)
+(internal page) and/or a product team.
 The docs use a [docs-as-code](https://www.writethedocs.org/guide/docs-as-code/) approach and are
 mostly open source, empowering developers and community members to contribute to the docs alongside
 the docs team.
@@ -37,7 +37,8 @@ The following table shows the full list of developer documentation sites support
 | [Teku](https://docs.teku.consensys.net/)                                | [`consensys/doc.teku`](https://github.com/consensys/doc.teku)             | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
 | [Hyperledger Besu](https://besu.hyperledger.org/)                       | [`hyperledger/besu-docs`](https://github.com/hyperledger/besu-docs)       | Docusaurus    | GitHub Pages     | Maintained by the docs team. This is a Hyperledger project and has its own [Besu docs contribution guidelines](https://wiki.hyperledger.org/display/BESU/Documentation). |
 | [Web3Signer](https://docs.web3signer.consensys.net/)                    | [`consensys/doc.web3signer`](https://github.com/consensys/doc.web3signer) | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
-| [MetaMask](https://docs.metamask.io/)                                   | [`metamask/metamask-docs`](https://github.com/MetaMask/metamask-docs)     | Docusaurus    | GitHub Pages     | Maintained by the docs team. This project has additional [MetaMask docs contribution guidelines](https://github.com/MetaMask/metamask-docs/blob/main/CONTRIBUTING.md).   |
+| [MetaMask](https://docs.metamask.io/)                                   | [`metamask/metamask-docs`](https://github.com/MetaMask/metamask-docs)     | Docusaurus    | Vercel           | Maintained by the docs team. This project has additional [MetaMask docs contribution guidelines](https://github.com/MetaMask/metamask-docs/blob/main/CONTRIBUTING.md).   |
+| MetaMask Delegation Toolkit (private)                                   | `metamask/gator-docs` (private)                                           | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
 | [Infura](https://docs.infura.io/infura/)                                | `infura/docs` (private)                                                   | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
 | [Linea](https://docs.linea.build/)                                      | [`consensys/doc.zk-evm`](https://github.com/consensys/doc.zk-evm)         | Docusaurus    | Vercel           | Maintained by the docs team.                                                                                                                                             |
 | [MetaFi](https://fantastic-goggles-eyo7zmp.pages.github.io/)            | `consensys-vertical-apps/cx-api-docs` (private)                           | Docusaurus    | GitHub Pages     | Maintained by the docs team and the MetaFi team.                                                                                                                         |
