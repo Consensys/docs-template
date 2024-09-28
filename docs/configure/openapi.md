@@ -8,4 +8,4 @@ sidebar_label: OpenAPI docs
 
 There are currently no plugins available to support OpenAPI in Docusaurus 3. Please refer to the solution implemented in the [Web3Signer REST API documentation](https://docs.web3signer.consensys.io/reference/api/rest).
 
-This page will be updated when there is a plugin available from Redocusaurus or Palo Alto OpenAPI.
+This page will be updated when there is a plugin available from [Redocusaurus](https://redocusaurus.vercel.app/docs/) or [Palo Alto OpenAPI](https://github.com/PaloAltoNetworks/docusaurus-template-openapi-docs).
