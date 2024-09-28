@@ -7,6 +7,7 @@ const sidebars = {
     {
       type: "category",
       label: "Contribute to the docs",
+      collapsed: false,
       link: {
         type: "generated-index",
         slug: "/contribute",
@@ -21,6 +22,7 @@ const sidebars = {
     {
       type: "category",
       label: "Create a new doc site",
+      collapsed: false,
       link: {
         type: "generated-index",
         slug: "/create",
