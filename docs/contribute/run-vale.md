@@ -10,7 +10,8 @@ Vale is currently integrated into the continuous integration (CI) pipeline and i
 pull request (PR) using a GitHub action. You can select the **Details** link to view the failures.
 
 :::info important
-The Vale GitHub workflow runs on all Markdown files (and for some repos YAML files) in the repository, not only the ones you've updated. However, only items related to files in your PR receive alerts.
+The Vale GitHub workflow runs on all Markdown files (and for some repos YAML files) in the repository, not
+only the ones you've updated. However, only items related to files in your PR receive alerts.
 Failures in the workflow won't prevent your PR from being merged.
 
 You can run Vale locally to view issues directly related to your PR.
@@ -42,18 +43,24 @@ view issues in real-time.
     ```bash
     export VALE_CONFIG_PATH="/Users/{user-name}/documentation/docs-gha/spelling/.vale.ini"
     ```
+
     :::note
     To persist the ENV variable across sessions you’ll need to add the above command it to the appropriate
     file. For example `~/.zshrc` (default shell in newer macOS versions).
     :::
 
- 4. Run the `vale` command in your terminal with the location of your file. For example:
+ 1. Run the `vale` command in your terminal with the location of your file. For example:
 
     ```bash
     vale node-sync.md
     ```
 
     ![Run Vale](../assets/use-vale.png)
+
+    :::note
+    If you pass a file that does not exist, Vale will not alert you that the file cannot be found.
+    You'll receive a message similar to `0 errors, 0 warnings and 0 suggestions` in the terminal.
+    :::
 
 ### Use the VS Code integration
 
