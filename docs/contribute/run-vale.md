@@ -1,0 +1,84 @@
+---
+description: Run the spelling and style linter
+sidebar_position: 7
+---
+
+# Run the spelling and style linter
+
+The documentation suite uses [Vale](https://vale.sh/) as the style guide and spelling linter.
+Vale is currently integrated into the continuous integration (CI) pipeline and is executed on each
+pull request (PR) using a GitHub action. You can select the **Details** link to view the failures.
+
+:::info important
+The Vale GitHub workflow runs on all Markdown files in the document, not only the one's you've updated.
+Failures in the workflow won't prevent your PR from being merged.
+
+You can run Vale locally to view issues directly related to your PR.
+:::
+
+<p align = "center">
+![Vale CI](../assets/vale-ci.png)
+</p>
+
+## Run locally
+
+Run Vale locally to view issues related to the Markdown files you're working on. You can run Vale using the
+command line, or you can integrate it into a [supported editor](https://vale.sh/docs/integrations/guide/) to
+view issues in real-time.
+
+### Use the command line
+
+1. [Install Vale locally](https://vale.sh/docs/vale-cli/installation/#package-managers).
+
+1. Checkout the repo containing our Vale settings:
+
+   ```bash
+   git clone https://github.com/Consensys/docs-gha.git
+   ```
+
+1. Override the default location of the `.vale.ini` file by setting the `VALE_CONFIG_PATH` environment
+    variable to the location of the file in the repo. For example, on macOS this is:
+
+    ```bash
+    export VALE_CONFIG_PATH="/Users/jdoe/documentation/docs-gha/spelling/.vale.ini"
+    ```
+    :::note
+    To persist the ENV variable across sessions you’ll need to add the above command it to the appropriate
+    file. For example `~/.zshrc` (default shell in newer macOS versions).
+    :::
+
+ 4. Run the `vale` command in your terminal with the location of your file. For example:
+
+    ```bash
+    vale node-sync.md
+    ```
+
+    ![Run Vale](../assets/use-vale.png)
+
+### Use the VS Code integration
+
+You must have the VS Code editor installed to use this integration.
+
+1. [Install Vale locally](https://vale.sh/docs/vale-cli/installation/#package-managers).
+
+1. Checkout the repo containing our Vale settings:
+
+   ```bash
+   git clone https://github.com/Consensys/docs-gha.git
+   ```
+
+1. [Install the VS Code extension](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode)
+
+1. In the settings for the Vale VS Code extension, set the location of the `.vale.ini` file, and
+    enable the spell check. The `.vale.ini` file is located within the `spelling` directory in the
+    `docs-gha` repo that you checked out.
+
+    ![VS Code extension settings](../assets/vs-code-ext.png)
+
+1. Restart VS Code.
+
+## Contribute to the spell checker
+
+You can contribute to the spell checker by submitting a PR to the [`docs-gha` repository](https://github.com/Consensys/docs-gha).
+
+You can add your words to the [`accept.txt`](https://github.com/Consensys/docs-gha/blob/main/spelling/styles/config/vocabularies/Consensys-common/accept.txt) file.
