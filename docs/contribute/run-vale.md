@@ -49,7 +49,7 @@ view issues in real-time.
     file. For example `~/.zshrc` (default shell in newer macOS versions).
     :::
 
- 1. Run the `vale` command in your terminal with the location of your file. For example:
+1. Run the `vale` command in your terminal with the location of your file. For example:
 
     ```bash
     vale node-sync.md
