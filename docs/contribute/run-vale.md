@@ -81,4 +81,4 @@ You must have the VS Code editor installed to use this integration.
 
 You can contribute to the spell checker by submitting a PR to the [`docs-gha` repository](https://github.com/Consensys/docs-gha).
 
-You can add your words to the [`accept.txt`](https://github.com/Consensys/docs-gha/blob/main/spelling/styles/config/vocabularies/Consensys-common/accept.txt) file.
+Learn more about how to [configure Vale](https://github.com/Consensys/docs-gha/tree/main/spelling#configure-vale).
