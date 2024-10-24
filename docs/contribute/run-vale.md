@@ -10,7 +10,7 @@ Vale is currently integrated into the continuous integration (CI) pipeline and i
 pull request (PR) using a GitHub action. You can select the **Details** link to view the failures.
 
 :::info important
-The Vale GitHub workflow runs on all Markdown files in the document, not only the ones you've updated.
+The Vale GitHub workflow runs on all Markdown files (and for some repos YAML files) in the repository, not only the ones you've updated. However, only items related to files in your PR receive alerts.
 Failures in the workflow won't prevent your PR from being merged.
 
 You can run Vale locally to view issues directly related to your PR.
