@@ -40,7 +40,7 @@ view issues in real-time.
     variable to the location of the file in the repo. For example, on macOS this is:
 
     ```bash
-    export VALE_CONFIG_PATH="/Users/jdoe/documentation/docs-gha/spelling/.vale.ini"
+    export VALE_CONFIG_PATH="/Users/{user-name}/documentation/docs-gha/spelling/.vale.ini"
     ```
     :::note
     To persist the ENV variable across sessions you’ll need to add the above command it to the appropriate
