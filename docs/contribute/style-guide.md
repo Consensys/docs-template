@@ -11,7 +11,7 @@ Refer to the following guides when writing, editing, or reviewing doc content:
 - [**Microsoft Writing Style Guide**](https://learn.microsoft.com/en-us/style-guide/welcome/): Refer to this guide for style, voice, grammar, and text formatting guidelines.
 - [**Diátaxis framework**](https://diataxis.fr/): Refer to this guide for information about
   function-based docs.
-- [**Consensys Editorial Style Guide**](https://www.notion.so/consensys/Consensys-Editorial-Style-Guide-d5b9867e85df4ae38f8bed44f61a77d5): Refer to this guide for spelling and usage of blockchain-related terms. [Vale](/run-vale.md) assists writers to adhere to this style.
+- [**Consensys Editorial Style Guide**](https://www.notion.so/consensys/Consensys-Editorial-Style-Guide-d5b9867e85df4ae38f8bed44f61a77d5): Refer to this guide for spelling and usage of blockchain-related terms. [Vale](run-vale.md) assists writers to adhere to this style.
   > This guide is only available to internal Consensys contributors.
 
 The following section also highlights the top five style tips from these guides.
