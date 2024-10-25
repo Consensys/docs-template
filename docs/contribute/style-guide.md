@@ -8,13 +8,11 @@ sidebar_position: 2
 Style guidelines help keep the Consensys documentation consistent, concise, and readable.
 Refer to the following guides when writing, editing, or reviewing doc content:
 
-- [**Microsoft Writing Style Guide**](https://learn.microsoft.com/en-us/style-guide/welcome/) -
-  Refer to this guide for style, voice, grammar, and text formatting guidelines.
-- [**Diátaxis framework**](https://diataxis.fr/) - Refer to this guide for information about
+- [**Microsoft Writing Style Guide**](https://learn.microsoft.com/en-us/style-guide/welcome/): Refer to this guide for style, voice, grammar, and text formatting guidelines.
+- [**Diátaxis framework**](https://diataxis.fr/): Refer to this guide for information about
   function-based docs.
-- [**Consensys Editorial Style Guide**](https://docs.google.com/document/d/1smRdw4TUIpz9re_o0_0DKdH_nK6cSPMJOK6BcbhjJ7Y/edit?usp=sharing)
-  - Refer to this guide for spelling and usage of blockchain-related terms.
-  This guide is only available to internal Consensys contributors.
+- [**Consensys Editorial Style Guide**](https://www.notion.so/consensys/Consensys-Editorial-Style-Guide-d5b9867e85df4ae38f8bed44f61a77d5): Refer to this guide for spelling and usage of blockchain-related terms. [Vale](/run-vale) assist writers to adhere to this style.
+  > This guide is only available to internal Consensys contributors.
 
 The following section also highlights the top five style tips from these guides.
 
@@ -54,7 +52,7 @@ in your writing:
 
 :::info example
 
-❌ *If we are unable to find another library that works with the execution environment, another way
+❌ *If we're unable to find another library that works with the execution environment, another way
    of solving the problem is by patching the dependency ourselves.
    For this, `patch-package` can be leveraged.*
 
@@ -69,10 +67,10 @@ Write for a [developer audience](https://learn.microsoft.com/en-us/style-guide/d
 
 - You don't need to market the product to the reader.
   Understand what they're seeking to learn or do, and optimize your content to help them achieve
-  that quickly.
+  that fast.
 - List prerequisites and suggest good practices.
   For example, instruct readers to secure private keys and protect RPC endpoints in production environments.
-- Write [code samples](format-markdown.md#code-sample-style-guide) that are readable, can be easily
+- Write [code samples](format-markdown.md#code-sample-style-guide) that are readable, can be 
   copied and pasted, and work as expected.
 
 :::info example
@@ -152,7 +150,7 @@ elements](https://learn.microsoft.com/en-us/style-guide/text-formatting/):
 
 ❌ *[Click here](https://discord.gg/hyperledger) for Besu support.*
 
-✅ *If you have questions about Besu for public networks, ask on the **besu** channel on
+✅ *If you have questions about Besu for public networks, ask on the **Besu** channel on
 [Hyperledger Discord](https://discord.gg/hyperledger).*
 
 :::
