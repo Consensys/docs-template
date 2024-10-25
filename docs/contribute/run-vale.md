@@ -31,7 +31,7 @@ view issues in real-time.
 
 1. [Install Vale locally](https://vale.sh/docs/vale-cli/installation/#package-managers).
 
-1. Checkout the repo containing our Vale settings:
+1. Clone the repo containing our Vale settings:
 
    ```bash
    git clone https://github.com/Consensys/docs-gha.git
@@ -44,10 +44,11 @@ view issues in real-time.
     export VALE_CONFIG_PATH="/Users/{user-name}/documentation/docs-gha/spelling/.vale.ini"
     ```
 
-    :::note
-    To persist the ENV variable across sessions you’ll need to add the above command it to the appropriate
-    file. For example `~/.zshrc` (default shell in newer macOS versions).
-    :::
+     :::note
+     To persist the `VALE_CONFIG_PATH` environment variable across sessions, you’ll need to add the above command to the
+     appropriate shell configuration file. For example, on macOS, add it to ~/.zshrc (the default shell configuration
+     file in recent versions of macOS).
+     :::
 
 1. Run the `vale` command in your terminal with the location of your file. For example:
 
@@ -64,11 +65,11 @@ view issues in real-time.
 
 ### Use the VS Code integration
 
-You must have the VS Code editor installed to use this integration.
+You must have the [Visual Studio (VS) Code](https://code.visualstudio.com) editor installed to use this integration.
 
 1. [Install Vale locally](https://vale.sh/docs/vale-cli/installation/#package-managers).
 
-1. Checkout the repo containing our Vale settings:
+1. Clone the repo containing our Vale settings:
 
    ```bash
    git clone https://github.com/Consensys/docs-gha.git
@@ -78,7 +79,7 @@ You must have the VS Code editor installed to use this integration.
 
 1. In the settings for the Vale VS Code extension, set the location of the `.vale.ini` file, and
     enable the spell check. The `.vale.ini` file is located within the `spelling` directory in the
-    `docs-gha` repo that you checked out.
+    `docs-gha` repo that you cloned onto your local.
 
     ![VS Code extension settings](../assets/vs-code-ext.png)
 
