@@ -152,7 +152,7 @@ elements](https://learn.microsoft.com/en-us/style-guide/text-formatting/):
 
 ❌ *[Click here](https://discord.gg/hyperledger) for Besu support.*
 
-✅ *If you have questions about Besu for public networks, ask on the **Besu** channel on
-[Hyperledger Discord](https://discord.gg/hyperledger).*
+✅ *If you have questions about Besu for public networks, ask on the **#besu** channel on
+[LFDT Discord](https://discord.gg/hyperledger).*
 
 :::
