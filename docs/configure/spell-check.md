@@ -23,7 +23,7 @@ However, you can add ignore paths or files if needed.
 We don't recommend ignoring entire files by placing them into `.cspell.json`.
 
 Instead, we recommend using [in-line comments](https://cspell.org/configuration/document-settings/)
-to disable spell check–for example, if you have a snippet of code with an example API key
+to disable spell check, for example, if you have a snippet of code with an example API key
 which CSpell picks up.
 
 If you use a new term that causes spell check to fail, you can [add the term to your project's dictionary](../create/run-in-development.md#npm-run-lintspelling).
