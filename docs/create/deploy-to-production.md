@@ -88,29 +88,29 @@ Follow these steps to deploy your private GitHub repository to Vercel:
           - name: Build
             uses: consensys/docs-gha/build@main
             with:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              GITHUB_TOKEN: ${{ github.token }}
           - run: cp vercel.json ./build
-          - uses: amondnet/vercel-action@v25.1.1
+          - uses: amondnet/vercel-action@v41.1.4
             id: vercel-action-staging
             if: github.event_name == 'pull_request'
             with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
+              github-token: ${{ github.token }}
               vercel-token: ${{ secrets.VERCEL_TOKEN }}
               vercel-org-id: ${{ secrets.ORG_ID }}
               vercel-project-id: ${{ secrets.PROJECT_ID }}
               working-directory: ./build
-              scope: infura-web
-          - uses: amondnet/vercel-action@v25.1.1
+              scope: consensys
+          - uses: amondnet/vercel-action@v41.1.4
             id: vercel-action-production
             if: github.event_name == 'push'
             with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
+              github-token: ${{ github.token }}
               vercel-token: ${{ secrets.VERCEL_TOKEN }}
               vercel-org-id: ${{ secrets.ORG_ID }}
               vercel-project-id: ${{ secrets.PROJECT_ID }}
               working-directory: ./build
               vercel-args: "--prod "
-              scope: infura-web
+              scope: consensys
               github-comment: false
     ```
 
