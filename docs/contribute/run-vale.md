@@ -41,7 +41,7 @@ view issues in real-time.
     variable to the location of the file in the repo. For example, on macOS this is:
 
     ```bash
-    export VALE_CONFIG_PATH="/Users/{user-name}/documentation/docs-gha/spelling/.vale.ini"
+    export VALE_CONFIG_PATH="/Users/{user-name}/documentation/docs-gha/docs-spelling-check/.vale.ini"
     ```
 
      :::note
@@ -78,7 +78,7 @@ You must have the [Visual Studio (VS) Code](https://code.visualstudio.com) edito
 1. [Install the VS Code extension](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode)
 
 1. In the settings for the Vale VS Code extension, set the location of the `.vale.ini` file, and
-    enable the spell check. The `.vale.ini` file is located within the `spelling` directory in the
+    enable the spell check. The `.vale.ini` file is located within the `docs-spelling-check` directory in the
     `docs-gha` repo that you cloned onto your local.
 
     ![VS Code extension settings](../assets/vs-code-ext.png)
