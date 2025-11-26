@@ -105,16 +105,6 @@ Combined command which includes spell check, JS/TS linting, and CSS linting.
 
 Lints JS/TS with ESLint.
 
-### `npm run lint:spelling`
-
-Checks spelling using [CSpell](../configure/spell-check.md).
-
-:::tip Add new words to the dictionary
-If you use a word in your content that's not known to the linter, your build or commit fails.
-If the word that the linter caught is correctly spelled, and you wish it to pass the linter's test,
-add it to `project-words.txt`.
-:::
-
 ### `npm run lint:style`
 
 Lints CSS files with specific styling.

@@ -1,0 +1,20 @@
+dirs:
+  - ./docs
+excludedDirs:
+  - ./build
+  - ./.vercel
+  - ./.docusaurus
+  - ./node_modules
+useGitIgnore: true
+
+ignorePatterns:
+  - pattern: "^/img/"
+  - pattern: "^/static/"
+  - pattern: "^http(s)?://localhost"
+  - pattern: "^http(s)?://127.0.0.1"
+
+aliveStatusCodes:
+  - 200
+  - 201
+  - 204
+  - 206

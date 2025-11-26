@@ -5,8 +5,8 @@ sidebar_position: 5
 
 # Preview the docs
 
-Use [npm](#npm) to preview your documentation changes locally before pushing them to your remote branch.
-Make sure you have [Node.js version 18+ and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+Use npm to preview your documentation changes locally before pushing them to your remote branch.
+Make sure you have [Node.js version 20+ and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 installed.
 
 :::tip
