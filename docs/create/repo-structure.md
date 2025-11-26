@@ -14,18 +14,24 @@ This page describes the function of each file in your new doc site, based on
 ```text title="Folder structure"
 .github
 └── workflows
+    ├── algolia-search-scraper.yml
     ├── build.yml
     ├── case.yml
+    ├── dependabot.yml
+    ├── links.yml
     ├── lint.yml
-    ├── pages-deploy.yaml
-    └── release.yaml
-    
-1 directory, 5 files
+    ├── release.yml
+    ├── spelling.yml
+    └── trivy.yaml
 ```
 
 ### 📁 `workflows` folder
 
 Contains all the GitHub actions for the repository.
+
+#### 📄 `algolia-search-scraper.yml`
+
+Action that runs in the background and populates the index that [Algolia uses to search](../configure/search.md).
 
 #### 📄 `build.yml`
 
@@ -36,14 +42,18 @@ Action that builds the docs as they would be built in production, to check for a
 Action that ensures that all Markdown files have [file names](../contribute/format-markdown.md#file-names)
 which are only lower case letters, digits, dashes, or underscores.
 
+#### 📄 `dependabot.yml`
+
+Action that reviews dependencies and automatically updates them if needed.
+
+#### 📄 `links.yml`
+
+Action that checks for broken links using [Linkspector](../contribute/run-link-checker.md).
+
 #### 📄 `lint.yml`
 
 Action that runs `npm run lint` from `package.json`.
-It includes spell checking, TypeScript linting, and CSS styling.
-
-#### 📄 `pages-deploy.yaml`
-
-Action that builds and deploys the docs to GitHub Pages when any commit is made to the `main` branch.
+It includes Markdown linting, TypeScript linting, and CSS styling.
 
 #### 📄 `release.yaml`
 
@@ -51,10 +61,13 @@ Action that checks all recent commits made to `main` branch and automatically cu
 with [semantic versioning](https://semver.org/).
 This action reads the configuration in `.releaserc.js` in the root directory of this repository.
 
-## 📁 `blog` folder
+#### 📄 `spelling.yaml`
 
-Contains all the Markdown and related files for the [blog](https://docusaurus.io/docs/blog)
-functionality of Docusaurus.
+Action that checks for spelling errors using [Vale](../contribute/run-vale.md).
+
+#### 📄 `trivy.yaml`
+
+Action that scans for vulnerabilities using [Trivy](https://trivy.dev/).
 
 ## 📁 `docs` folder
 
@@ -78,8 +91,6 @@ src
     ├── index.module.css
     ├── index.tsx
     └── markdown-page.md
-
-5 directories, 6 files
 ```
 
 ### 📁 `components` folder
@@ -117,25 +128,10 @@ See how to [reference your static asset](https://docusaurus.io/docs/static-asset
 ```text title="Folder structure"
 static
 └── img
-    ├── docusaurus.png
     ├── favicon.ico
     ├── logo.svg
-    ├── logo_dark.svg
-    ├── undraw_docusaurus_mountain.svg
-    ├── undraw_docusaurus_react.svg
-    └── undraw_docusaurus_tree.svg
-
-2 directories, 7 files
+    └── logo_dark.svg
 ```
-
-## 📄 `.cspell.json`
-
-A [spell checker](https://cspell.org/) configuration file used in linting to check for misspelling
-in all files.
-
-Includes basic configuration with `ignorePaths` for paths/files which should not be checked.
-You can add additional dictionaries, either default supported or additional files, such as the
-`project-words.txt` file included in this repository.
 
 ## 📄 `.editorconfig`
 
@@ -200,11 +196,6 @@ This repository by default has the plugin `docusaurus-plugin-openapi-docs` insta
 how to integrate OpenAPI documentation directly into Docusaurus.
 The `api.mustache` file contains the API template for the plugin when generating the Markdown files.
 
-## 📄 `babel.config.js`
-
-The Babel configuration used by Docusaurus.
-You shouldn't modify this.
-
 ## 📄 `docusaurus.config.js`
 
 Contains all major Docusaurus configuration which is necessary to configure its behavior.
@@ -220,11 +211,6 @@ It should not be necessary to edit this file.
 Used by npm and contains configuration scripts, dependencies, development dependencies, and other
 related dependency configurations.
 
-## 📄 `project-words.txt`
-
-Used by CSpell in the `.cspell.json` configuration file with additional project words that should
-not be flagged as misspelling when linting.
-
 ## 📄 `sidebars.js`
 
 Separate `.js` file used by Docusaurus to provide [sidebar configuration](configure-docusaurus.md#sidebar).
@@ -234,3 +220,7 @@ Separate `.js` file used by Docusaurus to provide [sidebar configuration](config
 This project uses Typescript for React.
 The `tsconfig.json` contains Typescript compiler options but isn't used in compilation of the
 project and is only for editor experience.
+
+## 📄 `vercel.json`
+
+Vercel configuration file used for [server-side redirects](https://vercel.com/docs/redirects/configuration-redirects).

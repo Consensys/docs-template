@@ -237,7 +237,7 @@ module.exports = {
 ## Redirects
 
 Use the Vercel configuration file `vercel.json` to configure
-[server-side redirects](https://vercel.com/docs/edge-network/redirects).
+[server-side redirects](https://vercel.com/docs/redirects/configuration-redirects).
 
 <details>
 <summary>Example redirects configuration</summary>
