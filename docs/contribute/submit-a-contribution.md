@@ -19,10 +19,6 @@ To contribute changes:
 1. Choose the repository you'd like to contribute to.
    See the [list of Consensys documentation repositories](../index.md#list-of-documentation-sites).
 
-   :::note
-   These steps only apply to the doc sites that use Docusaurus.
-   :::
-
 2. In the repository, search for an existing issue to work on, or [create a new
    issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue)
    describing the documentation issue you'd like to address.
@@ -34,7 +30,7 @@ To contribute changes:
    to your personal account.
 
    :::note
-   For repositories that don't allow forking, such as Infura, you can skip steps 3–6 and clone the
+   If you have write access to a repository, you can skip steps 3–6 and clone the
    original repository instead.
    :::
 

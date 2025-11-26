@@ -6,8 +6,12 @@ sidebar_position: 7
 # Run the spelling and style linter
 
 The documentation suite uses [Vale](https://vale.sh/) as the style guide and spelling linter.
-Vale is currently integrated into the continuous integration (CI) pipeline and is executed on each
-pull request (PR) using a GitHub action. You can select the **Details** link to view the failures.
+Vale is integrated into the continuous integration (CI) pipeline and is executed on each
+pull request (PR) using a GitHub action. You can select the **Details** link to view the logs.
+
+<p align = "center">
+![Vale CI](../assets/vale-ci.png)
+</p>
 
 :::info important
 The Vale GitHub workflow runs on all Markdown files (and for some repos YAML files) in the repository, not
@@ -16,10 +20,6 @@ Failures in the workflow won't prevent your PR from being merged.
 
 You can run Vale locally to view issues directly related to your PR.
 :::
-
-<p align = "center">
-![Vale CI](../assets/vale-ci.png)
-</p>
 
 ## Run locally
 
@@ -34,14 +34,14 @@ view issues in real-time.
 1. Clone the repo containing our Vale settings:
 
    ```bash
-   git clone https://github.com/Consensys/docs-gha.git
+   git clone git@github.com:Consensys/github-actions.git
    ```
 
 1. Override the default location of the `.vale.ini` file by setting the `VALE_CONFIG_PATH` environment
     variable to the location of the file in the repo. For example, on macOS this is:
 
     ```bash
-    export VALE_CONFIG_PATH="/Users/{user-name}/documentation/docs-gha/docs-spelling-check/.vale.ini"
+    export VALE_CONFIG_PATH="/Users/{user-name}/documentation/github-actions/docs-spelling-check/.vale.ini"
     ```
 
      :::note
@@ -72,14 +72,14 @@ You must have the [Visual Studio (VS) Code](https://code.visualstudio.com) edito
 1. Clone the repo containing our Vale settings:
 
    ```bash
-   git clone https://github.com/Consensys/docs-gha.git
+   git clone git@github.com:Consensys/github-actions.git
    ```
 
 1. [Install the VS Code extension](https://marketplace.visualstudio.com/items?itemName=ChrisChinchilla.vale-vscode)
 
 1. In the settings for the Vale VS Code extension, set the location of the `.vale.ini` file, and
     enable the spell check. The `.vale.ini` file is located within the `docs-spelling-check` directory in the
-    `docs-gha` repo that you cloned onto your local.
+    `github-actions` repo that you cloned onto your local.
 
     ![VS Code extension settings](../assets/vs-code-ext.png)
 
@@ -87,6 +87,6 @@ You must have the [Visual Studio (VS) Code](https://code.visualstudio.com) edito
 
 ## Contribute to the spell checker
 
-You can contribute to the spell checker by submitting a PR to the [`docs-gha` repository](https://github.com/Consensys/docs-gha).
+You can contribute to the spell checker by submitting a PR to the [`Consensys/github-actions` repository](https://github.com/Consensys/github-actions).
 
-Learn more about how to [configure Vale](https://github.com/Consensys/docs-gha/tree/main/spelling#configure-vale).
+Learn more about how to [configure Vale](https://github.com/Consensys/github-actions/tree/main/docs-spelling-check#configure-vale).
