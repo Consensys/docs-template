@@ -5,6 +5,12 @@ module.exports = {
     "comment-empty-line-before" : null,
     "media-feature-range-notation": null,
     "selector-anb-no-unmatchable": null,
-    "declaration-block-no-duplicate-properties": null
+    "declaration-block-no-duplicate-properties": null,
+    "declaration-property-value-no-unknown": [true, {
+      "ignoreProperties": {
+        "display": ["show"]
+      }
+    }],
+    "color-function-alias-notation": null
   }
 }
