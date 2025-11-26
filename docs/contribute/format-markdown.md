@@ -159,6 +159,14 @@ sign data using an unsupported method, in which case we recommend using your sta
   </TabItem>
 </Tabs>
 
+## Links
+
+Use relative file paths for [Markdown links](https://docusaurus.io/docs/markdown-features/links) where possible. For example:
+
+```md
+You can enable users to create a [MetaMask smart account](../../concepts/smart-accounts.md) directly in your dapp.
+```
+
 ## Code samples
 
 Use [code blocks](https://docusaurus.io/docs/markdown-features/code-blocks) to present code samples.

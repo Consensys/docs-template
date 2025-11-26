@@ -14,6 +14,10 @@
       "source": "/en/stable/:match(.*)",
       "destination": "/:match(.*)",
       "permanent": true
+    },
+    {
+      "source": "/configure/spell-check/",
+      "destination": "/contribute/run-vale/"
     }
   ]
 }
