@@ -1,0 +1,46 @@
+# Link Replacement Configuration
+# This file maps broken internal links to external URLs or local placeholders
+# When a broken link matches a key in this file, it will be replaced with the corresponding URL
+# Supports generalized network patterns using regex capture groups
+
+# Exact path replacements (matches the exact link path)
+replacements:
+  /services: https://docs.metamask.io/services
+  
+  # Add more exact path replacements below as needed
+
+# Pattern-based replacements (uses regex patterns to match links)
+# Patterns are applied before exact replacements
+# Supports {network} placeholder in replacement (extracted from pattern match)
+patterns:
+  # Generic JSON-RPC methods pattern - works for any ported network
+  # Example: /services/reference/base/json-rpc-methods/eth_call
+  #   -> /reference/base/json-rpc-methods/eth_call
+  - pattern: '/services/reference/(base|ethereum|linea)/json-rpc-methods/.+'
+    replacement: '/reference/{network}/json-rpc-methods'
+    extractPath: true
+    description: 'Rewrite JSON-RPC method links for ported networks (Base, Ethereum, Linea)'
+  
+  # General reference links for ported networks
+  # Example: /services/reference/base/foo/bar
+  #   -> /reference/base/foo/bar
+  - pattern: '/services/reference/(base|ethereum|linea)/.+'
+    replacement: '/reference/{network}'
+    extractPath: true
+    description: 'Rewrite reference links for ported networks'
+  
+  # Preserve full MetaMask paths for non-ported networks
+  # Example: /services/reference/sei/foo
+  #   -> https://docs.metamask.io/services/reference/sei/foo
+  - pattern: '/services/reference/(sei|arbitrum|avalanche|blast|bnb-smart-chain|celo|gas-api|hemi|ipfs|mantle|monad|opbnb|optimism|palm|polygon-pos|scroll|solana|starknet|swellchain|unichain|zksync-era)/.+'
+    replacement: 'https://docs.metamask.io/services/reference/{network}'
+    extractPath: true
+    description: 'Preserve full MetaMask path for non-ported networks'
+  
+  # Add more pattern replacements below as needed
+  # Example for adding a new network:
+  # - pattern: '/services/reference/new-network/.+'
+  #   replacement: '/reference/new-network'
+  #   extractPath: true
+  #   description: 'Rewrite links for new-network'
+

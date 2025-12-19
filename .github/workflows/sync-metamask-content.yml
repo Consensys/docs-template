@@ -1,0 +1,104 @@
+name: Sync MetaMask Content
+
+on:
+  schedule:
+    # Run daily at noon UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run sync script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/sync-metamask-content.js
+
+      - name: Check for changes
+        id: check-changes
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create or update PR
+        if: steps.check-changes.outputs.has_changes == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH_NAME="sync-metamask-content-$(date +%Y%m%d-%H%M%S)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git checkout -b $BRANCH_NAME
+          git add .
+          git commit -m "chore: sync MetaMask services content [$(date +%Y-%m-%d)]"
+          
+          # Check if PR already exists
+          PR_EXISTS=$(gh pr list --head $BRANCH_NAME --json number --jq '.[0].number' || echo "")
+          
+          if [ -z "$PR_EXISTS" ]; then
+            # Create new PR
+            gh pr create \
+              --title "chore: sync MetaMask services content [$(date +%Y-%m-%d)]" \
+              --body "## MetaMask Content Sync
+              
+          This PR syncs content from the upstream MetaMask docs repository.
+          
+          ### Changes
+          - Content synced from: \`MetaMask/metamask-docs\`
+          - Sync date: $(date -u +%Y-%m-%d\ %H:%M:%S\ UTC)
+          
+          ### Transformation Summary
+          Check \`_maintainers/logs/\` for detailed transformation logs:
+          - \`links-replaced.log\` - Links that were rewritten
+          - \`links-dropped.log\` - Links that were removed
+          - \`image-operations.log\` - Image downloads and path fixes
+          - \`image-errors.log\` - Image download errors
+          - \`transformation-summary.log\` - Overall summary
+          
+          ### Review Notes
+          - Review the diff carefully
+          - Check that link rewrites are correct
+          - Verify images are properly downloaded
+          - If you need to revert, use the revert button or \`git revert\`
+          
+          ---
+          *This PR was automatically created by the sync workflow*" \
+              --base main
+          else
+            # Update existing PR
+            git push --force-with-lease origin $BRANCH_NAME
+            echo "Updated existing PR #$PR_EXISTS"
+          fi
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sync-logs
+          path: _maintainers/logs/
+          retention-days: 30
+

@@ -46,6 +46,11 @@ const config = {
           routeBasePath: "/",
           path: "./docs",
           includeCurrentVersion: true,
+          // Remark plugins for link rewriting and image path fixing
+          remarkPlugins: [
+            require("./plugins/remark-link-rewriter"),
+            require("./plugins/remark-fix-image-paths"),
+          ],
           // lastVersion: "23.x",
           // versions: {
           //   //defaults to the ./docs folder
