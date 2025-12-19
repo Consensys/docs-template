@@ -1,7 +1,8 @@
 # Link Replacement Configuration
-# This file maps broken internal links to external URLs or local placeholders
-# When a broken link matches a key in this file, it will be replaced with the corresponding URL
-# Supports generalized network patterns using regex capture groups
+# Generic patterns that work for any network/folder without hardcoding names
+# The porting tool only updates specific folders (e.g., base)
+# Maintainers can manually add other folders (e.g., bitcoin) to reference/
+# All links are rewritten to local paths - if content exists locally link works
 
 # Exact path replacements (matches the exact link path)
 replacements:
@@ -12,35 +13,47 @@ replacements:
 # Pattern-based replacements (uses regex patterns to match links)
 # Patterns are applied before exact replacements
 # Supports {network} placeholder in replacement (extracted from pattern match)
+# Uses ([a-z0-9-]+) to match any network name (letters, numbers, hyphens)
 patterns:
-  # Generic JSON-RPC methods pattern - works for any ported network
+  # Generic JSON-RPC methods pattern - works for ANY network
+  # Matches: /services/reference/{any-network}/json-rpc-methods/{anything}
   # Example: /services/reference/base/json-rpc-methods/eth_call
   #   -> /reference/base/json-rpc-methods/eth_call
-  - pattern: '/services/reference/(base|ethereum|linea)/json-rpc-methods/.+'
+  # Works for both ported (base) and manually maintained (ethereum) networks
+  - pattern: '/services/reference/([a-z0-9-]+)/json-rpc-methods/.+'
     replacement: '/reference/{network}/json-rpc-methods'
     extractPath: true
-    description: 'Rewrite JSON-RPC method links for ported networks (Base, Ethereum, Linea)'
+    description: 'Rewrite JSON-RPC method links to local paths (works for any network)'
   
-  # General reference links for ported networks
+  # Generic reference links - works for ANY network
+  # Matches: /services/reference/{any-network}/{anything}
   # Example: /services/reference/base/foo/bar
   #   -> /reference/base/foo/bar
-  - pattern: '/services/reference/(base|ethereum|linea)/.+'
+  # Example: /services/reference/ethereum/some-page
+  #   -> /reference/ethereum/some-page
+  # If content exists locally (ported or manual), link works
+  # If not, it's a broken link (maintainers can fix or add content)
+  - pattern: '/services/reference/([a-z0-9-]+)/.+'
     replacement: '/reference/{network}'
     extractPath: true
-    description: 'Rewrite reference links for ported networks'
+    description: 'Rewrite all reference links to local paths (works for any network)'
   
-  # Preserve full MetaMask paths for non-ported networks
-  # Example: /services/reference/sei/foo
-  #   -> https://docs.metamask.io/services/reference/sei/foo
-  - pattern: '/services/reference/(sei|arbitrum|avalanche|blast|bnb-smart-chain|celo|gas-api|hemi|ipfs|mantle|monad|opbnb|optimism|palm|polygon-pos|scroll|solana|starknet|swellchain|unichain|zksync-era)/.+'
-    replacement: 'https://docs.metamask.io/services/reference/{network}'
-    extractPath: true
-    description: 'Preserve full MetaMask path for non-ported networks'
-  
-  # Add more pattern replacements below as needed
-  # Example for adding a new network:
-  # - pattern: '/services/reference/new-network/.+'
-  #   replacement: '/reference/new-network'
-  #   extractPath: true
-  #   description: 'Rewrite links for new-network'
+  # Generic services paths (non-reference)
+  # Matches: /services/{anything} that's not /services/reference/...
+  # Example: /services/get-started, /services/concepts, etc.
+  # Preserve as external links since these aren't ported
+  - pattern: '/services/(?!reference/)([a-z0-9-/]+)'
+    replacement: 'https://docs.metamask.io/services/{path}'
+    extractPath: false
+    description: 'Preserve full MetaMask path for general services paths (non-reference)'
+
+# Notes:
+# - ([a-z0-9-]+) matches any network name: letters, numbers, hyphens
+# - {network} in replacement is replaced with the first capture group
+# - {path} in replacement is replaced with the captured path
+# - extractPath: true appends remaining path after pattern match
+# - All /services/reference/{network}/... links are rewritten to local /reference/{network}/...
+# - Works for ported content (base) and manually maintained content (ethereum, etc.)
+# - New networks/folders work automatically without code changes
+# - Porting tool only updates specific folders, doesn't overwrite entire reference/ folder
 

@@ -1,0 +1,17 @@
+
+
+:::note
+For credit cost information, see [credit cost details](/docs/single-source/between-repos/Plugins/MetaMask-ported-data/not-ported/README.md#credit-cost).
+:::
+
+Simulates the user operation and estimates the appropriate gas limits. Returns an error if the operation
+is unsuccessful. 
+
+:::tip
+- You can use `stateOverrides` to estimate the gas cost even if the sender has no funds.
+    However, if the operation is sent onchain when the sender has no balance, it will revert during
+    the call phase due to lack of funds.
+
+- You can include a dummy signature for the `signature` field to estimate the gas cost. For example:
+    `0xfffffffffffffffffffffffffffffff0000000000000000000000000000000007aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1c`
+:::

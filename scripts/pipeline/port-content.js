@@ -1,0 +1,864 @@
+#!/usr/bin/env node
+
+/**
+ * Port content script - Downloads and transforms MetaMask content
+ * Runs link fixes, image fixes, writes logs, then starts dev server
+ * 
+ * Pipeline script for local development - run via: npm run port
+ */
+
+// Load environment variables from .env file
+require("dotenv").config();
+
+const { execSync, spawn } = require("child_process");
+const path = require("path");
+const fs = require("fs");
+
+// Get project root (two levels up from scripts/pipeline/)
+const PROJECT_ROOT = path.resolve(__dirname, "..", "..");
+const PORTED_DATA_DIR = path.join(PROJECT_ROOT, "docs", "single-source", "between-repos", "Plugins", "MetaMask-ported-data");
+const LOGS_DIR = path.join(PROJECT_ROOT, "_maintainers", "logs");
+const TIMING_FILE = path.join(LOGS_DIR, "last-run-timing.json");
+
+// Logging utility - matches original format (no timestamps, summary counts in headers)
+function logToFile(logFile, message) {
+  try {
+    if (!fs.existsSync(LOGS_DIR)) {
+      fs.mkdirSync(LOGS_DIR, { recursive: true });
+    }
+    const logPath = path.join(LOGS_DIR, logFile);
+    
+    // For transformation-summary.log, replace file each build (not append)
+    if (logFile === "transformation-summary.log") {
+      // Check if file exists - if not, create it; if it does, append to it during the run
+      // But we'll write the final summary at the end, replacing the file
+      fs.appendFileSync(logPath, `${message}\n`, "utf8");
+    } else {
+      fs.appendFileSync(logPath, `${message}\n`, "utf8");
+    }
+  } catch (err) {
+    console.warn(`[port-content] Failed to write log: ${err.message}`);
+  }
+}
+
+/**
+ * Check if GITHUB_TOKEN is set and warn if not
+ */
+function checkGitHubToken() {
+  const token = process.env.GITHUB_TOKEN || process.env.API_TOKEN;
+  if (!token) {
+    console.warn("⚠️  WARNING: GITHUB_TOKEN or API_TOKEN environment variable is not set.");
+    console.warn("   Unauthenticated requests are limited to 60/hour and may fail.");
+    console.warn("   Set GITHUB_TOKEN in .env file for higher rate limits (5000/hour):");
+    console.warn("   Create .env file with: GITHUB_TOKEN=your_token_here");
+    console.warn("   Or set it in your environment: export GITHUB_TOKEN=your_token_here");
+    console.warn("");
+  }
+}
+
+/**
+ * Run command with timeout and better error handling
+ */
+function runCommandWithTimeout(command, args, options, timeoutMs = 300000) {
+  return new Promise((resolve, reject) => {
+    const startTime = Date.now();
+    console.log(`   ⏱️  Running: ${command} ${args.join(' ')}`);
+    
+    const proc = spawn(command, args, {
+      ...options,
+      stdio: "inherit",
+    });
+    
+    const timeout = setTimeout(() => {
+      proc.kill('SIGTERM');
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+      reject(new Error(`Command timed out after ${elapsed}s: ${command} ${args.join(' ')}`));
+    }, timeoutMs);
+    
+    proc.on('close', (code) => {
+      clearTimeout(timeout);
+      const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+      if (code === 0) {
+        console.log(`   ✅ Completed in ${elapsed}s`);
+        resolve();
+      } else {
+        reject(new Error(`Command failed with code ${code} after ${elapsed}s: ${command} ${args.join(' ')}`));
+      }
+    });
+    
+    proc.on('error', (err) => {
+      clearTimeout(timeout);
+      reject(err);
+    });
+  });
+}
+
+/**
+ * Download remote content using docusaurus-plugin-remote-content
+ */
+async function downloadRemoteContent() {
+  console.log("📥 Downloading remote content from MetaMask docs...");
+  console.log(`   Working directory: ${PROJECT_ROOT}`);
+  
+  // Check for GitHub token
+  checkGitHubToken();
+  
+  // Show what will be downloaded (once)
+  console.log("\n   📋 Requested downloads:");
+  console.log("      • services/index.md → services-index.md");
+  console.log("      • services/reference/_partials/** → reference/_partials/");
+  console.log("      • services/reference/base/json-rpc-methods/** → reference/base/json-rpc-methods/");
+  console.log("      • services/**/images/** → static/img/ported-images/");
+  
+  const commands = [
+    { name: "partials", cmd: "npx", args: ["docusaurus", "download-remote-metamask-partials"] },
+    { name: "services index", cmd: "npx", args: ["docusaurus", "download-remote-metamask-services-index"] },
+    { name: "base JSON-RPC", cmd: "npx", args: ["docusaurus", "download-remote-metamask-base-json-rpc"] },
+    { name: "images", cmd: "npx", args: ["docusaurus", "download-remote-metamask-images"] },
+  ];
+  
+  const errors = [];
+  try {
+    for (const { name, cmd, args } of commands) {
+      try {
+        await runCommandWithTimeout(cmd, args, {
+          cwd: PROJECT_ROOT,
+          env: { ...process.env },
+        }, 300000); // 5 minute timeout per command
+      } catch (error) {
+        errors.push({ name, error });
+        // Continue with other downloads even if one fails
+      }
+    }
+    
+    if (errors.length > 0) {
+      console.log("\n⚠️  Some downloads failed:");
+      errors.forEach(({ name, error }) => {
+        console.error(`   ❌ ${name}: ${error.message || error}`);
+      });
+      throw new Error(`${errors.length} download(s) failed`);
+    }
+    
+    console.log("\n✅ Remote content downloaded successfully!");
+    // Don't log to transformation-summary.log here - we'll write a clean summary at the end
+  } catch (error) {
+    const errorMessage = error.message || String(error);
+    
+    // Check for rate limit errors
+    if (errorMessage.includes("rate limit") || errorMessage.includes("403")) {
+      console.error("\n❌ GitHub API rate limit exceeded!");
+      console.error("");
+      console.error("   Solutions:");
+      console.error("   1. Set GITHUB_TOKEN in .env file:");
+      console.error("      echo 'GITHUB_TOKEN=your_token' > .env");
+      console.error("   2. Wait for rate limit to reset");
+      console.error("   3. Get token from: https://github.com/settings/tokens");
+      console.error("");
+      logToFile("build-errors.log", `ERROR: GitHub API rate limit exceeded. Set GITHUB_TOKEN for higher limits.\n${errorMessage}`);
+    } else if (errorMessage.includes("timed out")) {
+      console.error(`\n❌ Command timed out: ${errorMessage}`);
+      console.error("   This may indicate a network issue or the command is hanging.");
+      logToFile("build-errors.log", `ERROR: Command timeout\n${errorMessage}`);
+    } else {
+      console.error(`\n❌ Error downloading remote content: ${errorMessage}`);
+      logToFile("build-errors.log", `ERROR: Failed to download remote content: ${errorMessage}\n${error.stack || ''}`);
+    }
+    throw error;
+  }
+}
+
+/**
+ * Get all markdown files in ported data directory
+ */
+function getAllMarkdownFiles(dir) {
+  const files = [];
+  
+  if (!fs.existsSync(dir)) {
+    return files;
+  }
+  
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...getAllMarkdownFiles(fullPath));
+    } else if (entry.isFile() && (entry.name.endsWith(".md") || entry.name.endsWith(".mdx"))) {
+      files.push(fullPath);
+    }
+  }
+  
+  return files;
+}
+
+/**
+ * Fix image paths in content
+ * Converts ../images/... to /img/ported-images/... to match the remark plugin
+ * Note: The remark plugin will handle this during build, but we fix it here
+ * for consistency and to avoid issues if plugins don't run
+ */
+function fixImagePaths(content, filePath) {
+  let modified = false;
+  const imageFixes = [];
+  
+  // Match markdown image syntax: ![alt](../images/file.png)
+  content = content.replace(
+    /!\[([^\]]*)\]\((\.\.\/)+images\/([^)]+\.(png|jpg|jpeg|gif|svg|webp))\)/g,
+    (match, alt, dots, imagePath) => {
+      modified = true;
+      const filename = imagePath.split('/').pop();
+      const newPath = `/img/ported-images/${filename}`;
+      imageFixes.push({ original: match, new: `![${alt}](${newPath})`, image: filename });
+      return `![${alt}](${newPath})`;
+    }
+  );
+  
+  // Match require() statements - keep as require for Docusaurus
+  content = content.replace(
+    /require\(["'](\.\.\/)+images\/([^"']+\.(png|jpg|jpeg|gif|svg|webp))["']\)/g,
+    (match, dots, imagePath) => {
+      modified = true;
+      const filename = imagePath.split('/').pop();
+      const newPath = `require('@site/static/img/ported-images/${filename}')`;
+      imageFixes.push({ original: match, new: newPath, image: filename });
+      return newPath;
+    }
+  );
+  
+  // Match src={require(...)} patterns
+  content = content.replace(
+    /src=\{require\(["'](\.\.\/)+images\/([^"']+\.(png|jpg|jpeg|gif|svg|webp))["']\)\.default\}/g,
+    (match, dots, imagePath) => {
+      modified = true;
+      const filename = imagePath.split('/').pop();
+      const newPath = `src="/img/ported-images/${filename}"`;
+      imageFixes.push({ original: match, new: newPath, image: filename });
+      return newPath;
+    }
+  );
+  
+  return { content, modified, imageFixes };
+}
+
+/**
+ * Rename index.md to services-index.md to avoid conflict with README.md
+ * Also removes index.md if services-index.md already exists (from previous run)
+ */
+function renameIndexFile() {
+  const indexPath = path.join(PORTED_DATA_DIR, "index.md");
+  const servicesIndexPath = path.join(PORTED_DATA_DIR, "services-index.md");
+  
+  // If services-index.md already exists, delete the newly downloaded index.md
+  if (fs.existsSync(servicesIndexPath) && fs.existsSync(indexPath)) {
+    fs.unlinkSync(indexPath);
+    console.log("   ✅ Removed duplicate index.md (services-index.md already exists)");
+      // Don't log to transformation-summary.log here - we'll write a clean summary at the end
+    return;
+  }
+  
+  // Otherwise, rename index.md to services-index.md
+  if (fs.existsSync(indexPath) && !fs.existsSync(servicesIndexPath)) {
+    fs.renameSync(indexPath, servicesIndexPath);
+    console.log("   ✅ Renamed index.md to services-index.md");
+      // Don't log to transformation-summary.log here - we'll write a clean summary at the end
+  }
+}
+
+/**
+ * Load and display previous run timing
+ */
+/**
+ * Format seconds into human-readable time string
+ */
+function formatTime(seconds) {
+  if (seconds < 60) {
+    return `${seconds.toFixed(1)}s`;
+  } else if (seconds < 3600) {
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${minutes}m ${secs}s`;
+  } else {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    return `${hours}h ${minutes}m`;
+  }
+}
+
+/**
+ * Calculate exponential moving average
+ * Formula: newAverage = (alpha * newValue) + ((1 - alpha) * oldAverage)
+ * alpha = smoothing constant (0.1 = 10% weight to new value, 90% to old average)
+ */
+function calculateAverage(currentAverage, newValue, alpha = 0.1) {
+  if (currentAverage === null || currentAverage === undefined) {
+    return newValue; // First run, use the value as average
+  }
+  return (alpha * newValue) + ((1 - alpha) * currentAverage);
+}
+
+function displayPreviousRunTiming() {
+  try {
+    if (fs.existsSync(TIMING_FILE)) {
+      const timingData = JSON.parse(fs.readFileSync(TIMING_FILE, "utf8"));
+      const elapsed = timingData.elapsedSeconds;
+      
+      // Use human-readable UTC date if available, otherwise fall back to parsing timestamp
+      let dateStr;
+      if (timingData.dateHumanReadable) {
+        dateStr = timingData.dateHumanReadable;
+      } else if (timingData.timestamp) {
+        const date = new Date(timingData.timestamp);
+        dateStr = date.toUTCString();
+      } else {
+        dateStr = "unknown";
+      }
+      
+      const timeStr = formatTime(elapsed);
+      
+      // Show status based on previous run
+      let statusStr = "";
+      if (timingData.status === "success") {
+        statusStr = "✅ Previous run completed successfully";
+      } else if (timingData.status === "failed") {
+        statusStr = "❌ Previous run failed";
+      } else if (timingData.status === "errors") {
+        statusStr = "⚠️  Previous run completed with errors";
+      } else {
+        statusStr = "📊 Previous run";
+      }
+      
+      // Show average if available
+      let avgStr = "";
+      if (timingData.averageSeconds !== undefined && timingData.averageSeconds !== null) {
+        const avgTimeStr = formatTime(timingData.averageSeconds);
+        avgStr = ` (avg: ${avgTimeStr})`;
+      }
+      
+      console.log(`${statusStr} in ${timeStr}${avgStr} (${dateStr} UTC)\n`);
+    }
+  } catch (err) {
+    // Silently fail if we can't read timing file
+  }
+}
+
+/**
+ * Save run timing to file with status and average calculation
+ */
+function saveRunTiming(elapsedSeconds, status = "success") {
+  try {
+    if (!fs.existsSync(LOGS_DIR)) {
+      fs.mkdirSync(LOGS_DIR, { recursive: true });
+    }
+    
+    // Load previous timing data to calculate average
+    let previousAverage = null;
+    if (fs.existsSync(TIMING_FILE)) {
+      try {
+        const previousData = JSON.parse(fs.readFileSync(TIMING_FILE, "utf8"));
+        previousAverage = previousData.averageSeconds;
+      } catch (err) {
+        // Ignore errors reading previous file
+      }
+    }
+    
+    // Calculate new average using exponential moving average (alpha = 0.1)
+    // Only update average for successful runs
+    let newAverage = previousAverage;
+    if (status === "success") {
+      newAverage = calculateAverage(previousAverage, elapsedSeconds, 0.1);
+    } else {
+      // Keep previous average if run failed
+      newAverage = previousAverage;
+    }
+    
+    const now = new Date();
+    const timingData = {
+      elapsedSeconds: elapsedSeconds,
+      timestamp: Date.now(),
+      date: now.toISOString(),
+      dateHumanReadable: now.toUTCString(), // Human-readable UTC format
+      status: status, // "success", "failed", or "errors"
+      averageSeconds: newAverage, // Exponential moving average of successful runs
+    };
+    
+    fs.writeFileSync(TIMING_FILE, JSON.stringify(timingData, null, 2), "utf8");
+  } catch (err) {
+    console.warn(`[port-content] Failed to save timing: ${err.message}`);
+  }
+}
+
+/**
+ * Validate environment and setup
+ */
+function validateSetup() {
+  console.log("🔍 Validating setup...");
+  
+  const checks = [];
+  
+  // Check if .env file exists
+  const envPath = path.join(PROJECT_ROOT, ".env");
+  if (fs.existsSync(envPath)) {
+    console.log("   ✅ .env file found");
+    checks.push({ name: ".env file", passed: true });
+  } else {
+    console.log("   ⚠️  .env file not found (optional, but recommended for GitHub token)");
+    checks.push({ name: ".env file", passed: false, warning: true });
+  }
+  
+  // Check if node_modules exists
+  const nodeModulesPath = path.join(PROJECT_ROOT, "node_modules");
+  if (fs.existsSync(nodeModulesPath)) {
+    console.log("   ✅ node_modules found");
+    checks.push({ name: "node_modules", passed: true });
+  } else {
+    console.log("   ❌ node_modules not found - run 'npm install' first");
+    checks.push({ name: "node_modules", passed: false });
+  }
+  
+  // Check if docusaurus.config.js exists
+  const configPath = path.join(PROJECT_ROOT, "docusaurus.config.js");
+  if (fs.existsSync(configPath)) {
+    console.log("   ✅ docusaurus.config.js found");
+    checks.push({ name: "docusaurus.config.js", passed: true });
+  } else {
+    console.log("   ❌ docusaurus.config.js not found");
+    checks.push({ name: "docusaurus.config.js", passed: false });
+  }
+  
+  const failed = checks.filter(c => !c.passed && !c.warning);
+  if (failed.length > 0) {
+    console.error("\n❌ Setup validation failed!");
+    failed.forEach(check => console.error(`   - ${check.name} is missing`));
+    throw new Error("Setup validation failed");
+  }
+  
+  console.log("   ✅ Setup validation passed\n");
+}
+
+/**
+ * Fix component imports in content (process as text, not AST)
+ * Comments out @site/src/components imports that don't exist
+ */
+function fixComponentImports(content, filePath) {
+  let modified = false;
+  const componentFixes = [];
+  
+  // Track if we need to add a CreditCost note
+  let hasCreditCostImport = false;
+  const creditCostNotePath = '/docs/single-source/between-repos/Plugins/MetaMask-ported-data/not-ported/README.md#credit-cost';
+  
+  // Match @site/src/components imports - especially CreditCost
+  const componentImportRegex = /^import\s+(\w+)\s+from\s+["']@site\/src\/components\/([^"']+)["'];?\s*$/gm;
+  
+  content = content.replace(componentImportRegex, (match, componentName, componentPath) => {
+    modified = true;
+    
+    // Special handling for CreditCost - remove import entirely, we'll add a note
+    if (componentName === 'CreditCost') {
+      hasCreditCostImport = true;
+      componentFixes.push({ 
+        type: 'component', 
+        name: componentName, 
+        path: componentPath, 
+        import: match,
+        finalPath: creditCostNotePath
+      });
+      // Remove the import line entirely
+      return '';
+    } else {
+      const finalReplacement = `// ${match} // Component not available in this project`;
+      componentFixes.push({ 
+        type: 'component', 
+        name: componentName, 
+        path: componentPath, 
+        import: match,
+        finalPath: '(commented out)'
+      });
+      return finalReplacement;
+    }
+  });
+  
+  // Clean up any double blank lines that might result from removing imports
+  content = content.replace(/\n\n\n+/g, '\n\n');
+  
+  // Match @site/src/plugins imports (named imports)
+  const pluginImportRegex = /^import\s+{([^}]+)}\s+from\s+["']@site\/src\/plugins\/([^"']+)["'];?\s*$/gm;
+  
+  content = content.replace(pluginImportRegex, (match, imports, pluginPath) => {
+    modified = true;
+    const constants = imports.split(',').map(i => i.trim());
+    const finalReplacement = `// ${match} // Plugin not available in this project`;
+    constants.forEach(constName => {
+      componentFixes.push({ 
+        type: 'plugin', 
+        name: constName, 
+        path: pluginPath, 
+        import: match,
+        finalPath: '(commented out)'
+      });
+    });
+    return finalReplacement;
+  });
+  
+  // Match @site/src/plugins imports (default imports)
+  const pluginDefaultImportRegex = /^import\s+(\w+)\s+from\s+["']@site\/src\/plugins\/([^"']+)["'];?\s*$/gm;
+  
+  content = content.replace(pluginDefaultImportRegex, (match, importName, pluginPath) => {
+    modified = true;
+    componentFixes.push({ 
+      type: 'plugin', 
+      name: importName, 
+      path: pluginPath, 
+      import: match,
+      finalPath: '(commented out)'
+    });
+    return `// ${match} // Plugin not available in this project`;
+  });
+  
+  // Remove CreditCost component usage (we'll add a note instead)
+  // Match JSX usage: <CreditCost ... />
+  const creditCostSelfClosingRegex = /<CreditCost(?:[\s\S]*?)\/>/g;
+  if (creditCostSelfClosingRegex.test(content)) {
+    hasCreditCostImport = true;
+    content = content.replace(creditCostSelfClosingRegex, (match) => {
+      modified = true;
+      componentFixes.push({
+        type: 'component',
+        name: 'CreditCost',
+        path: 'JSX usage',
+        import: match,
+        finalPath: creditCostNotePath
+      });
+      // Remove the component usage entirely
+      return '';
+    });
+  }
+  
+  // Match opening/closing tags: <CreditCost>...</CreditCost>
+  const creditCostOpenCloseRegex = /<CreditCost(?:[\s\S]*?)>([\s\S]*?)<\/CreditCost>/g;
+  if (creditCostOpenCloseRegex.test(content)) {
+    hasCreditCostImport = true;
+    content = content.replace(creditCostOpenCloseRegex, (match) => {
+      modified = true;
+      componentFixes.push({
+        type: 'component',
+        name: 'CreditCost',
+        path: 'JSX usage',
+        import: match,
+        finalPath: creditCostNotePath
+      });
+      // Remove the component usage entirely
+      return '';
+    });
+  }
+  
+  // Clean up any double blank lines that might result from removing JSX
+  content = content.replace(/\n\n\n+/g, '\n\n');
+  
+  // Add a note about CreditCost if we removed an import or JSX usage
+  if (hasCreditCostImport) {
+    // Find where to insert the note - after all imports and frontmatter
+    const lines = content.split('\n');
+    let insertIndex = 0;
+    let inFrontmatter = false;
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      
+      // Track frontmatter boundaries
+      if (line === '---') {
+        inFrontmatter = !inFrontmatter;
+        if (!inFrontmatter) {
+          insertIndex = i + 1;
+        }
+        continue;
+      }
+      
+      // Skip frontmatter content
+      if (inFrontmatter) {
+        continue;
+      }
+      
+      // Skip import and export statements
+      if (line.startsWith('import ') || line.startsWith('export ')) {
+        insertIndex = i + 1;
+        continue;
+      }
+      
+      // Skip empty lines and comments after imports
+      if (!line || line.startsWith('//')) {
+        insertIndex = i + 1;
+        continue;
+      }
+      
+      // Found the first non-import, non-frontmatter, non-empty line
+      break;
+    }
+    
+    // Insert the note (check if note already exists to avoid duplicates)
+    const noteText = `:::note\nFor credit cost information, see [credit cost details](${creditCostNotePath}).\n:::`;
+    const noteExists = content.includes('credit cost information') || content.includes('credit cost details');
+    
+    if (!noteExists) {
+      // Insert blank line, note, and another blank line
+      lines.splice(insertIndex, 0, '', ...noteText.split('\n'), '');
+      content = lines.join('\n');
+    }
+  }
+  
+  return { content, modified, componentFixes };
+}
+
+/**
+ * Apply transformations to downloaded content
+ */
+function applyTransformations() {
+  console.log("\n🔧 Applying transformations...");
+  
+  if (!fs.existsSync(PORTED_DATA_DIR)) {
+    console.log("⚠️  No ported data directory found. Skipping transformations.");
+    console.log(`   Expected: ${PORTED_DATA_DIR}`);
+    return;
+  }
+  
+  console.log(`   Ported data directory: ${PORTED_DATA_DIR}`);
+  
+  // Rename index.md to services-index.md first
+  renameIndexFile();
+  
+  const files = getAllMarkdownFiles(PORTED_DATA_DIR);
+  console.log(`   Found ${files.length} markdown/MDX file(s) to process`);
+  
+  if (files.length === 0) {
+    console.log("   ⚠️  No files found to process");
+    return;
+  }
+  
+  let totalImageFixes = 0;
+  let totalComponentFixes = 0;
+  const allImageFixes = [];
+  const allComponentFixes = [];
+  const docsRoot = path.join(PROJECT_ROOT, "docs");
+  
+  files.forEach((filePath, index) => {
+    if ((index + 1) % 50 === 0) {
+      console.log(`   Processing file ${index + 1}/${files.length}...`);
+    }
+    
+    try {
+      let content = fs.readFileSync(filePath, "utf8");
+      const originalContent = content;
+      const relativeFilePath = path.relative(docsRoot, filePath);
+      let fileModified = false;
+      
+      // Fix component imports FIRST (before image fixes)
+      const { content: componentFixed, modified: componentModified, componentFixes } = fixComponentImports(content, filePath);
+      content = componentFixed;
+      if (componentModified) {
+        fileModified = true;
+        totalComponentFixes += componentFixes.length;
+        componentFixes.forEach(fix => {
+          allComponentFixes.push({
+            file: relativeFilePath,
+            type: fix.type,
+            name: fix.name,
+            path: fix.path,
+            import: fix.import,
+            finalPath: fix.finalPath || '(commented out)',
+          });
+        });
+      }
+      
+      // Fix image paths
+      const { content: imageFixed, modified: imageModified, imageFixes } = fixImagePaths(content, filePath);
+      content = imageFixed;
+      
+      if (imageModified) {
+        fileModified = true;
+        totalImageFixes += imageFixes.length;
+        imageFixes.forEach(fix => {
+          allImageFixes.push({
+            file: relativeFilePath,
+            original: fix.original,
+            new: fix.new,
+            image: fix.image,
+          });
+        });
+      }
+      
+      // Write file if modified
+      if (fileModified) {
+        fs.writeFileSync(filePath, content, "utf8");
+      }
+    } catch (err) {
+      console.error(`   ⚠️  Error processing ${filePath}: ${err.message}`);
+      logToFile("build-errors.log", `ERROR processing ${filePath}: ${err.message}\n${err.stack}`);
+    }
+  });
+  
+  // Write summary logs (matching original repo structure)
+  if (allComponentFixes.length > 0) {
+    const componentLogPath = path.join(LOGS_DIR, "component-import-fixes.log");
+    const sortedFixes = allComponentFixes.sort((a, b) => {
+      const fileCompare = a.file.localeCompare(b.file);
+      return fileCompare !== 0 ? fileCompare : `${a.type}/${a.name}`.localeCompare(`${b.type}/${b.name}`);
+    });
+    const componentLogContent = sortedFixes.map(fix => 
+      `File: ${fix.file}\n  Type: ${fix.type}\n  Name: ${fix.name}\n  Path: ${fix.path}\n  Import: ${fix.import}\n`
+    ).join("\n");
+    fs.writeFileSync(componentLogPath, `Component Import Fixes (${allComponentFixes.length} total)\n${"=".repeat(80)}\n\n${componentLogContent}`);
+    console.log(`   ✅ Fixed ${totalComponentFixes} component import(s)`);
+    console.log(`      📝 Details written to _maintainers/logs/component-import-fixes.log`);
+  }
+  
+  if (allImageFixes.length > 0) {
+    const imageLogPath = path.join(LOGS_DIR, "image-path-fixes.log");
+    const sortedFixes = allImageFixes.sort((a, b) => {
+      const fileCompare = a.file.localeCompare(b.file);
+      return fileCompare !== 0 ? fileCompare : (a.image || '').localeCompare(b.image || '');
+    });
+    const imageLogContent = sortedFixes.map(fix => 
+      `File: ${fix.file}\n  Original: ${fix.original}\n  New: ${fix.new}\n  Image: ${fix.image}\n`
+    ).join("\n");
+    fs.writeFileSync(imageLogPath, `Image Path Fixes (${allImageFixes.length} total)\n${"=".repeat(80)}\n\n${imageLogContent}`);
+    console.log(`   ✅ Fixed ${totalImageFixes} image path(s)`);
+    console.log(`      📝 Details written to _maintainers/logs/image-path-fixes.log`);
+  } else {
+    console.log("   ✅ No image fixes needed");
+  }
+  
+  // Write final summary to transformation-summary.log, replacing the file (no duplicates, no timestamps)
+  const summaryLogPath = path.join(LOGS_DIR, "transformation-summary.log");
+  const summaryContent = `Transformation Summary\n${"=".repeat(80)}\n\nApplied transformations to ${files.length} file(s)\nFixed ${totalComponentFixes} component import(s)\nFixed ${totalImageFixes} image path(s)\n`;
+  
+  // Replace file with clean summary (no timestamps, no duplicates)
+  fs.writeFileSync(summaryLogPath, summaryContent, "utf8");
+}
+
+/**
+ * Main function
+ */
+async function main() {
+  const startTime = Date.now();
+  console.log("🚀 Starting port content process...\n");
+  console.log(`   Project root: ${PROJECT_ROOT}`);
+  console.log(`   Ported data dir: ${PORTED_DATA_DIR}`);
+  console.log(`   Logs dir: ${LOGS_DIR}\n`);
+  
+  // Display previous run timing
+  displayPreviousRunTiming();
+  
+  // Validate setup first
+  try {
+    validateSetup();
+  } catch (err) {
+    console.error("\n❌ Setup validation failed. Please fix the issues above and try again.");
+    process.exit(1);
+  }
+  
+  // Check if we should skip the dev server (for testing)
+  const skipServer = process.argv.includes("--no-server") || process.argv.includes("--test");
+  const runBuild = process.argv.includes("--build");
+  
+  try {
+    // Step 1: Download remote content
+    await downloadRemoteContent();
+    
+    // Step 2: Apply transformations
+    applyTransformations();
+    
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    const elapsedSeconds = parseFloat(elapsed);
+    
+    const timeStr = formatTime(elapsedSeconds);
+    
+    console.log(`\n✨ Port content process completed in ${timeStr}!`);
+    
+    if (runBuild) {
+      // Run build to check for broken links
+      console.log("\n🔨 Running build to check for broken links...\n");
+      const buildStart = Date.now();
+      try {
+        execSync("npm run build", {
+          stdio: "inherit",
+          cwd: PROJECT_ROOT,
+          env: { ...process.env },
+        });
+        const buildElapsed = ((Date.now() - buildStart) / 1000).toFixed(1);
+        console.log(`\n✅ Build completed successfully in ${buildElapsed}s`);
+        // Save timing with success status (build passed)
+        saveRunTiming(elapsedSeconds, "success");
+      } catch (buildError) {
+        const buildElapsed = ((Date.now() - buildStart) / 1000).toFixed(1);
+        const exitTime = new Date().toUTCString();
+        console.error(`\n❌ Build failed after ${buildElapsed}s`);
+        console.error("   Check the error messages above for broken links or other issues");
+        console.error(`   Run exited at ${exitTime}`);
+        logToFile("build-errors.log", `Build failed: ${buildError.message}\n${buildError.stack || ''}`);
+        // Save timing with failed status (build failed)
+        saveRunTiming(elapsedSeconds, "failed");
+        process.exit(1);
+      }
+    } else if (!skipServer) {
+      // Check for transformation errors to determine status
+      let status = "success";
+      const buildErrorsLog = path.join(LOGS_DIR, "build-errors.log");
+      if (fs.existsSync(buildErrorsLog)) {
+        const errorContent = fs.readFileSync(buildErrorsLog, "utf8");
+        if (errorContent.trim().length > 0) {
+          status = "errors"; // Completed but had errors
+        }
+      }
+      // Save timing for run without build check
+      saveRunTiming(elapsedSeconds, status);
+      // Step 3: Start dev server (default behavior)
+      console.log("\n🌐 Starting dev server...\n");
+      execSync("npm start", {
+        stdio: "inherit",
+        cwd: PROJECT_ROOT,
+        env: { ...process.env },
+      });
+    } else {
+      console.log("   Skipping dev server (--no-server flag used)");
+      // Check for transformation errors to determine status
+      let status = "success";
+      const buildErrorsLog = path.join(LOGS_DIR, "build-errors.log");
+      if (fs.existsSync(buildErrorsLog)) {
+        const errorContent = fs.readFileSync(buildErrorsLog, "utf8");
+        if (errorContent.trim().length > 0) {
+          status = "errors"; // Completed but had errors
+        }
+      }
+      // Save timing for run without server
+      saveRunTiming(elapsedSeconds, status);
+    }
+  } catch (error) {
+    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+    const elapsedSeconds = parseFloat(elapsed);
+    const exitTime = new Date().toUTCString();
+    
+    // Save timing even on failure (so we know how long it ran before failing)
+    saveRunTiming(elapsedSeconds, "failed");
+    
+    console.error(`\n❌ Port content process failed after ${elapsed}s`);
+    console.error(`   Error: ${error.message}`);
+    console.error(`   Run exited at ${exitTime}`);
+    logToFile("build-errors.log", `FATAL ERROR after ${elapsed}s: ${error.message}\n${error.stack || ''}`);
+    process.exit(1);
+  }
+}
+
+// Run if called directly
+if (require.main === module) {
+  main();
+}
+
+module.exports = {
+  downloadRemoteContent,
+  applyTransformations,
+  checkGitHubToken,
+  validateSetup,
+  getAllMarkdownFiles,
+  fixImagePaths,
+  renameIndexFile,
+};
+

@@ -12,6 +12,7 @@
 
 # Misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -22,3 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 .vercel
 .envrc
+
+# Maintainer logs (build outputs, sync logs, debug info)
+# These are regenerated on clone/build
+_maintainers/logs/

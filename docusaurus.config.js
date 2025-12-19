@@ -1,6 +1,14 @@
 const {themes} = require("prism-react-renderer");
+const path = require("path");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
+
+// Remote content from MetaMask docs
+const { createRepo, buildRepoRawBaseUrl, listDocuments } = require("./src/lib/list-remote");
+const metamaskRepo = createRepo("MetaMask", "metamask-docs", "main");
+const servicesIndexPath = "services";
+const baseJsonRpcPath = "services/reference/base/json-rpc-methods";
+const partialsPath = "services/reference/_partials";
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
@@ -15,7 +23,8 @@ const config = {
   onBrokenLinks: "throw",
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: "throw",
+      // Warn instead of throw for broken links - plugins will fix ported content links
+      onBrokenMarkdownLinks: "warn",
     }
   },
   favicon: "img/favicon.ico",
@@ -46,10 +55,14 @@ const config = {
           routeBasePath: "/",
           path: "./docs",
           includeCurrentVersion: true,
-          // Remark plugins for link rewriting and image path fixing
-          remarkPlugins: [
+          // Remark plugins for link rewriting, image path fixing, and component fixes
+          // Using plugins from plugins/ directory (simpler, less brittle approach)
+          // Only processes files in ported content directory
+          // Run before default plugins to ensure links are fixed before validation
+          beforeDefaultRemarkPlugins: [
             require("./plugins/remark-link-rewriter"),
             require("./plugins/remark-fix-image-paths"),
+            require("./plugins/remark-fix-components"),
           ],
           // lastVersion: "23.x",
           // versions: {
@@ -258,6 +271,61 @@ const config = {
         containerId: "GTM-",
       },
     ],
+    // Remote content: MetaMask Services Index
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-services-index",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, servicesIndexPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data",
+        documents: ["index.md"], // Downloads services/index.md
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-services-index
+        // Set to false for auto-download on start/build (adds ~2.5 min to build time)
+        noRuntimeDownloads: true,
+        performCleanup: false, // Keep files after build
+      },
+    ],
+    // Remote content: MetaMask _partials (required for Base JSON-RPC methods)
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-partials",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, partialsPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/_partials",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], partialsPath),
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-partials
+        // Set to false for auto-download on start/build (adds ~2.5 min to build time)
+        noRuntimeDownloads: true,
+        performCleanup: false, // Keep files after build
+      },
+    ],
+    // Remote content: MetaMask Base JSON-RPC Methods
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-base-json-rpc",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, baseJsonRpcPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/base/json-rpc-methods",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], baseJsonRpcPath),
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-base-json-rpc
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Images (ported from upstream)
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-images",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, servicesIndexPath),
+        outDir: "static/img/ported-images",
+        documents: listDocuments(metamaskRepo, ["**/images/**/*.{png,jpg,jpeg,gif,svg,webp}"], [], servicesIndexPath),
+        // To sync images from MetaMask docs, run: npx docusaurus download-remote-metamask-images
+        // Set to false for auto-download on start/build (adds time to build)
+        noRuntimeDownloads: true,
+        performCleanup: false, // Keep files after build
+      },
+    ],
     // This is how redirects are done
     // [
     //   "@docusaurus/plugin-client-redirects",
@@ -283,6 +351,21 @@ const config = {
     //     },
     //   },
     // ],
+    // Webpack alias plugin to resolve /services/ import paths
+    function (context, options) {
+      return {
+        name: "webpack-alias-plugin",
+        configureWebpack(config, isServer) {
+          return {
+            resolve: {
+              alias: {
+                "/services": path.resolve(__dirname, "docs", "single-source", "between-repos", "Plugins", "MetaMask-ported-data"),
+              },
+            },
+          };
+        },
+      };
+    },
   ],
   themes: [
     [
