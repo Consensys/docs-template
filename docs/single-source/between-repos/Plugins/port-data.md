@@ -22,13 +22,12 @@ The porting system uses **runtime plugins** to transform content at build time:
 ### Components
 
 - **Remark Plugins** (`plugins/`)
-  - `remark-link-rewriter` - Rewrites links based on YAML config
-  - `remark-fix-image-paths` - Fixes image paths for Docusaurus
-  - `remark-fix-components` - Fixes missing component imports
+  - `remark-link-rewriter` - Rewrites links based on YAML config (used at build time)
+  - `remark-fix-image-paths` - Fixes image paths for Docusaurus (used at build time)
 
-- **Port Script** (`scripts/pipeline/port-content.js`)
+- **Port Script** (`scripts/port-content.js`)
   - Downloads content via `docusaurus-plugin-remote-content`
-  - Applies component and image transformations
+  - Applies transformations: MDX syntax fixes, component import removal, broken link removal, image path fixes
   - Writes logs to `_maintainers/logs/`
 
 - **Configuration** (`_maintainers/link-replacements.yaml`)
@@ -63,12 +62,14 @@ plugins: [
 
 The system handles four types of link replacements:
 
-| Type | Plugin | Configuration | Description |
-|------|--------|--------------|-------------|
-| **Component Imports** | `remark-fix-components` | None | Comments out missing `@site/src/components` imports and replaces `CreditCost` component usage with links |
-| **Relative Links from Upstream** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Converts relative paths that don't exist locally to external URLs |
-| **Image Links** | `remark-fix-image-paths` | None | Rewrites image paths to `/img/ported-images/{filename}`. Images downloaded via `docusaurus-plugin-remote-content` |
-| **Absolute Paths** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Rewrites absolute paths (starting with `/`) to local paths or external URLs based on YAML patterns |
+| Type | Tool | Configuration | Description |
+|------|------|--------------|-------------|
+| **Component Imports** | `scripts/port-content.js` | None | Removes missing `@site/src/components` and `@site/src/plugins` imports, comments out component usage |
+| **MDX Syntax** | `scripts/port-content.js` | None | Fixes MDX syntax issues (adds blank lines after imports) |
+| **Broken Links** | `scripts/port-content.js` | None | Removes broken internal markdown links that can't be resolved |
+| **Image Links** | `scripts/port-content.js` | None | Rewrites image paths to `@site/static/img/{filename}`. Images downloaded via `docusaurus-plugin-remote-content` |
+| **Relative Links from Upstream** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Converts relative paths that don't exist locally to external URLs (applied at build time) |
+| **Absolute Paths** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Rewrites absolute paths (starting with `/`) to local paths or external URLs based on YAML patterns (applied at build time) |
 
 <details>
   <summary>Examples</summary>
@@ -118,7 +119,7 @@ patterns:
 
 ### Plugin Import Syntax
 
-Plugins are imported in `docusaurus.config.js`:
+Remark plugins are imported in `docusaurus.config.js` and applied at build time:
 
 <Tabs>
   <TabItem value="simple" label="Simple Import" default>
@@ -127,7 +128,6 @@ Plugins are imported in `docusaurus.config.js`:
 remarkPlugins: [
   require("./plugins/remark-link-rewriter"),
   require("./plugins/remark-fix-image-paths"),
-  require("./plugins/remark-fix-components"),
 ],
 ```
 
@@ -145,6 +145,8 @@ remarkPlugins: [
 
   </TabItem>
 </Tabs>
+
+**Note:** Component fixes, broken link removal, and MDX syntax fixes are handled by `scripts/port-content.js` during the port process, not by remark plugins.
 
 ### Adding New Networks
 
@@ -167,12 +169,13 @@ Images are downloaded via `docusaurus-plugin-remote-content` to `static/img/port
 ## Logging
 
 All transformations are logged to `_maintainers/logs/`:
-- `links-replaced.log` - Link rewrites
-- `links-dropped.log` - Removed links
-- `component-import-fixes.log` - Component fixes
-- `image-operations.log` - Image operations
-- `build-errors.log` - Build errors
-- `transformation-summary.log` - Summary per run
+- `transformation-summary.log` - Summary per run (downloads, transformations applied)
+- `links-dropped.log` - Removed broken links
+- `component-import-fixes.log` - Removed component/plugin imports
+- `image-operations.log` - Image path fixes
+- `build-errors.log` - Build and download errors
+
+**Note:** Link rewrites from `remark-link-rewriter` are applied at build time and logged by the plugin itself.
 
 ## Usage
 
@@ -184,17 +187,33 @@ npm run port
 
 This command:
 1. Downloads content via `docusaurus-plugin-remote-content`
-2. Applies transformations (component fixes, image fixes)
+2. Applies transformations:
+   - Fixes MDX syntax (adds blank lines after imports)
+   - Removes missing component imports (`@site/src/components`, `@site/src/plugins`)
+   - Removes broken internal markdown links
+   - Fixes image paths
 3. Writes logs to `_maintainers/logs/`
-4. Starts dev server
+4. Starts dev server (unless `--no-server` flag is used)
 
-### Build for Testing
+### Command-Line Options
 
 ```bash
-npm run port --build
+# Port content without starting dev server
+npm run port -- --no-server
+
+# Port content and build (no dev server)
+npm run port -- --build
 ```
 
-Runs the port process and builds the site without starting the server.
+### Environment Variables
+
+The script loads environment variables from `.env` file in the project root using `dotenv`.
+
+**Required for GitHub API:**
+- `API_TOKEN` or `GITHUB_TOKEN` - GitHub personal access token for higher rate limits (5000/hour vs 60/hour)
+  - Get a token at: https://github.com/settings/tokens
+  - No special permissions needed
+  - Add to `.env`: `API_TOKEN=your_token_here`
 
 ## Error Handling
 
@@ -214,14 +233,15 @@ npm test
 Test files:
 - `plugins/__tests__/remark-link-rewriter.test.js`
 - `plugins/__tests__/remark-fix-image-paths.test.js`
-- `scripts/pipeline/__tests__/port-content.test.js`
 
 ## Troubleshooting
 
-- **Links not rewriting**: Check `_maintainers/link-replacements.yaml` and `_maintainers/logs/links-replaced.log`
-- **Images not working**: Check `_maintainers/logs/image-errors.log`
+- **Links not rewriting**: Check `_maintainers/link-replacements.yaml` and verify patterns match your paths
+- **Images not working**: Check `_maintainers/logs/image-operations.log` for image path fixes
 - **Build failing**: Check `_maintainers/logs/build-errors.log` and verify YAML syntax
-- **GitHub rate limits**: Set `GITHUB_TOKEN` in `.env` file
+- **GitHub rate limits**: Set `API_TOKEN` (or `GITHUB_TOKEN`) in `.env` file for higher rate limits (5000/hour)
+- **Component errors**: Check `_maintainers/logs/component-import-fixes.log` to see which imports were removed
+- **MDX compilation errors**: The script fixes common MDX syntax issues (blank lines after imports)
 
 ## Examples
 
