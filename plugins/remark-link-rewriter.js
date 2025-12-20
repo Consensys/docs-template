@@ -4,14 +4,22 @@
  * Only processes files in the ported content directory
  * Handles relative paths that point outside ported content by converting to external URLs
  * Based on the simpler, less brittle approach from test-duplicate-data
+ * 
+ * Note: Contains MetaMask-specific logic for base/ethereum mapping:
+ * - Maps base/ paths to ethereum/ in external MetaMask URLs (base services use ethereum paths upstream)
+ * - Maps ethereum/ links to base/ if base version exists locally
+ * This is intentional for MetaMask docs porting but could be generalized for other use cases
  */
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
+const { getPortedContentDirs, getPortedContentDirsRelative, isPortedContent, getPortedContentDirForFile } = require("./config-loader");
+const { getLogsDir, ensureLogsDir, normalizePath, getFilePath } = require("./utils");
 
-const PORTED_CONTENT_DIR = "docs/single-source/between-repos/Plugins/MetaMask-ported-data";
-const PORTED_CONTENT_ABSOLUTE = path.join(process.cwd(), PORTED_CONTENT_DIR);
-const LOGS_DIR = path.join(process.cwd(), "_maintainers", "logs");
+// Get ported content directories from config
+const PORTED_CONTENT_DIRS = getPortedContentDirsRelative();
+const PORTED_CONTENT_DIRS_ABSOLUTE = getPortedContentDirs();
+const LOGS_DIR = getLogsDir();
 const DROPPED_LINKS_LOG = path.join(LOGS_DIR, "links-dropped.log");
 const EXTERNAL_LINKS_LOG = path.join(LOGS_DIR, "links-external.log");
 const LINKS_REPLACED_LOG = path.join(LOGS_DIR, "links-replaced.log");
@@ -27,8 +35,11 @@ const replacedLinks = []; // Array of { file, original, new }
 function pathExistsInPortedContent(relativePath, baseDir) {
   try {
     const resolvedPath = path.resolve(baseDir, relativePath);
-    // Check if resolved path is within ported content directory
-    if (!resolvedPath.startsWith(PORTED_CONTENT_ABSOLUTE)) {
+    // Check if resolved path is within any ported content directory
+    const isInPortedDir = PORTED_CONTENT_DIRS_ABSOLUTE.some(dir => 
+      resolvedPath.startsWith(dir)
+    );
+    if (!isInPortedDir) {
       return false;
     }
     // Check if file exists
@@ -47,6 +58,7 @@ function pathExistsInPortedContent(relativePath, baseDir) {
 
 /**
  * Try to map ethereum links to base links if base version exists
+ * MetaMask-specific: base services use ethereum paths upstream, so we map ethereum->base for local links
  */
 function tryMapEthereumToBase(relativePath, baseDir) {
   // Try various patterns to map ethereum to base
@@ -83,7 +95,9 @@ function tryMapEthereumToBase(relativePath, baseDir) {
  * Convert relative path to MetaMask docs external URL
  * Handles paths like ../ethereum/... or ../../concepts/...
  * Removes file extensions (.md, .mdx) from URLs
- * Maps base/ paths to ethereum/ in MetaMask docs (base services are ethereum)
+ * 
+ * MetaMask-specific: Maps base/ paths to ethereum/ in external URLs
+ * (base services use ethereum paths in MetaMask docs upstream)
  */
 function convertToExternalUrl(relativePath, baseDir) {
   // Remove leading ../ or ./
@@ -96,9 +110,10 @@ function convertToExternalUrl(relativePath, baseDir) {
   let resolvedPath = null;
   try {
     resolvedPath = path.resolve(baseDir, relativePath);
-    // Check if this path is within ported content to understand the structure
-    if (resolvedPath.startsWith(PORTED_CONTENT_ABSOLUTE)) {
-      const relativeToPorted = path.relative(PORTED_CONTENT_ABSOLUTE, resolvedPath);
+    // Check if this path is within any ported content directory
+    const portedDirForFile = getPortedContentDirForFile(resolvedPath);
+    if (portedDirForFile) {
+      const relativeToPorted = path.relative(portedDirForFile, resolvedPath);
       // Map base/ to ethereum/ for MetaMask docs
       // Example: reference/base/json-rpc-methods/filter-methods/eth_newfilter
       // -> services/reference/ethereum/json-rpc-methods/filter-methods/eth_newfilter
@@ -224,8 +239,8 @@ function remarkLinkRewriter() {
   if (replacements.size === 0 && patterns.length === 0) {
     return (tree, file) => {
       // Still need to handle relative paths for ported content
-      const filePath = file?.path || file?.history?.[0] || "";
-      if (!filePath.includes(PORTED_CONTENT_DIR)) {
+      const filePath = getFilePath(file);
+      if (!isPortedContent(filePath)) {
         return; // Skip files outside ported content
       }
       
@@ -249,7 +264,9 @@ function remarkLinkRewriter() {
           const originalUrl = String(node.url);
           
           // Handle relative paths that point outside ported content
-          if (!(/^(https?|mailto):/.test(originalUrl) || originalUrl.startsWith("#"))) {
+          // Skip absolute URLs, anchors, and Docusaurus routes (/docs/...)
+          // Docusaurus routes are valid and should not be processed
+          if (!(/^(https?|mailto):/.test(originalUrl) || originalUrl.startsWith("#") || originalUrl.startsWith("/docs/"))) {
             const isRelativePath = !originalUrl.startsWith('/') && 
                                    !/^(https?|mailto):/.test(originalUrl) && 
                                    !originalUrl.startsWith('#');
@@ -282,9 +299,9 @@ function remarkLinkRewriter() {
   }
 
   return (tree, file) => {
-    // Only process files in the ported content directory
-    const filePath = file?.path || file?.history?.[0] || "";
-    if (!filePath.includes(PORTED_CONTENT_DIR)) {
+    // Only process files in any ported content directory
+    const filePath = getFilePath(file);
+    if (!isPortedContent(filePath)) {
       return; // Skip files outside ported content
     }
 
@@ -296,6 +313,7 @@ function remarkLinkRewriter() {
       // Skip code blocks, inline code, and MDX-specific nodes - they contain literal code/content
       // that shouldn't be processed and could break MDX compilation if modified
       // Also skip HTML nodes to avoid corrupting JSX/HTML structures
+      // Note: Import statements (mdxjsEsm) are handled by webpack alias, not by this plugin
       if (
         node.type === 'code' || 
         node.type === 'inlineCode' ||
@@ -313,8 +331,9 @@ function remarkLinkRewriter() {
       if (node.type === 'link' && node.url && typeof node.url === 'string') {
         const originalUrl = String(node.url); // Ensure it's a string
 
-        // Skip absolute URLs and anchors
-        if (!(/^(https?|mailto):/.test(originalUrl) || originalUrl.startsWith("#"))) {
+        // Skip absolute URLs, anchors, and Docusaurus routes (/docs/...)
+        // Docusaurus routes are valid and should not be processed
+        if (!(/^(https?|mailto):/.test(originalUrl) || originalUrl.startsWith("#") || originalUrl.startsWith("/docs/"))) {
           let newUrl = originalUrl;
           
           // Check if this is a relative path (not starting with /, http, mailto, or #)
@@ -413,9 +432,7 @@ function remarkLinkRewriter() {
 // Write logs at module unload (end of build) - matching original repo structure
 process.on('exit', () => {
   try {
-    if (!fs.existsSync(LOGS_DIR)) {
-      fs.mkdirSync(LOGS_DIR, { recursive: true });
-    }
+    ensureLogsDir();
     
     // Write dropped links log (matching original format)
     if (droppedLinks.length > 0) {

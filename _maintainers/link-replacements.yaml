@@ -4,6 +4,21 @@
 # Maintainers can manually add other folders (e.g., bitcoin) to reference/
 # All links are rewritten to local paths - if content exists locally link works
 
+# Global settings
+settings:
+  # Image directory path (where images are served from, e.g., /img/ported-images/)
+  # Note: Ported content directories are read from docusaurus.config.js
+  # (from docusaurus-plugin-remote-content plugin configurations)
+  imagePath: "/img/ported-images"
+  
+  # Default messages for unconfigured components/plugins
+  defaultComponentMessage: "Component not available in this project"
+  defaultPluginMessage: "Plugin not available in this project"
+  
+  # Fallback values for logging
+  fallbackCommentedOut: "(commented out)"
+  fallbackReplaced: "(replaced)"
+
 # Exact path replacements (matches the exact link path)
 replacements:
   /services: https://docs.metamask.io/services
@@ -13,13 +28,14 @@ replacements:
 # Pattern-based replacements (uses regex patterns to match links)
 # Patterns are applied before exact replacements
 # Supports {network} placeholder in replacement (extracted from pattern match)
-# Uses ([a-z0-9-]+) to match any network name (letters, numbers, hyphens)
+# Uses ([a-z0-9-]+) to match any network name (letters, numbers, hyphens) patterns:
 patterns:
   # Generic JSON-RPC methods pattern - works for ANY network
   # Matches: /services/reference/{any-network}/json-rpc-methods/{anything}
   # Example: /services/reference/base/json-rpc-methods/eth_call
   #   -> /reference/base/json-rpc-methods/eth_call
-  # Works for both ported (base) and manually maintained (ethereum) networks
+  # Works for any folder defined in docusaurus.config.js (via docusaurus-plugin-remote-content outDir)
+  # even if sub-files or folders within that directory are locally maintained and not ported
   - pattern: '/services/reference/([a-z0-9-]+)/json-rpc-methods/.+'
     replacement: '/reference/{network}/json-rpc-methods'
     extractPath: true
@@ -31,12 +47,23 @@ patterns:
   #   -> /reference/base/foo/bar
   # Example: /services/reference/ethereum/some-page
   #   -> /reference/ethereum/some-page
+  # Works for any folder defined in docusaurus.config.js (via docusaurus-plugin-remote-content outDir)
+  # even if sub-files or folders within that directory are locally maintained and not ported
   # If content exists locally (ported or manual), link works
   # If not, it's a broken link (maintainers can fix or add content)
   - pattern: '/services/reference/([a-z0-9-]+)/.+'
     replacement: '/reference/{network}'
     extractPath: true
     description: 'Rewrite all reference links to local paths (works for any network)'
+  
+  # Partial imports - rewrite /services/reference/_partials/ to /reference/_partials/
+  # Matches: /services/reference/_partials/{anything}
+  # Example: /services/reference/_partials/_eth_syncing-description.mdx
+  #   -> /reference/_partials/_eth_syncing-description.mdx
+  - pattern: '/services/reference/_partials/.+'
+    replacement: '/reference/_partials'
+    extractPath: true
+    description: 'Rewrite partial import paths to local paths'
   
   # Generic services paths (non-reference)
   # Matches: /services/{anything} that's not /services/reference/...
@@ -47,13 +74,44 @@ patterns:
     extractPath: false
     description: 'Preserve full MetaMask path for general services paths (non-reference)'
 
+# Component replacements
+# Handles missing component imports by replacing them with links or comments
+# Each entry defines:
+#   - component: Component name (e.g., "CreditCost")
+#   - importPath: Full import path pattern (regex supported)
+#   - replacement: Replacement text (markdown link or comment)
+#   - jsxReplacement: Replacement for JSX usage (optional, defaults to replacement)
+#   - insertNote: Whether to insert the replacement as a note after imports (default: false)
+#     If true, the replacement will be inserted after frontmatter/imports.
+#     If the replacement doesn't already contain :::, it will be wrapped in a :::note block.
+componentReplacements:
+  - component: CreditCost
+    importPath: '@site/src/components/CreditCost/CreditCostPrice\\.js'
+    replacement: 'For credit cost information, see [credit cost details](/docs/single-source/between-repos/Plugins/MetaMask-ported-data/not-ported/README.md#credit-cost).'
+    jsxReplacement: 'For credit cost information, see [credit cost details](/docs/single-source/between-repos/Plugins/MetaMask-ported-data/not-ported/README.md#credit-cost).'
+    insertNote: true
+  
+  - component: SectionNetworks
+    importPath: '@site/src/components/Sections/SectionNetworks\\.jsx'
+    replacement: 'SectionNetworks component not available in this project'
+    jsxReplacement: '<!-- SectionNetworks component not available -->'
+    insertNote: false
+  
+  - component: SectionAPIs
+    importPath: '@site/src/components/Sections/SectionAPIs\\.jsx'
+    replacement: 'SectionAPIs component not available in this project'
+    jsxReplacement: '<!-- SectionAPIs component not available -->'
+    insertNote: false
+
 # Notes:
 # - ([a-z0-9-]+) matches any network name: letters, numbers, hyphens
 # - {network} in replacement is replaced with the first capture group
 # - {path} in replacement is replaced with the captured path
 # - extractPath: true appends remaining path after pattern match
 # - All /services/reference/{network}/... links are rewritten to local /reference/{network}/...
-# - Works for ported content (base) and manually maintained content (ethereum, etc.)
+# - Works for any folder defined in docusaurus.config.js (via docusaurus-plugin-remote-content outDir)
+#   even if sub-files or folders within that directory are locally maintained and not ported
 # - New networks/folders work automatically without code changes
 # - Porting tool only updates specific folders, doesn't overwrite entire reference/ folder
+# - Component replacements are optional - if not configured, components are commented out
 

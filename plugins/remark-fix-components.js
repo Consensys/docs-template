@@ -1,71 +1,80 @@
 /**
  * Remark plugin to fix/remove missing component imports
  * Comments out @site/src/components and @site/src/plugins imports that don't exist
- * Replaces CreditCost component usage with link to README
+ * Replaces component usage based on YAML config
  * Based on the approach from test-duplicate-data/scripts/get-remote.js
  */
 
-const PORTED_CONTENT_DIR = "docs/single-source/between-repos/Plugins/MetaMask-ported-data";
-const NOT_PORTED_README_PATH = "/docs/single-source/between-repos/Plugins/MetaMask-ported-data/not-ported/README.md";
+const { 
+  isPortedContent,
+  getComponentReplacements, 
+  getSettings 
+} = require("./config-loader");
+const { normalizePath, getFilePath } = require("./utils");
 
 function remarkFixComponents() {
   return (tree, file) => {
     // Only process files in the ported content directory
     // Check multiple possible path formats from Docusaurus
-    const filePath = file?.path || file?.history?.[0] || file?.data?.filePath || "";
-    const normalizedPath = filePath.replace(/\\/g, '/'); // Normalize Windows paths
+    const filePath = getFilePath(file);
+    const normalizedPath = normalizePath(filePath);
     
-    // Check if file is in ported content directory (multiple ways to match)
+    // Check if file is in any ported content directory
     // If no path available, we'll process anyway and let the import check determine if it's relevant
-    const isPortedContent = 
-      !filePath || // If no path, process anyway
-      normalizedPath.includes(PORTED_CONTENT_DIR) ||
-      normalizedPath.includes('MetaMask-ported-data') ||
-      normalizedPath.includes('single-source/between-repos/Plugins');
+    const isInPortedContent = !filePath || isPortedContent(filePath);
     
-    if (!isPortedContent && filePath) {
+    if (!isInPortedContent && filePath) {
       return; // Skip files outside ported content (but only if we have a path to check)
     }
 
     function traverse(node) {
       if (!node || typeof node !== 'object') return;
 
-      // Handle MDX import statements (mdxjsEsm) - replace CreditCost imports with link
+      // Handle MDX import statements (mdxjsEsm) - replace component imports based on config
       // This runs BEFORE MDX processes the imports, so we can comment them out
       if (node.type === 'mdxjsEsm' && node.value) {
         let newValue = node.value;
         let modified = false;
 
-        // Special handling for CreditCost component - replace import with link info
-        // Match the exact import pattern - be very specific to catch it
-        if (newValue.includes('CreditCost') && newValue.includes('@site/src/components/CreditCost')) {
-          modified = true;
-          // Replace the entire import line with a comment
-          // Match: import CreditCost from '@site/src/components/CreditCost/CreditCostPrice.js';
-          // Handle with or without semicolon, with or without trailing newline
-          newValue = newValue.replace(
-            /import\s+CreditCost\s+from\s+['"]@site\/src\/components\/CreditCost\/CreditCostPrice\.js['"];?\s*\n?/g,
-            `// CreditCost component not available in this repo - see [credit cost information](${NOT_PORTED_README_PATH}#credit-cost)\n`
-          );
-        }
+        // Load component replacements from config
+        const componentReplacements = getComponentReplacements();
+        const settings = getSettings();
+        const componentMap = new Map();
+        componentReplacements.forEach(replacement => {
+          if (replacement.component && replacement.importPath) {
+            componentMap.set(replacement.component.toLowerCase(), replacement);
+          }
+        });
 
-        // Match other @site/src/components imports (but not CreditCost which we already handled)
-        if (!newValue.includes('CreditCost')) {
-          newValue = newValue.replace(
-            /^import\s+(\w+)\s+from\s+["']@site\/src\/components\/([^"']+)["'];?\s*$/gm,
-            (match) => {
-              modified = true;
-              return `// ${match} // Component not available in this project`;
+        // Match @site/src/components imports
+        newValue = newValue.replace(
+          /^import\s+(\w+)\s+from\s+["']@site\/src\/components\/([^"']+)["'];?\s*$/gm,
+          (match, componentName, componentPath) => {
+            modified = true;
+            
+            // Check if we have a replacement configured for this component
+            const replacement = componentMap.get(componentName.toLowerCase());
+            
+            if (replacement) {
+              // Check if the import path matches
+              const importPathRegex = new RegExp(replacement.importPath.replace(/\./g, '\\.'));
+              if (importPathRegex.test(componentPath)) {
+                // Remove the import (replacement will be handled elsewhere)
+                return '';
+              }
             }
-          );
-        }
+            
+            // No replacement configured - comment it out
+            return `// ${match} // ${settings.defaultComponentMessage}`;
+          }
+        );
 
         // Match @site/src/plugins imports (named imports)
         newValue = newValue.replace(
           /^import\s+{([^}]+)}\s+from\s+["']@site\/src\/plugins\/([^"']+)["'];?$/gm,
           (match) => {
             modified = true;
-            return `// ${match} // Plugin not available in this project`;
+            return `// ${match} // ${settings.defaultPluginMessage}`;
           }
         );
 
@@ -74,7 +83,7 @@ function remarkFixComponents() {
           /^import\s+(\w+)\s+from\s+["']@site\/src\/plugins\/([^"']+)["'];?$/gm,
           (match) => {
             modified = true;
-            return `// ${match} // Plugin not available in this project`;
+            return `// ${match} // ${settings.defaultPluginMessage}`;
           }
         );
 
@@ -83,37 +92,9 @@ function remarkFixComponents() {
         }
       }
 
-      // Handle JSX elements - replace CreditCost component usage with link
-      if ((node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') && node.name === 'CreditCost') {
-        // Replace CreditCost component with a paragraph containing a link to the README
-        // This preserves the content flow while removing the broken component
-        const linkNode = {
-          type: 'link',
-          url: NOT_PORTED_README_PATH + '#credit-cost',
-          children: [
-            {
-              type: 'text',
-              value: 'credit cost information',
-            },
-          ],
-        };
-        
-        const textBefore = {
-          type: 'text',
-          value: 'For credit cost information, see ',
-        };
-        
-        const textAfter = {
-          type: 'text',
-          value: '.',
-        };
-        
-        // Transform the JSX element into a paragraph with link
-        node.type = 'paragraph';
-        node.name = undefined; // Remove JSX-specific properties
-        node.attributes = undefined;
-        node.children = [textBefore, linkNode, textAfter];
-      }
+      // Note: JSX component usage is handled by text-based fixComponentImports in port-content.js
+      // This plugin only handles import statements to avoid AST manipulation issues
+      // The working source code does text replacement before MDX compilation, not AST manipulation
 
       // Recursively traverse children
       if (Array.isArray(node.children)) {

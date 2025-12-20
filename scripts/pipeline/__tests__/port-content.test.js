@@ -194,6 +194,96 @@ describe('port-content script', () => {
     expect(result.content).toContain('@site/static/img/ported-images/test.png');
   });
 
+  test('fixComponentImports should replace JSX components with comments', () => {
+    // Mock config-loader before requiring port-content
+    jest.doMock('../../../plugins/config-loader', () => ({
+      getComponentReplacements: jest.fn(() => [
+        {
+          component: 'SectionNetworks',
+          importPath: '@site/src/components/Sections/SectionNetworks\\.jsx',
+          replacement: 'SectionNetworks component not available in this project',
+          jsxReplacement: '<!-- SectionNetworks component not available -->',
+          insertNote: false
+        },
+        {
+          component: 'SectionAPIs',
+          importPath: '@site/src/components/Sections/SectionAPIs\\.jsx',
+          replacement: 'SectionAPIs component not available in this project',
+          jsxReplacement: '<!-- SectionAPIs component not available -->',
+          insertNote: false
+        }
+      ]),
+      getSettings: jest.fn(() => ({
+        defaultComponentMessage: 'Component not available in this project',
+        defaultPluginMessage: 'Plugin not available in this project',
+        fallbackCommentedOut: '(commented out)',
+        fallbackReplaced: '(replaced)'
+      })),
+      getPortedContentDirsRelative: jest.fn(() => ['docs/single-source/between-repos/Plugins/MetaMask-ported-data'])
+    }));
+    
+    jest.resetModules();
+    const freshPortContent = require('../port-content');
+    
+    const content = `import SectionNetworks from "@site/src/components/Sections/SectionNetworks.jsx";
+import SectionAPIs from "@site/src/components/Sections/SectionAPIs.jsx";
+
+# Title
+
+<SectionNetworks />
+<SectionAPIs />`;
+    
+    const result = freshPortContent.fixComponentImports(content, '/test/path.md');
+    
+    expect(result.modified).toBe(true);
+    // Imports should be commented out (not removed)
+    expect(result.content).toContain('// import SectionNetworks from');
+    expect(result.content).toContain('// import SectionAPIs from');
+    // JSX should be replaced with comments
+    expect(result.content).toContain('{/* SectionNetworks');
+    expect(result.content).toContain('{/* SectionAPIs');
+    expect(result.componentFixes.length).toBeGreaterThan(0);
+  });
+
+  test('fixComponentImports should handle components even if imports are already commented', () => {
+    // Mock config-loader before requiring port-content
+    jest.doMock('../../../plugins/config-loader', () => ({
+      getComponentReplacements: jest.fn(() => [
+        {
+          component: 'SectionNetworks',
+          importPath: '@site/src/components/Sections/SectionNetworks\\.jsx',
+          replacement: 'SectionNetworks component not available in this project',
+          jsxReplacement: '<!-- SectionNetworks component not available -->',
+          insertNote: false
+        }
+      ]),
+      getSettings: jest.fn(() => ({
+        defaultComponentMessage: 'Component not available in this project',
+        defaultPluginMessage: 'Plugin not available in this project',
+        fallbackCommentedOut: '(commented out)',
+        fallbackReplaced: '(replaced)'
+      })),
+      getPortedContentDirsRelative: jest.fn(() => ['docs/single-source/between-repos/Plugins/MetaMask-ported-data'])
+    }));
+    
+    jest.resetModules();
+    const freshPortContent = require('../port-content');
+    
+    // Content with already-commented imports but active JSX usage
+    const content = `// import SectionNetworks from "@site/src/components/Sections/SectionNetworks.jsx";
+
+# Title
+
+<SectionNetworks />`;
+    
+    const result = freshPortContent.fixComponentImports(content, '/test/path.md');
+    
+    // Should still replace JSX even though import is commented
+    expect(result.modified).toBe(true);
+    expect(result.content).toContain('{/* SectionNetworks');
+    expect(result.content).not.toContain('<SectionNetworks />');
+  });
+
   test('static files and folders should survive porting events', () => {
     // Use actual fs module, not mocked one
     const actualFs = jest.requireActual('fs');

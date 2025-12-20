@@ -4,7 +4,7 @@ title: Data source - this repo
 
 # Data source - this repo
 
-The importer respects existing files. For example a component like Credit cost can be replace with this page:
+The importer respects existing files. For example, a component like Credit cost is being linked to this page:
 
 ## Credit cost
 

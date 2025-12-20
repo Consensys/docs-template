@@ -10,8 +10,10 @@
  */
 const fs = require("fs");
 const path = require("path");
+const { getImagePath } = require("./config-loader");
+const { getLogsDir, ensureLogsDir, normalizePath, getFilePath } = require("./utils");
 
-const LOGS_DIR = path.join(process.cwd(), "_maintainers", "logs");
+const LOGS_DIR = getLogsDir();
 const IMAGE_FIXES_LOG = path.join(LOGS_DIR, "image-path-fixes.log");
 
 // Track image fixes with file context (matching original repo structure)
@@ -19,7 +21,7 @@ const imageFixes = []; // Array of { file, original, new, image }
 
 function remarkFixImagePaths() {
   return (tree, file) => {
-    const filePath = file?.path || file?.history?.[0] || "";
+    const filePath = getFilePath(file);
     const relativeFilePath = path.relative(process.cwd(), filePath);
     // Use a simple approach: traverse the tree manually
     // Since we can't use unist-util-visit (ES module), we'll do a simple recursive traversal
@@ -32,7 +34,8 @@ function remarkFixImagePaths() {
           const originalUrl = node.url;
           const imagePath = originalUrl.replace(/^(\.\.\/|\.\/)+images\//, '');
           const filename = imagePath.split('/').pop();
-          const newUrl = `/img/ported-images/${filename}`;
+          const imageBasePath = getImagePath();
+          const newUrl = `${imageBasePath}/${filename}`;
           node.url = newUrl;
           imageFixes.push({ file: relativeFilePath, original: originalUrl, new: newUrl, image: filename });
         }
@@ -43,13 +46,15 @@ function remarkFixImagePaths() {
         let modified = false;
         let newValue = node.value;
         
+        const imageBasePath = getImagePath();
+        
         // Match src={require("../images/file.png").default} or src={require('../../images/file.png').default}
         newValue = newValue.replace(
           /src=\{require\(["'](\.\.\/)+images\/([^"']+\.(png|jpg|jpeg|gif|svg|webp))["']\)\.default\}/g,
           (match, dots, imagePath) => {
             modified = true;
             const filename = imagePath.split('/').pop();
-            const newPath = `src="/img/ported-images/${filename}"`;
+            const newPath = `src="${imageBasePath}/${filename}"`;
             imageFixes.push({ file: relativeFilePath, original: match, new: newPath, image: filename });
             return newPath;
           }
@@ -61,7 +66,7 @@ function remarkFixImagePaths() {
           (match, imagePath) => {
             modified = true;
             const filename = imagePath.split('/').pop();
-            const newPath = `src="/img/ported-images/${filename}"`;
+            const newPath = `src="${imageBasePath}/${filename}"`;
             imageFixes.push({ file: relativeFilePath, original: match, new: newPath, image: filename });
             return newPath;
           }
@@ -94,7 +99,8 @@ function remarkFixImagePaths() {
                 const match = valueStr.match(/require\(["'](\.\.\/)+images\/([^"']+\.(png|jpg|jpeg|gif|svg|webp))["']\)/);
                 if (match) {
                   const filename = match[2].split('/').pop();
-                  const newPath = `/img/ported-images/${filename}`;
+                  const imageBasePath = getImagePath();
+                  const newPath = `${imageBasePath}/${filename}`;
                   attr.value = newPath;
                   imageFixes.push({ file: relativeFilePath, original: match[0], new: newPath, image: filename });
                 }
@@ -124,9 +130,7 @@ function remarkFixImagePaths() {
 // Write image fixes log at module unload (end of build) - matching original repo structure
 process.on('exit', () => {
   try {
-    if (!fs.existsSync(LOGS_DIR)) {
-      fs.mkdirSync(LOGS_DIR, { recursive: true });
-    }
+    ensureLogsDir();
     
     if (imageFixes.length > 0) {
       const sortedFixes = imageFixes.sort((a, b) => {

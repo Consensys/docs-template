@@ -49,4 +49,4 @@ include:
 
 Click below to explore the supported networks.
 
-<SectionNetworks />
+{/* SectionNetworks - <!-- SectionNetworks component not available --> */}

@@ -1,0 +1,122 @@
+ // Remote content: MetaMask _partials
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-partials",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, partialsPath),
+        outDir: "service/reference/_partials",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-partials
+        // Set to false for auto-download on start/build (adds ~2.5 min to build time)
+        noRuntimeDownloads: true,
+        performCleanup: false, // Keep files after build
+      },
+    ],
+    // Remote content: MetaMask Ethereum
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-ethereum",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, ethereumPath),
+        outDir: "service/reference/ethereum",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Linea
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-linea",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, lineaPath),
+        outDir: "service/reference/linea",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Base
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-base",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, basePath),
+        outDir: "service/reference/base",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Concepts
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-concepts",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, conceptsPath),
+        outDir: "service/concepts",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Get Started
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-get-started",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, getStartedPath),
+        outDir: "service/get-started",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Gas API
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-gas-api",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, gasApiPath),
+        outDir: "service/reference/gas-api",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask IPFS
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-ipfs",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, ipfsPath),
+        outDir: "service/reference/ipfs",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask How-To
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-how-to",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, howToPath),
+        outDir: "service/how-to",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Tutorials
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-tutorials",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, tutorialsPath),
+        outDir: "service/tutorials",
+        documents: [], // Empty array since noRuntimeDownloads: true - files already downloaded
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
