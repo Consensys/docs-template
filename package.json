@@ -23,9 +23,7 @@
     "format": "prettier --write '{blog,docs,src,static}/**/*.{md,mdx,ts,js,tsx,jsx,json}'",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:port": "jest scripts/pipeline/__tests__/port-content.test.js",
-    "port": "node scripts/pipeline/port-content.js",
-    "port:test": "npm run port -- --build --no-server"
+    "port": "node scripts/port-content.js"
   },
   "lint-staged": {
     "src/**/*.{ts,js,jsx,tsx}": "npm run lint:fix",
@@ -45,7 +43,6 @@
     "@octokit/rest": "^22.0.1",
     "clsx": "^1.2.1",
     "docusaurus-plugin-remote-content": "^4.0.0",
-    "dotenv": "^16.4.5",
     "js-yaml": "^4.1.0",
     "minimatch": "^10.1.1",
     "prism-react-renderer": "^2.4.1",

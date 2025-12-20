@@ -4,9 +4,10 @@ sidebar_label: Introduction
 sidebar_position: 1
 ---
 
-// import SectionAPIs from "@site/src/components/Sections/SectionAPIs.jsx"; // Component not available in this project
-// import SectionNetworks from "@site/src/components/Sections/SectionNetworks.jsx";
- // Component not available in this project
+
+
+
+
 # Build and scale your dapp using services
 
 MetaMask, in partnership with [Infura](https://www.infura.io/), offers a comprehensive set of
@@ -32,12 +33,12 @@ include:
       natively support.
   - **Expanded method support** - This includes access to debug or trace methods not natively
       supported by Infura. For these types of calls, Infura leverages DIN to provide user access.
- - **Archive data querying** - [Access historical state data](concepts/archive-data.md) at any given
+ - **Archive data querying** - Access historical state data at any given
       block height. This is essential for performing deep analyses of past transactions, contract
       states, or balances. With this feature, developers can build applications that are not only data-rich but also comprehensive.
       Infura can leverage DIN to provide access to archive data that may not be natively supported.
 - **Expansion APIs** -
-  [Access Infura's multichain Gas API](reference/gas-api/api-reference/index.md). Use the Gas API used by the MetaMask wallet to analyze and optimize gas costs on EIP-1559 compatible chains.
+  Access Infura's multichain Gas API. Use the Gas API used by the MetaMask wallet to analyze and optimize gas costs on EIP-1559 compatible chains.
 
 <head>
 <meta httpEquiv="cache-control" content="no-cache" />
@@ -49,4 +50,4 @@ include:
 
 Click below to explore the supported networks.
 
-{/* SectionNetworks - <!-- SectionNetworks component not available --> */}
+{/* <SectionNetworks />... - Component not available */}

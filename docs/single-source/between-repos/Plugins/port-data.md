@@ -24,20 +24,16 @@ The porting system uses **runtime plugins** to transform content at build time:
 - **Remark Plugins** (`plugins/`)
   - `remark-link-rewriter` - Rewrites links based on YAML config
   - `remark-fix-image-paths` - Fixes image paths for Docusaurus
-  - `remark-fix-components` - Fixes missing component imports based on YAML config
+  - `remark-fix-components` - Fixes missing component imports
 
 - **Port Script** (`scripts/pipeline/port-content.js`)
   - Downloads content via `docusaurus-plugin-remote-content`
   - Applies component and image transformations
   - Writes logs to `_maintainers/logs/`
 
-- **Helper Functions** (`src/lib/`)
-  - `get-ported-dirs.js` - Reads ported content directories from `docusaurus.config.js` (single source of truth)
-  - `config-loader.js` - Loads settings from `_maintainers/link-replacements.yaml`
-
-- **Configuration**
-  - **`docusaurus.config.js`** - Defines ported content directories (via `docusaurus-plugin-remote-content` `outDir`)
-  - **`_maintainers/link-replacements.yaml`** - Link rewriting rules, component replacements, and settings
+- **Configuration** (`_maintainers/link-replacements.yaml`)
+  - Link rewriting rules (exact and pattern-based)
+  - Generalized network support via patterns
 
 ## Configuration
 
@@ -61,8 +57,6 @@ plugins: [
 ],
 ```
 
-**Important:** The `outDir` values in `docusaurus-plugin-remote-content` configurations are the **single source of truth** for where ported content is stored. Plugins automatically detect these directories via `src/lib/get-ported-dirs.js` - you don't need to configure them separately.
-
 **Documentation:** See [docusaurus-plugin-remote-content on npm](https://www.npmjs.com/package/docusaurus-plugin-remote-content) for full configuration options.
 
 ### Link Replacement Types
@@ -71,9 +65,9 @@ The system handles four types of link replacements:
 
 | Type | Plugin | Configuration | Description |
 |------|--------|--------------|-------------|
-| **Component Imports** | `remark-fix-components` | `_maintainers/link-replacements.yaml` | Replaces component imports based on `componentReplacements` config, or comments out if not configured |
+| **Component Imports** | `remark-fix-components` | None | Comments out missing `@site/src/components` imports and replaces `CreditCost` component usage with links |
 | **Relative Links from Upstream** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Converts relative paths that don't exist locally to external URLs |
-| **Image Links** | `remark-fix-image-paths` | `_maintainers/link-replacements.yaml` | Rewrites image paths to configured `imagePath` (default: `/img/ported-images/{filename}`). Images downloaded via `docusaurus-plugin-remote-content` |
+| **Image Links** | `remark-fix-image-paths` | None | Rewrites image paths to `/img/ported-images/{filename}`. Images downloaded via `docusaurus-plugin-remote-content` |
 | **Absolute Paths** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Rewrites absolute paths (starting with `/`) to local paths or external URLs based on YAML patterns |
 
 <details>
@@ -93,27 +87,11 @@ The system handles four types of link replacements:
 
 </details>
 
-### Configuration Files
+### Link Replacements Configuration
 
-#### `docusaurus.config.js`
-
-**Ported Content Directories:** The `outDir` values in `docusaurus-plugin-remote-content` plugin configurations define where ported content is stored. These are automatically detected by the plugins - no additional configuration needed.
-
-#### `_maintainers/link-replacements.yaml`
-
-Configuration for link rewriting, component replacements, and settings:
+Configuration is stored in `_maintainers/link-replacements.yaml`:
 
 ```yaml
-# Global settings
-settings:
-  # Image directory path (where images are served from)
-  imagePath: "/img/ported-images"
-  
-  # Default messages for unconfigured components/plugins
-  defaultComponentMessage: "Component not available in this project"
-  defaultPluginMessage: "Plugin not available in this project"
-
-# Link rewriting rules
 replacements:
   /services: https://docs.metamask.io/services
 
@@ -129,14 +107,6 @@ patterns:
     replacement: 'https://docs.metamask.io/services/reference/{network}'
     extractPath: true
     description: 'Preserve full MetaMask path for non-ported networks'
-
-# Component replacements
-componentReplacements:
-  - component: CreditCost
-    importPath: '@site/src/components/CreditCost/CreditCostPrice\\.js'
-    replacement: 'For credit cost information, see [credit cost details](/docs/...).'
-    jsxReplacement: 'For credit cost information, see [credit cost details](/docs/...).'
-    insertNote: true
 ```
 
 ### Pattern Syntax
@@ -148,20 +118,33 @@ componentReplacements:
 
 ### Plugin Import Syntax
 
-Plugins are imported in `docusaurus.config.js`. Ported content directories are automatically detected from `docusaurus-plugin-remote-content` configurations:
+Plugins are imported in `docusaurus.config.js`:
+
+<Tabs>
+  <TabItem value="simple" label="Simple Import" default>
 
 ```javascript
-beforeDefaultRemarkPlugins: [
+remarkPlugins: [
   require("./plugins/remark-link-rewriter"),
   require("./plugins/remark-fix-image-paths"),
   require("./plugins/remark-fix-components"),
 ],
 ```
 
-**Note:** Plugins automatically read:
-- Ported content directories from `docusaurus-plugin-remote-content` `outDir` values
-- Configuration from `_maintainers/link-replacements.yaml`
-- No additional plugin configuration needed
+  </TabItem>
+  <TabItem value="configured" label="With Configuration Options">
+
+```javascript
+remarkPlugins: [
+  [require("./plugins/remark-link-rewriter"), {
+    configPath: "_maintainers/link-replacements.yaml",
+    portedContentDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data",
+  }],
+],
+```
+
+  </TabItem>
+</Tabs>
 
 ### Adding New Networks
 
@@ -177,24 +160,9 @@ patterns:
 
 No code changes needed - the system is fully generalized.
 
-## Component Replacements
-
-Component imports can be replaced with custom content via `componentReplacements` in `_maintainers/link-replacements.yaml`:
-
-```yaml
-componentReplacements:
-  - component: ComponentName
-    importPath: '@site/src/components/ComponentName/ComponentPath\\.js'
-    replacement: 'Replacement text or markdown link'
-    jsxReplacement: 'Replacement for JSX usage (optional)'
-    insertNote: true  # Insert replacement as note after imports
-```
-
-If a component isn't configured, it's commented out with the default message.
-
 ## Image Handling
 
-Images are downloaded via `docusaurus-plugin-remote-content` to `static/img/ported-images/` and paths are rewritten by `remark-fix-image-paths` to the configured `imagePath` (default: `/img/ported-images/{filename}`).
+Images are downloaded via `docusaurus-plugin-remote-content` to `static/img/ported-images/` and paths are rewritten by `remark-fix-image-paths` to `/img/ported-images/{filename}`.
 
 ## Logging
 

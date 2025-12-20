@@ -24,6 +24,5 @@ yarn-error.log*
 .vercel
 .envrc
 
-# Maintainer logs (build outputs, sync logs, debug info)
-# These are regenerated on clone/build
-_maintainers/logs/
+# Cursor IDE
+.cursor/

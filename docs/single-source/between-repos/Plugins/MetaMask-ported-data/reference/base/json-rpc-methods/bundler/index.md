@@ -8,7 +8,7 @@ description: Base bundler methods
 Infura integrates with the Pimlico account abstraction bundler infrastructure, enabling
 developers to access [ERC-4337](https://docs.erc4337.io/) smart account features.
 
-The following [bundler methods](../../../../concepts/bundler.md) are supported on Base mainnet
+The following bundler methods are supported on Base mainnet
 and Sepolia:
 
 - [`eth_sendUserOperation`](eth_senduseroperation.mdx):

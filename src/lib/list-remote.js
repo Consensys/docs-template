@@ -1,15 +1,9 @@
 // Source: https://github.com/1amcode/docusaurus-lib-list-remote
-// Load environment variables from .env file
-require("dotenv").config();
-
 const { Octokit } = require("@octokit/rest");
 const minimatch = require("minimatch");
 
-// Support both GITHUB_TOKEN and API_TOKEN for flexibility
-const token = process.env.GITHUB_TOKEN || process.env.API_TOKEN;
-
 const octokit = new Octokit({
-  auth: token, // Optional: for higher rate limits (5000/hour vs 60/hour)
+  auth: process.env.API_TOKEN || process.env.GITHUB_TOKEN, // Optional: for higher rate limits
 });
 
 const OCTOKIT_TREE_FILE_TYPE = "blob";
@@ -59,8 +53,10 @@ const listDocuments = (repo, includeFilters, excludeFilters = [], basePath = "")
         repoFilePaths = repoFilePaths.map((p) => p.substring(basePath.length + 1));
       }
 
-      // Silent by default - logging handled by calling code
+      console.log(`\n[list-remote] Found ${repoFilePaths.length} files in ${basePath || "root"}`);
+
       const resultingFilePaths = applyFilters(repoFilePaths, includeFilters, excludeFilters);
+      console.log(`[list-remote] After filtering: ${resultingFilePaths.length} files`);
 
       return resultingFilePaths;
     });

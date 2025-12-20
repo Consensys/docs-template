@@ -60,10 +60,10 @@ const sidebars = {
         {
           type: "category",
           label: "Between repositories",
-          collapsed: true,
+          collapsed: false,
           link: {
-            type: "doc",
-            id: "single-source/between-repos/Readme",
+            type: "generated-index",
+            slug: "/single-source/between-repos",
           },
           items: [
             {
@@ -75,10 +75,10 @@ const sidebars = {
         {
           type: "category",
           label: "Within repositories",
-          collapsed: true,
+          collapsed: false,
           link: {
-            type: "doc",
-            id: "single-source/within-repos/README",
+            type: "generated-index",
+            slug: "/single-source/within-repos",
           },
           items: [
             {

@@ -23,8 +23,7 @@ const config = {
   onBrokenLinks: "throw",
   markdown: {
     hooks: {
-      // Warn instead of throw for broken links - plugins will fix ported content links
-      onBrokenMarkdownLinks: "warn",
+      onBrokenMarkdownLinks: "throw",
     }
   },
   favicon: "img/favicon.ico",
@@ -55,14 +54,11 @@ const config = {
           routeBasePath: "/",
           path: "./docs",
           includeCurrentVersion: true,
-          // Remark plugins for link rewriting, image path fixing, and component fixes
-          // Using plugins from plugins/ directory (simpler, less brittle approach)
-          // Only processes files in ported content directory
-          // Run before default plugins to ensure links are fixed before validation
-          beforeDefaultRemarkPlugins: [
+          // Remark plugins for link rewriting and image path fixing
+          // Using modular plugins from plugins/
+          remarkPlugins: [
             require("./plugins/remark-link-rewriter"),
             require("./plugins/remark-fix-image-paths"),
-            require("./plugins/remark-fix-components"),
           ],
           // lastVersion: "23.x",
           // versions: {
@@ -310,20 +306,6 @@ const config = {
         // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-base-json-rpc
         noRuntimeDownloads: true,
         performCleanup: false,
-      },
-    ],
-    // Remote content: MetaMask Images (ported from upstream)
-    [
-      "docusaurus-plugin-remote-content",
-      {
-        name: "metamask-images",
-        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, servicesIndexPath),
-        outDir: "static/img/ported-images",
-        documents: listDocuments(metamaskRepo, ["**/images/**/*.{png,jpg,jpeg,gif,svg,webp}"], [], servicesIndexPath),
-        // To sync images from MetaMask docs, run: npx docusaurus download-remote-metamask-images
-        // Set to false for auto-download on start/build (adds time to build)
-        noRuntimeDownloads: true,
-        performCleanup: false, // Keep files after build
       },
     ],
     // This is how redirects are done

@@ -1,5 +1,5 @@
 ---
-title: CI Method
+title: CI Method (Alternative Approach)
 ---
 
 # CI Method for Porting Data
@@ -12,7 +12,7 @@ This method uses CI workflows to automatically sync content from upstream reposi
 
 ## Components
 
-- **Sync Script**: `scripts/ci/sync-metamask-content.js` - Downloads and transforms content
+- **Sync Script**: `scripts/sync-metamask-content.js` - Downloads and transforms content
 - **CI Workflow**: `.github/workflows/sync-metamask-content.yml` - Runs daily, creates PRs
 - **Plugins**: Runtime remark plugins for link rewriting and image path fixing
 
@@ -34,7 +34,7 @@ The `example-ported-data/` folder in this directory shows example content that w
 
 ## Files
 
-- Sync script location: `scripts/ci/sync-metamask-content.js`
+- Sync script location: `scripts/sync-metamask-content.js` (note: script must be in project root)
 - CI workflow: `.github/workflows/sync-metamask-content.yml`
 - Configuration: `_maintainers/link-replacements.yaml`
 - Example data: `CI-method/example-ported-data/`
