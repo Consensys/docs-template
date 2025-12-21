@@ -7,7 +7,8 @@ const darkCodeTheme = themes.dracula;
 const { createRepo, buildRepoRawBaseUrl, listDocuments } = require("./src/lib/list-remote");
 const metamaskRepo = createRepo("MetaMask", "metamask-docs", "main");
 const servicesIndexPath = "services";
-const baseJsonRpcPath = "services/reference/base/json-rpc-methods";
+const ethereumFolder = "services/reference/ethereum";
+const gasApiPath = "services/reference/gas-api";
 const partialsPath = "services/reference/_partials";
 
 const isDev = process.env.NODE_ENV === "development";
@@ -281,7 +282,7 @@ const config = {
         performCleanup: false, // Keep files after build
       },
     ],
-    // Remote content: MetaMask _partials (required for Base JSON-RPC methods)
+    // Remote content: MetaMask _partials (required for network's JSON-RPC methods)
     [
       "docusaurus-plugin-remote-content",
       {
@@ -295,15 +296,28 @@ const config = {
         performCleanup: false, // Keep files after build
       },
     ],
-    // Remote content: MetaMask Base JSON-RPC Methods
+    // Remote content: MetaMask Ethereum JSON-RPC Methods
     [
       "docusaurus-plugin-remote-content",
       {
-        name: "metamask-base-json-rpc",
-        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, baseJsonRpcPath),
-        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/base/json-rpc-methods",
-        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], baseJsonRpcPath),
-        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-base-json-rpc
+        name: "metamask-ethereum-json-rpc",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, ethereumFolder),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/ethereum",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"],ethereumFolder),
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-ethereum-json-rpc
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Gas API
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-gas-api",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, gasApiPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/gas-api",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], gasApiPath),
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-gas-api
         noRuntimeDownloads: true,
         performCleanup: false,
       },

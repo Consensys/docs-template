@@ -60,33 +60,33 @@ function debugLog(location, message, data = {}, hypothesisId = null) {
 }
 // #endregion agent log
 
-// Logging utility
+// Logging utility - writes transformation logs to _maintainers/logs/ directory
 function logToFile(logFile, message) {
   try {
     if (!fs.existsSync(LOGS_DIR)) {
-      fs.mkdirSync(LOGS_DIR, { recursive: true });
+      fs.mkdirSync(LOGS_DIR, { recursive: true }); // Create logs directory if it doesn't exist
     }
     const logPath = path.join(LOGS_DIR, logFile);
     const timestamp = new Date().toISOString();
-    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8");
+    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8"); // Append timestamped log entry
   } catch (err) {
     console.warn(`[port-content] Failed to write log: ${err.message}`);
   }
 }
 
 /**
- * Kill process tree (process and all children)
+ * Kill process tree (process and all children) - ensures all child processes are terminated on timeout
  */
 function killProcessTree(pid, signal = "SIGTERM") {
   try {
-    // On Unix, kill the process group
+    // On Unix, kill the process group (negative PID kills entire process group)
     process.kill(-pid, signal);
   } catch (err) {
     // If process group kill fails, try individual process
     try {
-      process.kill(pid, signal);
+      process.kill(pid, signal); // Fallback to killing just the process
     } catch (e) {
-      // Process might already be dead
+      // Process might already be dead - ignore error
     }
   }
 }
@@ -266,6 +266,108 @@ function checkGitHubToken() {
 }
 
 /**
+ * Extract remote content plugin configurations from docusaurus.config.js
+ * Parses the config file as text to avoid executing ES module dependencies
+ * Uses path variables (e.g., partialsPath, lineaJsonRpcPath) as the source of truth
+ */
+function getRemoteContentPlugins() {
+  const configPath = path.join(__dirname, "..", "docusaurus.config.js");
+  const configContent = fs.readFileSync(configPath, "utf8");
+  
+  // First, extract all path variable definitions (e.g., const partialsPath = "services/reference/_partials")
+  const pathVars = new Map();
+  const pathVarRegex = /const\s+(\w+Path)\s*=\s*["']([^"']+)["']/g;
+  let pathMatch;
+  while ((pathMatch = pathVarRegex.exec(configContent)) !== null) {
+    pathVars.set(pathMatch[1], pathMatch[2]); // Store variable name -> path value
+  }
+  
+  const commands = [];
+  
+  // Find all occurrences of "docusaurus-plugin-remote-content" and extract the following config block
+  const pluginMarker = /["']docusaurus-plugin-remote-content["']/g;
+  let markerMatch;
+  
+  while ((markerMatch = pluginMarker.exec(configContent)) !== null) {
+    // Start searching from the marker position
+    const startPos = markerMatch.index;
+    const afterMarker = configContent.substring(startPos);
+    
+    // Find the opening brace of the config object (skip the array bracket and comma)
+    const configStart = afterMarker.indexOf('{');
+    if (configStart === -1) continue;
+    
+    // Extract a reasonable chunk to search for name, outDir, and source path (up to 2000 chars should be enough)
+    const configChunk = afterMarker.substring(configStart, configStart + 2000);
+    
+    // Extract name field
+    const nameMatch = configChunk.match(/name:\s*["']([^"']+)["']/);
+    if (!nameMatch) continue;
+    const pluginName = nameMatch[1];
+    
+    // Extract outDir field
+    const outDirMatch = configChunk.match(/outDir:\s*["']([^"']+)["']/);
+    const outDir = outDirMatch ? outDirMatch[1] : null;
+    
+    // Extract source path variable from buildRepoRawBaseUrl call (e.g., buildRepoRawBaseUrl(metamaskRepo, partialsPath))
+    // This is the source of truth for what's being downloaded
+    const sourcePathVarMatch = configChunk.match(/buildRepoRawBaseUrl\([^,]+,\s*(\w+Path)\)/);
+    const sourcePathVar = sourcePathVarMatch ? sourcePathVarMatch[1] : null;
+    const sourcePath = sourcePathVar && pathVars.has(sourcePathVar) ? pathVars.get(sourcePathVar) : null;
+    
+    // Generate display name from the actual source path (the source of truth)
+    let displayName;
+    if (sourcePath) {
+      // Parse the source path to generate a meaningful display name
+      // e.g., "services" -> "Services Index"
+      // e.g., "services/reference/_partials" -> "Reference Partials"
+      // e.g., "services/reference/linea/json-rpc-methods" -> "Linea JSON-RPC Methods"
+      const pathParts = sourcePath.split('/').filter(p => p && p !== 'services' && p !== 'reference');
+      
+      if (pathParts.length === 0) {
+        // Just "services" - this is the services index
+        displayName = "Services Index";
+      } else if (pathParts[0] === '_partials') {
+        // Partials
+        displayName = "Reference Partials";
+      } else if (pathParts.includes('json-rpc-methods')) {
+        // JSON-RPC methods - extract network name
+        const networkIndex = pathParts.indexOf('json-rpc-methods');
+        if (networkIndex > 0) {
+          const networkName = pathParts[networkIndex - 1];
+          const networkDisplay = networkName.charAt(0).toUpperCase() + networkName.slice(1);
+          displayName = `${networkDisplay} JSON-RPC Methods`;
+        } else {
+          displayName = "JSON-RPC Methods";
+        }
+      } else {
+        // Fallback: use path parts to generate name
+        displayName = pathParts.map(p => p.charAt(0).toUpperCase() + p.slice(1).replace(/-/g, ' ')).join(' ');
+      }
+    } else {
+      // Fallback: Generate display name from plugin name
+      displayName = pluginName
+        .replace(/^metamask-/, "")
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, l => l.toUpperCase());
+    }
+    
+    // Generate download command: npx docusaurus download-remote-{name}
+    const downloadCommand = `download-remote-${pluginName}`;
+    
+    commands.push({
+      name: pluginName,
+      displayName: displayName,
+      cmd: "npx",
+      args: ["docusaurus", downloadCommand],
+      outDir: outDir, // Use outDir from config to determine where files are downloaded
+    });
+  }
+  
+  return commands;
+}
+
+/**
  * Download remote content using docusaurus-plugin-remote-content
  */
 async function downloadRemoteContent() {
@@ -278,29 +380,13 @@ async function downloadRemoteContent() {
   // Check for GitHub token
   checkGitHubToken();
   
-  const commands = [
-    { 
-      name: "partials", 
-      displayName: "Reference Partials",
-      cmd: "npx", 
-      args: ["docusaurus", "download-remote-metamask-partials"],
-      expectedPath: "services/reference/_partials"
-    },
-    { 
-      name: "services index", 
-      displayName: "Services Index",
-      cmd: "npx", 
-      args: ["docusaurus", "download-remote-metamask-services-index"],
-      expectedPath: "services"
-    },
-    { 
-      name: "base JSON-RPC", 
-      displayName: "Base JSON-RPC Methods",
-      cmd: "npx", 
-      args: ["docusaurus", "download-remote-metamask-base-json-rpc"],
-      expectedPath: "services/reference/base/json-rpc-methods"
-    },
-  ];
+  // Get commands from docusaurus.config.js instead of hardcoding
+  const commands = getRemoteContentPlugins();
+  
+  if (commands.length === 0) {
+    console.warn("⚠️  No remote content plugins found in docusaurus.config.js");
+    return;
+  }
   
   // Show expected downloads summary
   console.log("📋 Expected downloads:");
@@ -316,7 +402,7 @@ async function downloadRemoteContent() {
     
       const downloadResults = [];
       
-      for (const { name, displayName, cmd, args, expectedPath } of commands) {
+      for (const { name, displayName, cmd, args, outDir: expectedPath } of commands) {
         // #region agent log
         debugLog("port-content.js:downloadRemoteContent", "Starting download", { name, cmd, args: args.join(" ") }, "B");
         // #endregion agent log
@@ -331,20 +417,18 @@ async function downloadRemoteContent() {
         
         const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
         
-        // Count files after download to verify success
-        const outDir = name === "partials" 
-          ? path.join(PORTED_DATA_DIR, "reference", "_partials")
-          : name === "services index"
-          ? PORTED_DATA_DIR
-          : path.join(PORTED_DATA_DIR, "reference", "base", "json-rpc-methods");
-        
+        // Count files after download to verify success - use outDir from plugin config
         let fileCount = null;
-        if (fs.existsSync(outDir)) {
+        const outDir = expectedPath ? path.resolve(path.join(__dirname, ".."), expectedPath) : null;
+        
+        if (outDir && fs.existsSync(outDir)) {
           const files = getAllMarkdownFiles(outDir);
           fileCount = files.length;
           console.log(`   ✅ Successfully downloaded ${fileCount} file(s) in ${elapsed}s`);
+        } else if (outDir) {
+          console.log(`   ⚠️  Completed in ${elapsed}s but output directory not found: ${outDir}`);
         } else {
-          console.log(`   ⚠️  Completed in ${elapsed}s but output directory not found`);
+          console.log(`   ✅ Completed in ${elapsed}s`);
         }
         
         downloadResults.push({ name: displayName, fileCount, elapsed, success: true });
@@ -410,35 +494,38 @@ async function downloadRemoteContent() {
  * Get all markdown files in ported data directory
  */
 function getAllMarkdownFiles(dir) {
-  const files = [];
+  const files = []; // Array to collect all markdown files recursively
   
   if (!fs.existsSync(dir)) {
-    return files;
+    // #region agent log
+    fetch('http://127.0.0.1:7244/ingest/fae801bd-1e6d-4c72-aede-bd9509a19560',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'port-content.js:getAllMarkdownFiles',message:'Directory does not exist',data:{dir},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'A'})}).catch(()=>{});
+    // #endregion agent log
+    return files; // Return empty array if directory doesn't exist
   }
   
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const entries = fs.readdirSync(dir, { withFileTypes: true }); // Read directory with file type info
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      files.push(...getAllMarkdownFiles(fullPath));
+      files.push(...getAllMarkdownFiles(fullPath)); // Recursively process subdirectories
     } else if (entry.isFile() && (entry.name.endsWith(".md") || entry.name.endsWith(".mdx"))) {
-      files.push(fullPath);
+      files.push(fullPath); // Add markdown/MDX files to results
     }
   }
   
-  return files;
+  return files; // Return all collected markdown files
 }
 
 /**
- * Check if a file exists relative to a base directory
+ * Check if a file exists relative to a base directory - validates link targets for broken link detection
  */
 function fileExists(relativePath, baseDir) {
-  // Skip external URLs
+  // Skip external URLs - consider them valid (they don't need to exist locally)
   if (/^(https?|mailto):/.test(relativePath)) {
     return true; // Consider external links as "existing"
   }
   
-  // Skip anchor links
+  // Skip anchor links - consider them valid (they reference sections within the same file)
   if (relativePath.startsWith('#')) {
     return true;
   }
@@ -496,23 +583,23 @@ function fileExists(relativePath, baseDir) {
 }
 
 /**
- * Build a map of partial files to the files that import them
+ * Build a map of partial files to the files that import them - used for context-aware link validation
  */
 function buildPartialImportMap() {
-  const partialImportMap = new Map();
+  const partialImportMap = new Map(); // Map: partial file path -> array of files that import it
   const files = getAllMarkdownFiles(PORTED_DATA_DIR);
   const docsRoot = path.join(__dirname, "..", "docs");
   const partialsDir = path.join(PORTED_DATA_DIR, "reference", "_partials");
   
   files.forEach(filePath => {
-    // Skip partial files themselves
+    // Skip partial files themselves - only process files that import partials
     if (filePath.includes(path.join("reference", "_partials"))) {
       return;
     }
     
     const content = fs.readFileSync(filePath, 'utf8');
     
-    // Match import statements: import X from "../../_partials/..."
+    // Match import statements: import X from "../../_partials/..." - find all partial imports
     const importRegex = /import\s+\w+\s+from\s+["']([^"']*_partials[^"']+)["']/g;
     let match;
     
@@ -552,17 +639,14 @@ function tryFixLink(linkPath, baseDir, docsRoot) {
   const linkWithoutAnchor = linkPath.split('#')[0];
   const anchor = linkPath.includes('#') ? '#' + linkPath.split('#').slice(1).join('#') : '';
   
-  // Common broken link patterns to fix
-  // Fix references to arbitrum, ethereum, linea that don't exist - remove them
-  // (These are references to content not in this repo)
-  if (linkWithoutAnchor.includes('/arbitrum/') || 
-      linkWithoutAnchor.includes('/ethereum/') ||
-      linkWithoutAnchor.includes('/linea/')) {
-    // Don't try to fix these - they reference content that doesn't exist
-    return null;
-  }
+  // Try to fix known broken link patterns
+  // This function should only attempt fixes, not exclude paths
+  // Let fileExists() determine if a link is valid - this makes the system work with any configured import
   
-  return null;
+  // Example: Fix relative paths that might need adjustment
+  // Add specific fix patterns here if needed, but don't exclude any paths generically
+  
+  return null; // Return null if no fix found - fileExists() will check validity
 }
 
 /**
@@ -768,35 +852,35 @@ function fixImagePaths(content, filePath) {
   let modified = false;
   const imageFixes = [];
   
-  // Match require() statements for images with any number of ../ before images/
+  // Match require() statements for images with any number of ../ before images/ - convert to @site/static/img/ paths
   content = content.replace(
     /require\(["'](\.\.\/)+images\/([^"']+)["']\)/g,
     (match, dots, imagePath) => {
       modified = true;
-      const filename = imagePath.split('/').pop();
+      const filename = imagePath.split('/').pop(); // Extract filename from path
       imageFixes.push({ original: match, new: `require('@site/static/img/${filename}')`, image: filename });
-      return `require('@site/static/img/${filename}')`;
+      return `require('@site/static/img/${filename}')`; // Rewrite to Docusaurus static asset path
     }
   );
   
-  // Match src={require(...)} patterns
+  // Match src={require(...)} patterns - convert JSX src attributes with relative require() to @site/static/img/ paths
   content = content.replace(
     /src=\{require\(["'](\.\.\/)+images\/([^"']+)["']\)\.default\}/g,
     (match, dots, imagePath) => {
       modified = true;
-      const filename = imagePath.split('/').pop();
+      const filename = imagePath.split('/').pop(); // Extract filename from path
       imageFixes.push({ original: match, new: `src={require('@site/static/img/${filename}').default}`, image: filename });
-      return `src={require('@site/static/img/${filename}').default}`;
+      return `src={require('@site/static/img/${filename}').default}`; // Rewrite to Docusaurus static asset path
     }
   );
   
-  // Also handle markdown image syntax
+  // Also handle markdown image syntax - convert ![alt](../images/file.png) to JSX img tag with require()
   content = content.replace(
     /!\[([^\]]*)\]\((\.\.\/)+images\/([^)]+)\)/g,
     (match, alt, dots, imagePath) => {
       modified = true;
-      const filename = imagePath.split('/').pop();
-      const newPath = `<img src={require('@site/static/img/${filename}').default} alt="${alt}" />`;
+      const filename = imagePath.split('/').pop(); // Extract filename from path
+      const newPath = `<img src={require('@site/static/img/${filename}').default} alt="${alt}" />`; // Convert to Docusaurus require() syntax
       imageFixes.push({ original: match, new: newPath, image: filename });
       return newPath;
     }
@@ -884,6 +968,12 @@ function applyTransformations() {
     let fileModified = false;
     const relativeFilePath = path.relative(docsRoot, filePath);
     
+    // #region agent log
+    if (content.length < 100) {
+      fetch('http://127.0.0.1:7244/ingest/fae801bd-1e6d-4c72-aede-bd9509a19560',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'port-content.js:applyTransformations',message:'File with very short content detected',data:{filePath,contentLength:content.length,contentPreview:content.substring(0,500)},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    }
+    // #endregion agent log
+    
     // Step 1: Fix image paths
     const { content: imageFixed, modified: imageModified, imageFixes } = fixImagePaths(content, filePath);
     content = imageFixed;
@@ -929,6 +1019,12 @@ function applyTransformations() {
     // Step 4: Remove broken internal links
     const { content: fixedContent, modified: linksModified, brokenLinks } = removeBrokenLinks(content, filePath, partialImportMap);
     content = fixedContent;
+    
+    // #region agent log
+    if (originalContent.length > 100 && content.length < 100) {
+      fetch('http://127.0.0.1:7244/ingest/fae801bd-1e6d-4c72-aede-bd9509a19560',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({location:'port-content.js:applyTransformations',message:'Content significantly reduced after transformations',data:{filePath,originalLength:originalContent.length,contentLength:content.length,linksModified,brokenLinksCount:brokenLinks.length,imageModified,componentModified,mdxModified},timestamp:Date.now(),sessionId:'debug-session',runId:'run1',hypothesisId:'B'})}).catch(()=>{});
+    }
+    // #endregion agent log
     
     if (linksModified) {
       fileModified = true;

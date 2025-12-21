@@ -9,16 +9,16 @@
 const fs = require("fs");
 const path = require("path");
 
-// Logging utility
+// Logging utility - writes image transformation logs to _maintainers/logs/ directory
 function logToFile(logFile, message) {
   try {
     const logsDir = path.join(process.cwd(), "_maintainers", "logs");
     if (!fs.existsSync(logsDir)) {
-      fs.mkdirSync(logsDir, { recursive: true });
+      fs.mkdirSync(logsDir, { recursive: true }); // Create logs directory if it doesn't exist
     }
     const logPath = path.join(logsDir, logFile);
     const timestamp = new Date().toISOString();
-    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8");
+    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8"); // Append timestamped log entry
   } catch (err) {
     // Silently fail logging to avoid breaking builds
     console.warn(`[remark-fix-image-paths] Failed to write log: ${err.message}`);
@@ -38,13 +38,13 @@ function remarkFixImagePaths() {
       function traverse(node) {
         if (!node || typeof node !== 'object') return;
         
-        // Handle image nodes
+        // Handle image nodes - convert relative image paths to Docusaurus static asset paths
         if (node.type === 'image' && node.url) {
           if (node.url.includes('../images/') || node.url.includes('./images/')) {
-            const imagePath = node.url.replace(/^(\.\.\/|\.\/)+images\//, '');
-            const filename = imagePath.split('/').pop();
+            const imagePath = node.url.replace(/^(\.\.\/|\.\/)+images\//, ''); // Strip relative path prefix
+            const filename = imagePath.split('/').pop(); // Extract just the filename
             const oldUrl = node.url;
-            node.url = `/img/${filename}`;
+            node.url = `/img/${filename}`; // Rewrite to Docusaurus static asset path
             
             imageFixes.push({
               file: filePath,
@@ -55,7 +55,7 @@ function remarkFixImagePaths() {
           }
         }
         
-        // Handle HTML nodes (for JSX img tags with require())
+        // Handle HTML nodes (for JSX img tags with require()) - convert require() paths to static asset paths
         if (node.type === 'html' && node.value) {
           let modified = false;
           let newValue = node.value;
@@ -65,8 +65,8 @@ function remarkFixImagePaths() {
             /src=\{require\(["'](\.\.\/)+images\/([^"']+\.(png|jpg|jpeg|gif|svg|webp))["']\)\.default\}/g,
             (match, dots, imagePath) => {
               modified = true;
-              const filename = imagePath.split('/').pop();
-              const newPath = `src="/img/${filename}"`;
+              const filename = imagePath.split('/').pop(); // Extract filename from path
+              const newPath = `src="/img/${filename}"`; // Rewrite to Docusaurus static asset path
               
               imageFixes.push({
                 file: filePath,

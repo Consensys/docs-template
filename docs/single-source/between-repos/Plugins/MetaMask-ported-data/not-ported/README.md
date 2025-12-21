@@ -1,9 +1,9 @@
 ---
-title: Data written to this repo
+title: Data written within this repo
 ---
 
 
-The importer respects incoming files.
+The importer respects existing files: no delete of existing items.
 
 ## Credit cost
 

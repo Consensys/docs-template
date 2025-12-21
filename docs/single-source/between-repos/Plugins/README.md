@@ -2,9 +2,9 @@
 title: Plugins Method
 ---
 
-# Plugins Method for Porting Data
+# Plugins method for porting data
 
-This is the recommended method for porting content from upstream repositories. It uses modular remark plugins and `docusaurus-plugin-remote-content` to download and transform content.
+This is a partially-tested method for porting content from upstream repositories. It uses modular remark plugins and `docusaurus-plugin-remote-content` to download and transform content.
 
 ## Overview
 
@@ -14,7 +14,7 @@ The Plugins method:
 - Runs link rewriting, image fixes, and logging before build
 - Starts local dev server
 
-## Quick Start
+## Quick start
 
 ```bash
 npm run port
@@ -28,14 +28,14 @@ This command:
 
 ## Architecture
 
-### Modular Plugins
+### Modular plugins
 
 Plugins are located in `src/remark/` for better organization and testing:
 - `remark-link-rewriter.js` - Rewrites links based on YAML config
 - `remark-fix-image-paths.js` - Fixes image paths for Docusaurus
 - Additional plugins can be added modularly
 
-### Remote Content Plugin
+### Remote content plugin
 
 Uses `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` to download content from:
 - MetaMask services index → `MetaMask-ported-data/index.md`
@@ -47,11 +47,11 @@ Uses `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` to 
 - Plugins: `src/remark/` (modular remark plugins)
 - Logs: `_maintainers/logs/` (all transformations logged)
 
-## Scripts Location
+## Scripts location
 
 **Note:** The port script (`scripts/port-content.js`) must be in the project root (`scripts/` directory) to work with npm commands.
 
-## Manual Download
+## Manual download
 
 To manually download content without starting the server:
 
@@ -60,9 +60,9 @@ npx docusaurus download-remote-metamask-services-index
 npx docusaurus download-remote-metamask-base-json-rpc
 ```
 
-## See Also
+## See also
 
-- [Porting Data Between Repositories](../port-data) - Full documentation
-- [CI Method](../CI-method/README) - Alternative approach (archived)
-- [MetaMask Ported Data](./MetaMask-ported-data/README) - Ported content
+- [Porting Data Between Repositories](./port-data.md) - Plugin documentation
+- [CI Method](../CI-method/README) - Alternative approach (needs testing)
+- [MetaMask Ported Data](./MetaMask-ported-data/README) - Test ported content
 

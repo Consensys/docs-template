@@ -1,10 +1,10 @@
 ---
-title: CI Method (Alternative Approach)
+title: CI Method
 ---
 
 # CI Method for Porting Data
 
-> **Note:** This is an alternative, untested approach. The recommended method is the [Plugins approach](../Plugins/README).
+> **Note:** This is an alternative, untested approach. The partially-tested method is the [Plugins approach](../Plugins/README).
 
 ## Overview
 
@@ -16,7 +16,7 @@ This method uses CI workflows to automatically sync content from upstream reposi
 - **CI Workflow**: `.github/workflows/sync-metamask-content.yml` - Runs daily, creates PRs
 - **Plugins**: Runtime remark plugins for link rewriting and image path fixing
 
-## How It Works
+## How it works
 
 1. CI workflow runs daily at noon UTC
 2. Detects changes in upstream MetaMask repo
@@ -28,7 +28,7 @@ This method uses CI workflows to automatically sync content from upstream reposi
 
 This approach is archived/paused. See the [Plugins method](../Plugins/README) for the active implementation.
 
-## Example Output
+## Example output
 
 The `example-ported-data/` folder in this directory shows example content that would be produced by the CI method. This is static example data for demonstration purposes.
 

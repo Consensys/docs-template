@@ -5,7 +5,7 @@ title: How it works
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Porting Data Between Repositories
+# Porting data between repositories
 
 Port content from upstream repositories using remark plugins and `docusaurus-plugin-remote-content`.
 
@@ -36,7 +36,7 @@ The porting system uses **runtime plugins** to transform content at build time:
 
 ## Configuration
 
-### Remote Content Plugin
+### Remote content plugin
 
 Content is downloaded using `docusaurus-plugin-remote-content`. Configure it in `docusaurus.config.js`:
 
@@ -58,7 +58,7 @@ plugins: [
 
 **Documentation:** See [docusaurus-plugin-remote-content on npm](https://www.npmjs.com/package/docusaurus-plugin-remote-content) for full configuration options.
 
-### Link Replacement Types
+### Link replacement types
 
 The system handles four types of link replacements:
 
@@ -88,7 +88,7 @@ The system handles four types of link replacements:
 
 </details>
 
-### Link Replacements Configuration
+### Link replacements configuration
 
 Configuration is stored in `_maintainers/link-replacements.yaml`:
 
@@ -110,14 +110,14 @@ patterns:
     description: 'Preserve full MetaMask path for non-ported networks'
 ```
 
-### Pattern Syntax
+### Pattern syntax
 
 - **Exact matches**: Use `replacements` section for simple path-to-URL mappings
 - **Pattern matches**: Use `patterns` section with regex for flexible matching
 - **Network placeholders**: Use `{network}` in replacement (extracted from pattern capture group)
 - **Path extraction**: Set `extractPath: true` to append remaining path after pattern match
 
-### Plugin Import Syntax
+### Plugin import syntax
 
 Remark plugins are imported in `docusaurus.config.js` and applied at build time:
 
@@ -148,7 +148,7 @@ remarkPlugins: [
 
 **Note:** Component fixes, broken link removal, and MDX syntax fixes are handled by `scripts/port-content.js` during the port process, not by remark plugins.
 
-### Adding New Networks
+### Adding new networks
 
 To add a new network, update the YAML patterns:
 
@@ -162,7 +162,13 @@ patterns:
 
 No code changes needed - the system is fully generalized.
 
-## Image Handling
+## Image handling
+
+:::warning
+
+All images from the upstream repo are currently copied.
+
+::: 
 
 Images are downloaded via `docusaurus-plugin-remote-content` to `static/img/ported-images/` and paths are rewritten by `remark-fix-image-paths` to `/img/ported-images/{filename}`.
 
@@ -179,7 +185,7 @@ All transformations are logged to `_maintainers/logs/`:
 
 ## Usage
 
-### Port Content
+### Port content
 
 ```bash
 npm run port
@@ -195,7 +201,7 @@ This command:
 3. Writes logs to `_maintainers/logs/`
 4. Starts dev server (unless `--no-server` flag is used)
 
-### Command-Line Options
+### Command-line options
 
 ```bash
 # Port content without starting dev server
@@ -205,7 +211,7 @@ npm run port -- --no-server
 npm run port -- --build
 ```
 
-### Environment Variables
+### Environment variables
 
 The script loads environment variables from `.env` file in the project root using `dotenv`.
 
@@ -215,7 +221,7 @@ The script loads environment variables from `.env` file in the project root usin
   - No special permissions needed
   - Add to `.env`: `API_TOKEN=your_token_here`
 
-## Error Handling
+## Error handling
 
 Errors are logged to `_maintainers/logs/build-errors.log`. Common issues:
 - Missing config: Plugin uses defaults
@@ -245,7 +251,7 @@ Test files:
 
 ## Examples
 
-### Adding a New Network
+### Adding a new network
 
 Update `_maintainers/link-replacements.yaml`:
 ```yaml
@@ -255,7 +261,7 @@ patterns:
     extractPath: true
 ```
 
-### Preserving External Links
+### Preserving external links
 
 For non-ported networks, links should point to external MetaMask docs, not local paths:
 ```yaml

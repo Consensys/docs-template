@@ -8,16 +8,16 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 
-// Logging utility
+// Logging utility - writes transformation logs to _maintainers/logs/ directory
 function logToFile(logFile, message) {
   try {
     const logsDir = path.join(process.cwd(), "_maintainers", "logs");
     if (!fs.existsSync(logsDir)) {
-      fs.mkdirSync(logsDir, { recursive: true });
+      fs.mkdirSync(logsDir, { recursive: true }); // Create logs directory if it doesn't exist
     }
     const logPath = path.join(logsDir, logFile);
     const timestamp = new Date().toISOString();
-    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8");
+    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8"); // Append timestamped log entry
   } catch (err) {
     // Silently fail logging to avoid breaking builds
     console.warn(`[remark-link-rewriter] Failed to write log: ${err.message}`);
@@ -25,23 +25,23 @@ function logToFile(logFile, message) {
 }
 
 function loadLinkReplacements() {
-  const configPath = path.join(process.cwd(), "_maintainers", "link-replacements.yaml");
+  const configPath = path.join(process.cwd(), "_maintainers", "link-replacements.yaml"); // Load YAML config from _maintainers directory
 
   if (!fs.existsSync(configPath)) {
     console.warn(`[remark-link-rewriter] No link-replacements.yaml found at ${configPath}`);
     logToFile("build-errors.log", `WARNING: No link-replacements.yaml found at ${configPath}`);
-    return { replacements: new Map(), patterns: [] };
+    return { replacements: new Map(), patterns: [] }; // Return empty config if file doesn't exist
   }
 
   try {
     const content = fs.readFileSync(configPath, "utf8");
-    const config = yaml.load(content) || {};
+    const config = yaml.load(content) || {}; // Parse YAML config file
 
-    // Exact replacements: { "/old/path": "https://new/url" }
+    // Exact replacements: { "/old/path": "https://new/url" } - simple key-value mappings
     const replacements = new Map();
     if (config.replacements && typeof config.replacements === "object") {
       for (const [from, to] of Object.entries(config.replacements)) {
-        replacements.set(from, to);
+        replacements.set(from, to); // Store exact path replacements in Map for fast lookup
       }
     }
 
@@ -54,11 +54,11 @@ function loadLinkReplacements() {
         let regexPattern = p.pattern;
         let originalPattern = p.pattern; // Store original pattern for path extraction
 
-        // Support {network} placeholder - replace with regex group
+        // Support {network} placeholder - replace with regex group to match network names dynamically
         // Example: '/services/reference/(base|ethereum)/' -> '/services/reference/(base|ethereum)/'
         // This allows matching multiple networks
         if (regexPattern.includes("{network}")) {
-          // Replace {network} with a capture group that matches common network names
+          // Replace {network} with a capture group that matches common network names (lowercase, numbers, hyphens)
           // This is a fallback - ideally patterns should use explicit network lists
           regexPattern = regexPattern.replace(/\{network\}/g, "([a-z0-9-]+)");
         }
