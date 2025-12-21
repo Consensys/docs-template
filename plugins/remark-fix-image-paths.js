@@ -1,6 +1,6 @@
 /**
  * Remark plugin to fix image paths in markdown
- * Converts ../images/... to /img/... (Docusaurus serves static files from root)
+ * Converts ../images/... to /img/ported-images/... (Docusaurus serves static files from root)
  * 
  * This is a CommonJS version that uses string replacement instead of AST traversal
  * to avoid ES module compatibility issues with unist-util-visit
@@ -44,7 +44,7 @@ function remarkFixImagePaths() {
             const imagePath = node.url.replace(/^(\.\.\/|\.\/)+images\//, ''); // Strip relative path prefix
             const filename = imagePath.split('/').pop(); // Extract just the filename
             const oldUrl = node.url;
-            node.url = `/img/${filename}`; // Rewrite to Docusaurus static asset path
+            node.url = `/img/ported-images/${filename}`; // Rewrite to Docusaurus static asset path
             
             imageFixes.push({
               file: filePath,
@@ -66,7 +66,7 @@ function remarkFixImagePaths() {
             (match, dots, imagePath) => {
               modified = true;
               const filename = imagePath.split('/').pop(); // Extract filename from path
-              const newPath = `src="/img/${filename}"`; // Rewrite to Docusaurus static asset path
+              const newPath = `src="/img/ported-images/${filename}"`; // Rewrite to Docusaurus static asset path
               
               imageFixes.push({
                 file: filePath,
@@ -85,7 +85,7 @@ function remarkFixImagePaths() {
             (match, imagePath) => {
               modified = true;
               const filename = imagePath.split('/').pop();
-              const newPath = `src="/img/${filename}"`;
+              const newPath = `src="/img/ported-images/${filename}"`;
               
               imageFixes.push({
                 file: filePath,
@@ -104,7 +104,7 @@ function remarkFixImagePaths() {
             (match, dots, imagePath) => {
               modified = true;
               const filename = imagePath.split('/').pop();
-              const newPath = `require('@site/static/img/${filename}')`;
+              const newPath = `require('@site/static/img/ported-images/${filename}')`;
               
               imageFixes.push({
                 file: filePath,
@@ -145,7 +145,7 @@ function remarkFixImagePaths() {
                   if (match) {
                     const filename = match[2].split('/').pop();
                     const oldValue = attr.value;
-                    attr.value = `/img/${filename}`;
+                    attr.value = `/img/ported-images/${filename}`;
                     
                     imageFixes.push({
                       file: filePath,

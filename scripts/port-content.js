@@ -835,25 +835,25 @@ function fixImagePaths(content, filePath) {
   let modified = false;
   const imageFixes = [];
   
-  // Match require() statements for images with any number of ../ before images/ - convert to @site/static/img/ paths
+  // Match require() statements for images with any number of ../ before images/ - convert to @site/static/img/ported-images/ paths
   content = content.replace(
     /require\(["'](\.\.\/)+images\/([^"']+)["']\)/g,
     (match, dots, imagePath) => {
       modified = true;
       const filename = imagePath.split('/').pop(); // Extract filename from path
-      imageFixes.push({ original: match, new: `require('@site/static/img/${filename}')`, image: filename });
-      return `require('@site/static/img/${filename}')`; // Rewrite to Docusaurus static asset path
+      imageFixes.push({ original: match, new: `require('@site/static/img/ported-images/${filename}')`, image: filename });
+      return `require('@site/static/img/ported-images/${filename}')`; // Rewrite to Docusaurus static asset path
     }
   );
   
-  // Match src={require(...)} patterns - convert JSX src attributes with relative require() to @site/static/img/ paths
+  // Match src={require(...)} patterns - convert JSX src attributes with relative require() to @site/static/img/ported-images/ paths
   content = content.replace(
     /src=\{require\(["'](\.\.\/)+images\/([^"']+)["']\)\.default\}/g,
     (match, dots, imagePath) => {
       modified = true;
       const filename = imagePath.split('/').pop(); // Extract filename from path
-      imageFixes.push({ original: match, new: `src={require('@site/static/img/${filename}').default}`, image: filename });
-      return `src={require('@site/static/img/${filename}').default}`; // Rewrite to Docusaurus static asset path
+      imageFixes.push({ original: match, new: `src={require('@site/static/img/ported-images/${filename}').default}`, image: filename });
+      return `src={require('@site/static/img/ported-images/${filename}').default}`; // Rewrite to Docusaurus static asset path
     }
   );
   
@@ -863,7 +863,7 @@ function fixImagePaths(content, filePath) {
     (match, alt, dots, imagePath) => {
       modified = true;
       const filename = imagePath.split('/').pop(); // Extract filename from path
-      const newPath = `<img src={require('@site/static/img/${filename}').default} alt="${alt}" />`; // Convert to Docusaurus require() syntax
+      const newPath = `<img src={require('@site/static/img/ported-images/${filename}').default} alt="${alt}" />`; // Convert to Docusaurus require() syntax
       imageFixes.push({ original: match, new: newPath, image: filename });
       return newPath;
     }
