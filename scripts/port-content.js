@@ -97,7 +97,7 @@ function logToFile(logFile, file, original, replacement) {
       fs.mkdirSync(LOGS_DIR, { recursive: true });
     }
     const logPath = path.join(LOGS_DIR, logFile);
-    const entry = `For this file: ${file}\nThe original was: ${original}\nThe replacement is: ${replacement}\n\n`;
+    const entry = `For file: ${file}\nOriginal: ${original}\nReplacement: ${replacement}\n\n`;
     fs.appendFileSync(logPath, entry, "utf8");
   } catch (err) {
     console.warn(`[port-content] Failed to write log: ${err.message}`);
