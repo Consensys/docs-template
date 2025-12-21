@@ -10,6 +10,7 @@ const servicesIndexPath = "services";
 const ethereumFolder = "services/reference/ethereum";
 const gasApiPath = "services/reference/gas-api";
 const partialsPath = "services/reference/_partials";
+const imagesPath = "services/images";
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
@@ -317,6 +318,19 @@ const config = {
         outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/gas-api",
         documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], gasApiPath),
         // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-gas-api
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Images
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-images",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, imagesPath),
+        outDir: "static/img/ported-images",
+        documents: listDocuments(metamaskRepo, ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.gif", "**/*.svg", "**/*.webp"], [], imagesPath),
+        // To sync images from MetaMask docs, run: npx docusaurus download-remote-metamask-images
         noRuntimeDownloads: true,
         performCleanup: false,
       },

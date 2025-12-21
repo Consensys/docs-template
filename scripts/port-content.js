@@ -2,7 +2,9 @@
 
 /**
  * Port content script - Downloads and transforms MetaMask content
- * Runs link fixes, image fixes, writes logs, then starts dev server
+ * Downloads content and images via docusaurus-plugin-remote-content (configured in docusaurus.config.js)
+ * Applies transformations: MDX syntax fixes, component import removal, broken link removal
+ * Note: Image path rewriting is handled by remark-fix-image-paths at build time
  * 
  * NOTE: This script must be in the project root scripts/ directory to work with npm commands
  */
@@ -61,14 +63,58 @@ function debugLog(location, message, data = {}, hypothesisId = null) {
 // #endregion agent log
 
 // Logging utility - writes transformation logs to _maintainers/logs/ directory
-function logToFile(logFile, message) {
+// Track log file initialization to write headers only once per run
+let logFileInitialized = new Set();
+
+/**
+ * Initialize log file with header (timestamp and count placeholder)
+ */
+function initLogFile(logFile, itemType, count) {
+  if (logFileInitialized.has(logFile)) {
+    return; // Already initialized
+  }
+  
   try {
     if (!fs.existsSync(LOGS_DIR)) {
-      fs.mkdirSync(LOGS_DIR, { recursive: true }); // Create logs directory if it doesn't exist
+      fs.mkdirSync(LOGS_DIR, { recursive: true });
     }
     const logPath = path.join(LOGS_DIR, logFile);
     const timestamp = new Date().toISOString();
-    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8"); // Append timestamped log entry
+    const header = `=== ${itemType} Log ===\nDate: ${timestamp}\nTotal ${itemType}: ${count}\n\n`;
+    fs.writeFileSync(logPath, header, "utf8");
+    logFileInitialized.add(logFile);
+  } catch (err) {
+    console.warn(`[port-content] Failed to initialize log: ${err.message}`);
+  }
+}
+
+/**
+ * Write log entry in simple format: file, original, replacement
+ */
+function logToFile(logFile, file, original, replacement) {
+  try {
+    if (!fs.existsSync(LOGS_DIR)) {
+      fs.mkdirSync(LOGS_DIR, { recursive: true });
+    }
+    const logPath = path.join(LOGS_DIR, logFile);
+    const entry = `For this file: ${file}\nThe original was: ${original}\nThe replacement is: ${replacement}\n\n`;
+    fs.appendFileSync(logPath, entry, "utf8");
+  } catch (err) {
+    console.warn(`[port-content] Failed to write log: ${err.message}`);
+  }
+}
+
+/**
+ * Legacy log function for non-transformation logs (kept for compatibility)
+ */
+function logToFileLegacy(logFile, message) {
+  try {
+    if (!fs.existsSync(LOGS_DIR)) {
+      fs.mkdirSync(LOGS_DIR, { recursive: true });
+    }
+    const logPath = path.join(LOGS_DIR, logFile);
+    const timestamp = new Date().toISOString();
+    fs.appendFileSync(logPath, `[${timestamp}] ${message}\n`, "utf8");
   } catch (err) {
     console.warn(`[port-content] Failed to write log: ${err.message}`);
   }
@@ -405,8 +451,14 @@ async function downloadRemoteContent() {
         const outDir = expectedPath ? path.resolve(path.join(__dirname, ".."), expectedPath) : null;
         
         if (outDir && fs.existsSync(outDir)) {
-          const files = getAllMarkdownFiles(outDir);
-          fileCount = files.length;
+          // For image directories, count image files; for docs directories, count markdown files
+          if (outDir.includes("static/img")) {
+            const files = getAllImageFiles(outDir);
+            fileCount = files.length;
+          } else {
+            const files = getAllMarkdownFiles(outDir);
+            fileCount = files.length;
+          }
           console.log(`   ✅ Successfully downloaded ${fileCount} file(s) in ${elapsed}s`);
         } else if (outDir) {
           console.log(`   ⚠️  Completed in ${elapsed}s but output directory not found: ${outDir}`);
@@ -434,7 +486,7 @@ async function downloadRemoteContent() {
     });
     console.log(`\n✅ Successfully downloaded ${totalFiles} total file(s) from MetaMask docs`);
     
-    logToFile("transformation-summary.log", `Downloaded remote content from MetaMask docs: ${downloadResults.map(r => `${r.name} (${r.fileCount || 0} files)`).join(", ")}`);
+    logToFileLegacy("transformation-summary.log", `Downloaded remote content from MetaMask docs: ${downloadResults.map(r => `${r.name} (${r.fileCount || 0} files)`).join(", ")}`);
   } catch (error) {
     // #region agent log
     debugLog("port-content.js:downloadRemoteContent", "Download error", { error: error.message, stack: error.stack }, "B");
@@ -464,13 +516,40 @@ async function downloadRemoteContent() {
       console.error("      (No special permissions needed - just a personal access token)");
       console.error("   4. Wait for rate limit to reset (usually 1 hour)");
       console.error("");
-      logToFile("build-errors.log", `ERROR: GitHub API rate limit exceeded. Set API_TOKEN or GITHUB_TOKEN for higher limits.\n${errorMessage}`);
+      logToFileLegacy("build-errors.log", `ERROR: GitHub API rate limit exceeded. Set API_TOKEN or GITHUB_TOKEN for higher limits.\n${errorMessage}`);
     } else {
       console.error("\n❌ Error downloading remote content:", errorMessage);
-      logToFile("build-errors.log", `ERROR: Failed to download remote content: ${errorMessage}\n${error.stack || ''}`);
+      logToFileLegacy("build-errors.log", `ERROR: Failed to download remote content: ${errorMessage}\n${error.stack || ''}`);
     }
     throw error;
   }
+}
+
+/**
+ * Recursively get all image files from a directory
+ */
+function getAllImageFiles(dir) {
+  const files = [];
+  if (!fs.existsSync(dir)) {
+    // #region agent log
+    debugLog("port-content.js:getAllImageFiles", "Directory does not exist", { dir }, "A");
+    // #endregion agent log
+    return files;
+  }
+  
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...getAllImageFiles(fullPath)); // Recursively process subdirectories
+    } else if (entry.isFile()) {
+      const ext = path.extname(entry.name).toLowerCase();
+      if (['.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp'].includes(ext)) {
+        files.push(fullPath);
+      }
+    }
+  }
+  return files;
 }
 
 /**
@@ -884,7 +963,7 @@ function renameIndexFile() {
   if (fs.existsSync(servicesIndexPath) && fs.existsSync(indexPath)) {
     fs.unlinkSync(indexPath);
     console.log("   ✅ Removed duplicate index.md (services-index.md already exists)");
-    logToFile("transformation-summary.log", "Removed duplicate index.md (services-index.md already exists)");
+    logToFileLegacy("transformation-summary.log", "Removed duplicate index.md (services-index.md already exists)");
     return;
   }
   
@@ -892,7 +971,7 @@ function renameIndexFile() {
   if (fs.existsSync(indexPath) && !fs.existsSync(servicesIndexPath)) {
     fs.renameSync(indexPath, servicesIndexPath);
     console.log("   ✅ Renamed index.md to services-index.md");
-    logToFile("transformation-summary.log", "Renamed index.md to services-index.md to avoid conflict with README.md");
+    logToFileLegacy("transformation-summary.log", "Renamed index.md to services-index.md to avoid conflict with README.md");
   }
 }
 
@@ -900,6 +979,9 @@ function renameIndexFile() {
  * Apply transformations to downloaded content
  */
 function applyTransformations() {
+  // Reset log file initialization tracking for this run
+  logFileInitialized = new Set();
+  
   // #region agent log
   debugLog("port-content.js:applyTransformations", "Function entry", {}, "C");
   // #endregion agent log
@@ -970,7 +1052,7 @@ function applyTransformations() {
           new: fix.new,
           image: fix.image,
         });
-        logToFile("image-operations.log", `FIXED: File: ${relativeFilePath}, Image: ${fix.image}, Original: ${fix.original}, New: ${fix.new}`);
+        // Log entry will be written later after we know the total count
       });
     }
     
@@ -995,7 +1077,7 @@ function applyTransformations() {
           path: fix.path,
           import: fix.import,
         });
-        logToFile("component-import-fixes.log", `FIXED: File: ${relativeFilePath}, Type: ${fix.type}, Name: ${fix.name}, Path: ${fix.path}`);
+        // Log entry will be written later after we know the total count
       });
     }
     
@@ -1014,7 +1096,7 @@ function applyTransformations() {
       totalBroken += brokenLinks.length;
       allBrokenLinks.push(...brokenLinks);
       brokenLinks.forEach(({ link, text }) => {
-        logToFile("links-dropped.log", `REMOVED: File: ${relativeFilePath}, Link Text: ${text}, Broken Link: ${link}`);
+        // Log entry will be written later after we know the total count
       });
     }
     
@@ -1031,6 +1113,32 @@ function applyTransformations() {
     fileCount: files.length 
   }, "C");
   // #endregion agent log
+  
+  // Initialize log files with headers and write entries
+  if (totalImageFixes > 0) {
+    initLogFile("image-operations.log", "Image Fixes", totalImageFixes);
+    allImageFixes.forEach(({ file, original, new: replacement }) => {
+      logToFile("image-operations.log", file, original, replacement);
+    });
+  }
+  
+  if (totalComponentFixes > 0) {
+    initLogFile("component-import-fixes.log", "Component Fixes", totalComponentFixes);
+    allComponentFixes.forEach(({ file, type, name, path: componentPath, import: importPath }) => {
+      const original = importPath || `${type} ${name} from ${componentPath}`;
+      const replacement = `/* ${name} - Component not available */`;
+      logToFile("component-import-fixes.log", file, original, replacement);
+    });
+  }
+  
+  if (totalBroken > 0) {
+    initLogFile("links-dropped.log", "Broken Links Removed", totalBroken);
+    allBrokenLinks.forEach(({ file, link, text }) => {
+      const original = `[${text}](${link})`;
+      const replacement = `[${text}]`; // Link removed, text kept
+      logToFile("links-dropped.log", file, original, replacement);
+    });
+  }
   
   // Report fixes
   if (totalImageFixes > 0) {
@@ -1058,7 +1166,7 @@ function applyTransformations() {
     }
   }
   
-  logToFile("transformation-summary.log", `Applied transformations to ${files.length} file(s), fixed ${totalImageFixes} image path(s), commented out ${totalComponentFixes} component import(s), removed ${totalBroken} broken link(s)`);
+  logToFileLegacy("transformation-summary.log", `Applied transformations to ${files.length} file(s), fixed ${totalImageFixes} image path(s), commented out ${totalComponentFixes} component import(s), removed ${totalBroken} broken link(s)`);
 }
 
 /**
@@ -1177,7 +1285,7 @@ async function main() {
     debugLog("port-content.js:main", "Error caught", { error: error.message, stack: error.stack }, "D");
     // #endregion agent log
     console.error("\n❌ Port content process failed:", error.message);
-    logToFile("build-errors.log", `FATAL ERROR: ${error.message}\n${error.stack}`);
+    logToFileLegacy("build-errors.log", `FATAL ERROR: ${error.message}\n${error.stack}`);
     process.exit(1);
   }
 }

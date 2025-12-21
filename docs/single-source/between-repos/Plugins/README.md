@@ -21,8 +21,8 @@ npm run port
 ```
 
 This command:
-1. Downloads content from MetaMask docs using `docusaurus-plugin-remote-content`
-2. Runs all transformation plugins (link rewriting, image fixes)
+1. Downloads content and images from MetaMask docs using `docusaurus-plugin-remote-content` (configured in `docusaurus.config.js`)
+2. Runs all transformation plugins (link rewriting, image path fixes)
 3. Writes logs to `_maintainers/logs/`
 4. Starts the local dev server
 
@@ -37,9 +37,7 @@ Plugins are located in `src/remark/` for better organization and testing:
 
 ### Remote content plugin
 
-Uses `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` to download content from:
-- MetaMask services index → `MetaMask-ported-data/index.md`
-- Base JSON-RPC methods → `MetaMask-ported-data/reference/base/json-rpc-methods/`
+Uses `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` to download content and images. All downloads are configured in `docusaurus.config.js` and visible in the console log when running `npm run port`.
 
 ### Configuration
 
@@ -53,12 +51,17 @@ Uses `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` to 
 
 ## Manual download
 
-To manually download content without starting the server:
+To manually download content without starting the server, use the commands generated from your `docusaurus.config.js` configuration:
 
 ```bash
 npx docusaurus download-remote-metamask-services-index
-npx docusaurus download-remote-metamask-base-json-rpc
+npx docusaurus download-remote-metamask-partials
+npx docusaurus download-remote-metamask-ethereum-json-rpc
+npx docusaurus download-remote-metamask-gas-api
+npx docusaurus download-remote-metamask-images
 ```
+
+See `docusaurus.config.js` for all configured downloads.
 
 ## See also
 

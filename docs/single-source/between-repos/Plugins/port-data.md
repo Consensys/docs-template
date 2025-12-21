@@ -26,9 +26,10 @@ The porting system uses **runtime plugins** to transform content at build time:
   - `remark-fix-image-paths` - Fixes image paths for Docusaurus (used at build time)
 
 - **Port Script** (`scripts/port-content.js`)
-  - Downloads content via `docusaurus-plugin-remote-content`
-  - Applies transformations: MDX syntax fixes, component import removal, broken link removal, image path fixes
+  - Downloads content and images via `docusaurus-plugin-remote-content` (configured in `docusaurus.config.js`)
+  - Applies transformations: MDX syntax fixes, component import removal, broken link removal
   - Writes logs to `_maintainers/logs/`
+  - Note: Image path rewriting is handled by `remark-fix-image-paths` at build time
 
 - **Configuration** (`_maintainers/link-replacements.yaml`)
   - Link rewriting rules (exact and pattern-based)
@@ -67,7 +68,7 @@ The system handles four types of link replacements:
 | **Component Imports** | `scripts/port-content.js` | None | Removes missing `@site/src/components` and `@site/src/plugins` imports, comments out component usage |
 | **MDX Syntax** | `scripts/port-content.js` | None | Fixes MDX syntax issues (adds blank lines after imports) |
 | **Broken Links** | `scripts/port-content.js` | None | Removes broken internal markdown links that can't be resolved |
-| **Image Links** | `scripts/port-content.js` | None | Rewrites image paths to `@site/static/img/{filename}`. Images downloaded via `docusaurus-plugin-remote-content` |
+| **Image Links** | `remark-fix-image-paths` | `docusaurus.config.js` | Rewrites image paths to `/img/ported-images/{filename}`. Images downloaded via `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` |
 | **Relative Links from Upstream** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Converts relative paths that don't exist locally to external URLs (applied at build time) |
 | **Absolute Paths** | `remark-link-rewriter` | `_maintainers/link-replacements.yaml` | Rewrites absolute paths (starting with `/`) to local paths or external URLs based on YAML patterns (applied at build time) |
 
@@ -146,7 +147,7 @@ remarkPlugins: [
   </TabItem>
 </Tabs>
 
-**Note:** Component fixes, broken link removal, and MDX syntax fixes are handled by `scripts/port-content.js` during the port process, not by remark plugins.
+**Note:** Component fixes, broken link removal, and MDX syntax fixes are handled by `scripts/port-content.js` during the port process. Image path rewriting is handled by `remark-fix-image-paths` at build time.
 
 ### Adding new networks
 
@@ -164,13 +165,28 @@ No code changes needed - the system is fully generalized.
 
 ## Image handling
 
-:::warning
+Images are explicitly configured in `docusaurus.config.js` using `docusaurus-plugin-remote-content`, just like markdown content. Images are downloaded to `static/img/ported-images/` and paths are rewritten by `remark-fix-image-paths` to `/img/ported-images/{filename}`.
 
-All images from the upstream repo are currently copied.
+### Image configuration
 
-::: 
+Images are configured in `docusaurus.config.js`:
 
-Images are downloaded via `docusaurus-plugin-remote-content` to `static/img/ported-images/` and paths are rewritten by `remark-fix-image-paths` to `/img/ported-images/{filename}`.
+```javascript
+// Remote content: MetaMask Images
+[
+  "docusaurus-plugin-remote-content",
+  {
+    name: "metamask-images",
+    sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, imagesPath),
+    outDir: "static/img/ported-images",
+    documents: listDocuments(metamaskRepo, ["**/*.png", "**/*.jpg", "**/*.jpeg", "**/*.gif", "**/*.svg", "**/*.webp"], [], imagesPath),
+    noRuntimeDownloads: true,
+    performCleanup: false,
+  },
+],
+```
+
+**To sync images:** Run `npx docusaurus download-remote-metamask-images` or use `npm run port` to download all configured content including images.
 
 ## Logging
 
@@ -192,12 +208,12 @@ npm run port
 ```
 
 This command:
-1. Downloads content via `docusaurus-plugin-remote-content`
+1. Downloads content and images via `docusaurus-plugin-remote-content` (configured in `docusaurus.config.js`)
 2. Applies transformations:
    - Fixes MDX syntax (adds blank lines after imports)
    - Removes missing component imports (`@site/src/components`, `@site/src/plugins`)
    - Removes broken internal markdown links
-   - Fixes image paths
+   - Rewrites image paths (via `remark-fix-image-paths` at build time)
 3. Writes logs to `_maintainers/logs/`
 4. Starts dev server (unless `--no-server` flag is used)
 
@@ -243,7 +259,10 @@ Test files:
 ## Troubleshooting
 
 - **Links not rewriting**: Check `_maintainers/link-replacements.yaml` and verify patterns match your paths
-- **Images not working**: Check `_maintainers/logs/image-operations.log` for image path fixes
+- **Images not working**: 
+  - Verify images are configured in `docusaurus.config.js` (see [Image handling](#image-handling))
+  - Check `_maintainers/logs/image-operations.log` for image path fixes
+  - Ensure images were downloaded: `npx docusaurus download-remote-metamask-images`
 - **Build failing**: Check `_maintainers/logs/build-errors.log` and verify YAML syntax
 - **GitHub rate limits**: Set `API_TOKEN` (or `GITHUB_TOKEN`) in `.env` file for higher rate limits (5000/hour)
 - **Component errors**: Check `_maintainers/logs/component-import-fixes.log` to see which imports were removed
