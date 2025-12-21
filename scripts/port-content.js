@@ -297,17 +297,28 @@ function getRemoteContentPlugins() {
     const configStart = afterMarker.indexOf('{');
     if (configStart === -1) continue;
     
-    // Extract a reasonable chunk to search for name, outDir, and source path (up to 2000 chars should be enough)
-    const configChunk = afterMarker.substring(configStart, configStart + 2000);
+    // Find the matching closing brace for this config object to limit our search
+    let braceCount = 0;
+    let configEnd = configStart;
+    for (let i = configStart; i < afterMarker.length && i < configStart + 5000; i++) {
+      if (afterMarker[i] === '{') braceCount++;
+      if (afterMarker[i] === '}') {
+        braceCount--;
+        if (braceCount === 0) {
+          configEnd = i + 1;
+          break;
+        }
+      }
+    }
+    
+    // Extract the config object content (from opening brace to closing brace)
+    const configChunk = afterMarker.substring(configStart, configEnd);
     
     // Extract name field
     const nameMatch = configChunk.match(/name:\s*["']([^"']+)["']/);
     if (!nameMatch) continue;
     const pluginName = nameMatch[1];
-    const nameMatchEnd = nameMatch.index + nameMatch[0].length;
     
-    // DEBUG: Log what we're finding
-    console.log(`[DEBUG] Found plugin at position ${startPos}: ${pluginName}`);
     
     // Extract outDir field
     const outDirMatch = configChunk.match(/outDir:\s*["']([^"']+)["']/);
@@ -315,52 +326,13 @@ function getRemoteContentPlugins() {
     
     // Extract source path variable from buildRepoRawBaseUrl call (e.g., buildRepoRawBaseUrl(metamaskRepo, partialsPath))
     // This is the source of truth for what's being downloaded
-    // Only search AFTER the name field to avoid matching sourceBaseUrl from other plugins in the chunk
-    const configAfterName = configChunk.substring(nameMatchEnd);
-    const sourcePathVarMatch = configAfterName.match(/sourceBaseUrl:\s*buildRepoRawBaseUrl\([^,]+,\s*(\w+Path)\)/);
+    // Now that we've limited to just this plugin's config object, we can safely match the first sourceBaseUrl
+    const sourcePathVarMatch = configChunk.match(/sourceBaseUrl:\s*buildRepoRawBaseUrl\([^,]+,\s*(\w+Path)\)/);
     const sourcePathVar = sourcePathVarMatch ? sourcePathVarMatch[1] : null;
     const sourcePath = sourcePathVar && pathVars.has(sourcePathVar) ? pathVars.get(sourcePathVar) : null;
     
-    // Generate display name from the actual source path (the source of truth)
-    let displayName;
-    if (sourcePath) {
-      // Parse the source path to generate a meaningful display name
-      // e.g., "services" -> "Services Index"
-      // e.g., "services/reference/_partials" -> "Reference Partials"
-      // e.g., "services/reference/linea/json-rpc-methods" -> "Linea JSON-RPC Methods"
-      const pathParts = sourcePath.split('/').filter(p => p && p !== 'services' && p !== 'reference');
-      
-      console.log(`[DEBUG] Plugin ${pluginName}: sourcePath="${sourcePath}", pathParts=[${pathParts.join(', ')}]`);
-      
-      if (pathParts.length === 0) {
-        // Just "services" - this is the services index
-        displayName = "Services Index";
-      } else if (pathParts[0] === '_partials') {
-        // Partials
-        displayName = "Reference Partials";
-      } else if (pathParts.includes('json-rpc-methods')) {
-        // JSON-RPC methods - extract network name
-        const networkIndex = pathParts.indexOf('json-rpc-methods');
-        if (networkIndex > 0) {
-          const networkName = pathParts[networkIndex - 1];
-          const networkDisplay = networkName.charAt(0).toUpperCase() + networkName.slice(1);
-          displayName = `${networkDisplay} JSON-RPC Methods`;
-        } else {
-          displayName = "JSON-RPC Methods";
-        }
-      } else {
-        // Fallback: use path parts to generate name
-        displayName = pathParts.map(p => p.charAt(0).toUpperCase() + p.slice(1).replace(/-/g, ' ')).join(' ');
-      }
-    } else {
-      // Fallback: Generate display name from plugin name
-      displayName = pluginName
-        .replace(/^metamask-/, "")
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, l => l.toUpperCase());
-    }
-    
-    console.log(`[DEBUG] Plugin ${pluginName}: displayName="${displayName}"`);
+    // Use the source path as the display name - what maintainers configured is what they get
+    const displayName = sourcePath || pluginName;
     
     // Generate download command: npx docusaurus download-remote-{name}
     const downloadCommand = `download-remote-${pluginName}`;
