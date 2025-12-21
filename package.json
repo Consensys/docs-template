@@ -20,7 +20,8 @@
     "lint:js": "eslint . --ext js,jsx,ts,tsx --max-warnings=0",
     "lint:style": "stylelint \"**/*.css\"",
     "lint:fix": "npm run lint:js -- --fix",
-    "format": "prettier --write '{blog,docs,src,static}/**/*.{md,mdx,ts,js,tsx,jsx,json}'"
+    "format": "prettier --write '{blog,docs,src,static}/**/*.{md,mdx,ts,js,tsx,jsx,json}'",
+    "port": "node scripts/port-content.js"
   },
   "lint-staged": {
     "src/**/*.{ts,js,jsx,tsx}": "npm run lint:fix",

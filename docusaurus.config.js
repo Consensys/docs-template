@@ -1,6 +1,15 @@
 const {themes} = require("prism-react-renderer");
+const path = require("path");
 const lightCodeTheme = themes.github;
 const darkCodeTheme = themes.dracula;
+
+// Remote content from MetaMask docs
+const { createRepo, buildRepoRawBaseUrl, listDocuments } = require("./src/lib/list-remote");
+const metamaskRepo = createRepo("MetaMask", "metamask-docs", "main");
+const servicesIndexPath = "services";
+const ethereumFolder = "services/reference/ethereum";
+const gasApiPath = "services/reference/gas-api";
+const partialsPath = "services/reference/_partials";
 
 const isDev = process.env.NODE_ENV === "development";
 const baseUrl = isDev ? "/" : "/";
@@ -46,6 +55,12 @@ const config = {
           routeBasePath: "/",
           path: "./docs",
           includeCurrentVersion: true,
+          // Remark plugins for link rewriting and image path fixing
+          // Using modular plugins from plugins/
+          remarkPlugins: [
+            require("./plugins/remark-link-rewriter"),
+            require("./plugins/remark-fix-image-paths"),
+          ],
           // lastVersion: "23.x",
           // versions: {
           //   //defaults to the ./docs folder
@@ -253,6 +268,75 @@ const config = {
         containerId: "GTM-",
       },
     ],
+    // Remote content: MetaMask Services Index
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-services-index",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, servicesIndexPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data",
+        documents: ["index.md"], // Downloads services/index.md
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-services-index
+        // Set to false for auto-download on start/build (adds ~2.5 min to build time)
+        noRuntimeDownloads: true,
+        performCleanup: false, // Keep files after build
+      },
+    ],
+    // Remote content: MetaMask _partials (required for network's JSON-RPC methods)
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-partials",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, partialsPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/_partials",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], partialsPath),
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-partials
+        // Set to false for auto-download on start/build (adds ~2.5 min to build time)
+        noRuntimeDownloads: true,
+        performCleanup: false, // Keep files after build
+      },
+    ],
+    // Remote content: MetaMask Ethereum JSON-RPC Methods
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-ethereum-json-rpc",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, ethereumFolder),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/ethereum",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"],ethereumFolder),
+
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Remote content: MetaMask Gas API
+    [
+      "docusaurus-plugin-remote-content",
+      {
+        name: "metamask-gas-api",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, gasApiPath),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/gas-api",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], gasApiPath),
+        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-gas-api
+        noRuntimeDownloads: true,
+        performCleanup: false,
+      },
+    ],
+    // Webpack alias plugin to resolve /services/ import paths
+    function (context, options) {
+      return {
+        name: "webpack-alias-plugin",
+        configureWebpack(config, isServer) {
+          return {
+            resolve: {
+              alias: {
+                "/services": path.resolve(__dirname, "docs", "single-source", "between-repos", "Plugins", "MetaMask-ported-data"),
+              },
+            },
+          };
+        },
+      };
+    },
     // This is how redirects are done
     // [
     //   "@docusaurus/plugin-client-redirects",
