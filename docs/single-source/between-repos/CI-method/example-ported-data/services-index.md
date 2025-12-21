@@ -23,7 +23,7 @@ Infura offers a robust set of features designed to enhance the development, depl
 
 Click below to explore the supported networks.
 
-* [Base](/single-source/between-repos/CI-method/example-ported-data/reference/base/json-rpc-methods) - Base JSON-RPC methods
+* [Base](./reference/base/json-rpc-methods) - Base JSON-RPC methods
 * [Ethereum](https://docs.metamask.io/services/reference/ethereum) - Ethereum network (external link)
 * [Sei](https://docs.metamask.io/services/reference/sei) - Sei network (external link)
 

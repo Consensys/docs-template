@@ -4,7 +4,7 @@ title: CI Method
 
 # CI Method for Porting Data
 
-> **Note:** This is an alternative, untested approach. The partially-tested method is the [Plugins approach](../Plugins/README).
+> **Note:** This is an alternative, untested approach. The partially-tested method is the [Plugins approach](/single-source/between-repos/Plugins/README).
 
 ## Overview
 
@@ -26,7 +26,7 @@ This method uses CI workflows to automatically sync content from upstream reposi
 
 ## Status
 
-This approach is archived/paused. See the [Plugins method](../Plugins/README) for the active implementation.
+This approach is archived/paused. See the [Plugins method](/single-source/between-repos/Plugins/README) for the active implementation.
 
 ## Example output
 

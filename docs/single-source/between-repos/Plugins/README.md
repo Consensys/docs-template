@@ -66,6 +66,5 @@ See `docusaurus.config.js` for all configured downloads.
 ## See also
 
 - [Porting Data Between Repositories](./port-data.md) - Plugin documentation
-- [CI Method](../CI-method/README) - Alternative approach (needs testing)
-- [MetaMask Ported Data](./MetaMask-ported-data/README) - Test ported content
+- [CI Method](/single-source/between-repos/CI-method) - Alternative approach (needs testing)
 

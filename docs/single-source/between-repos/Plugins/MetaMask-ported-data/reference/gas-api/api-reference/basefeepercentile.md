@@ -5,6 +5,13 @@ description: Get the base fee percentile for a chain.
 
 
 import Tabs from "@theme/Tabs";
+
+
+
+
+
+
+
 import TabItem from "@theme/TabItem";
 
 

@@ -5,6 +5,13 @@ description: Get the estimated gas prices for a chain.
 
 
 import Tabs from "@theme/Tabs";
+
+
+
+
+
+
+
 import TabItem from "@theme/TabItem";
 
 
