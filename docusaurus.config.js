@@ -290,7 +290,6 @@ const config = {
         sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, partialsPath),
         outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/_partials",
         documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], partialsPath),
-        // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-partials
         // Set to false for auto-download on start/build (adds ~2.5 min to build time)
         noRuntimeDownloads: true,
         performCleanup: false, // Keep files after build

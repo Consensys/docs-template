@@ -274,9 +274,10 @@ function getRemoteContentPlugins() {
   const configPath = path.join(__dirname, "..", "docusaurus.config.js");
   const configContent = fs.readFileSync(configPath, "utf8");
   
-  // First, extract all path variable definitions (e.g., const partialsPath = "services/reference/_partials")
+  // First, extract all path variable definitions (e.g., const partialsPath = "services/reference/_partials" or const ethereumFolder = "services/reference/ethereum")
   const pathVars = new Map();
-  const pathVarRegex = /const\s+(\w+Path)\s*=\s*["']([^"']+)["']/g;
+  // Match variables ending in Path or Folder (or any variable that looks like a path)
+  const pathVarRegex = /const\s+(\w+(?:Path|Folder))\s*=\s*["']([^"']+)["']/g;
   let pathMatch;
   while ((pathMatch = pathVarRegex.exec(configContent)) !== null) {
     pathVars.set(pathMatch[1], pathMatch[2]); // Store variable name -> path value
@@ -324,10 +325,10 @@ function getRemoteContentPlugins() {
     const outDirMatch = configChunk.match(/outDir:\s*["']([^"']+)["']/);
     const outDir = outDirMatch ? outDirMatch[1] : null;
     
-    // Extract source path variable from buildRepoRawBaseUrl call (e.g., buildRepoRawBaseUrl(metamaskRepo, partialsPath))
+    // Extract source path variable from buildRepoRawBaseUrl call (e.g., buildRepoRawBaseUrl(metamaskRepo, partialsPath) or buildRepoRawBaseUrl(metamaskRepo, ethereumFolder))
     // This is the source of truth for what's being downloaded
     // Now that we've limited to just this plugin's config object, we can safely match the first sourceBaseUrl
-    const sourcePathVarMatch = configChunk.match(/sourceBaseUrl:\s*buildRepoRawBaseUrl\([^,]+,\s*(\w+Path)\)/);
+    const sourcePathVarMatch = configChunk.match(/sourceBaseUrl:\s*buildRepoRawBaseUrl\([^,]+,\s*(\w+(?:Path|Folder))\)/);
     const sourcePathVar = sourcePathVarMatch ? sourcePathVarMatch[1] : null;
     const sourcePath = sourcePathVar && pathVars.has(sourcePathVar) ? pathVars.get(sourcePathVar) : null;
     
