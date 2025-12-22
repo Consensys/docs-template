@@ -41,30 +41,13 @@ Uses `docusaurus-plugin-remote-content` configured in `docusaurus.config.js` to 
 
 ### Configuration
 
-- Link replacements: `_maintainers/link-replacements.yaml` (generic patterns, no hardcoded network names)
+- Link replacements: `_maintainers/link-replacements.yaml` (generic patterns)
 - Plugins: `src/remark/` (modular remark plugins)
 - Logs: `_maintainers/logs/` (all transformations logged)
 
-## Scripts location
-
-**Note:** The port script (`scripts/port-content.js`) must be in the project root (`scripts/` directory) to work with npm commands.
-
-## Manual download
-
-To manually download content without starting the server, use the commands generated from your `docusaurus.config.js` configuration:
-
-```bash
-npx docusaurus download-remote-metamask-services-index
-npx docusaurus download-remote-metamask-partials
-npx docusaurus download-remote-metamask-ethereum-json-rpc
-npx docusaurus download-remote-metamask-gas-api
-npx docusaurus download-remote-metamask-images
-```
-
-See `docusaurus.config.js` for all configured downloads.
-
 ## See also
 
+- See `docusaurus.config.js` for all configured downloads.
 - [Porting Data Between Repositories](./port-data.md) - Plugin documentation
 - [CI Method](/single-source/between-repos/CI-method) - Alternative approach (needs testing)
 

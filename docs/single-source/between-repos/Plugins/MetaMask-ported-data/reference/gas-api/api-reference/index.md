@@ -1,17 +1,10 @@
 ---
 description: Reference content for the Gas API.
 sidebar_label: API reference
+warning: this page has been ported from another repository, any edits may be overwritten by running the port script
 ---
 
 import Tabs from "@theme/Tabs";
-
-
-
-
-
-
-
-
 import TabItem from "@theme/TabItem";
 
 # Gas API reference
@@ -25,17 +18,17 @@ Use the APIs to:
 - [Get the busy threshold for a network.](./busythreshold.md)
 
 :::info
-See the list of supported Gas API networks.
+See the [list of supported Gas API networks](https://docs.metamask.io/services/get-started/endpoints.md#gas-api).
 :::
 
 ## Supported API request formats
 
 You can call the Gas APIs in two ways:
 
-- **Using the API key only** - Add your API key
+- **Using the API key only** - Add your [API key](/developer-tools/dashboard/get-started/create-api)
   as a path option.
 - **Using the API key and API key secret** - Use basic authentication and specify the API key
-  and API key secret.
+  and [API key secret](/developer-tools/dashboard/how-to/secure-an-api/api-key-secret).
 
 <Tabs>
   <TabItem value="API key only" label="Use an API key only" default>

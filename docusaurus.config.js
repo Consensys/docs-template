@@ -7,7 +7,8 @@ const darkCodeTheme = themes.dracula;
 const { createRepo, buildRepoRawBaseUrl, listDocuments } = require("./src/lib/list-remote");
 const metamaskRepo = createRepo("MetaMask", "metamask-docs", "main");
 const servicesIndexPath = "services";
-const ethereumFolder = "services/reference/ethereum";
+// const ethereumFolder = "services/reference/ethereum";
+const baseFolder = "services/reference/base";
 const gasApiPath = "services/reference/gas-api";
 const partialsPath = "services/reference/_partials";
 const imagesPath = "services/images";
@@ -25,7 +26,7 @@ const config = {
   onBrokenLinks: "throw",
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: "throw",
+      onBrokenMarkdownLinks: "throw", // change to warn for less friction at build
     }
   },
   favicon: "img/favicon.ico",
@@ -278,8 +279,7 @@ const config = {
         outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data",
         documents: ["index.md"], // Downloads services/index.md
         // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-services-index
-        // Set to false for auto-download on start/build (adds ~2.5 min to build time)
-        noRuntimeDownloads: true,
+        noRuntimeDownloads: true, // Prevents downloads AND processing during npm start/build
         performCleanup: false, // Keep files after build
       },
     ],
@@ -290,24 +290,36 @@ const config = {
         name: "metamask-partials",
         sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, partialsPath),
         outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/_partials",
-        documents: [], // Empty array since noRuntimeDownloads: true - files downloaded via npm run port
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], partialsPath),
         // Set to false for auto-download on start/build (adds ~2.5 min to build time)
         noRuntimeDownloads: true,
         performCleanup: false, // Keep files after build
       },
     ],
-    // Remote content: MetaMask Ethereum JSON-RPC Methods
+        // Remote content: MetaMask Base JSON-RPC Methods
     [
       "docusaurus-plugin-remote-content",
       {
-        name: "metamask-ethereum-json-rpc",
-        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, ethereumFolder),
-        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/ethereum",
-        documents: [], // Empty array since noRuntimeDownloads: true - files downloaded via npm run port
+        name: "metamask-base-folder",
+        sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, baseFolder),
+        outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/base",
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], baseFolder),
         noRuntimeDownloads: true,
         performCleanup: false,
       },
     ],
+    // // Remote content: MetaMask Ethereum JSON-RPC Methods
+    // [
+    //   "docusaurus-plugin-remote-content",
+    //   {
+    //     name: "metamask-ethereum-folder",
+    //     sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, ethereumFolder),
+    //     outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/ethereum",
+    //     documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], ethereumFolder),
+    //     noRuntimeDownloads: true,
+    //     performCleanup: false,
+    //   },
+    // ],
     // Remote content: MetaMask Gas API
     [
       "docusaurus-plugin-remote-content",
@@ -315,7 +327,7 @@ const config = {
         name: "metamask-gas-api",
         sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, gasApiPath),
         outDir: "docs/single-source/between-repos/Plugins/MetaMask-ported-data/reference/gas-api",
-        documents: [], // Empty array since noRuntimeDownloads: true - files downloaded via npm run port
+        documents: listDocuments(metamaskRepo, ["**/*.md", "**/*.mdx"], ["**/_*.{js,jsx,ts,tsx}"], gasApiPath),
         // To sync content from MetaMask docs, run: npx docusaurus download-remote-metamask-gas-api
         noRuntimeDownloads: true,
         performCleanup: false,
@@ -328,7 +340,7 @@ const config = {
         name: "metamask-images",
         sourceBaseUrl: buildRepoRawBaseUrl(metamaskRepo, imagesPath),
         outDir: "static/img/ported-images",
-        documents: [], // Empty array since noRuntimeDownloads: true - files downloaded via npm run port
+        documents: listDocuments(metamaskRepo, ["**/*.{png,jpg,jpeg,gif,svg,webp}"], [], imagesPath),
         // To sync images from MetaMask docs, run: npx docusaurus download-remote-metamask-images
         noRuntimeDownloads: true,
         performCleanup: false,

@@ -5,9 +5,42 @@
  * This is a CommonJS version that uses string replacement instead of AST traversal
  * to avoid ES module compatibility issues with unist-util-visit
  * Includes logging for image operations
+ * Only processes files that were ported (from ported-files.log)
  */
 const fs = require("fs");
 const path = require("path");
+
+// Cache of ported files (loaded once per process)
+let portedFilesCache = null;
+
+/**
+ * Load ported files list from log file created by port-content.js
+ * Returns Set of file paths (relative to docs/, without .md/.mdx extension)
+ */
+function loadPortedFiles() {
+  if (portedFilesCache !== null) {
+    return portedFilesCache; // Return cached result
+  }
+  
+  portedFilesCache = new Set();
+  const logPath = path.join(process.cwd(), "_maintainers", "logs", "ported-files.log");
+  
+  if (!fs.existsSync(logPath)) {
+    // Log file doesn't exist - this is okay if porting hasn't run yet
+    // Return empty set so plugin doesn't process any files
+    return portedFilesCache;
+  }
+  
+  try {
+    const content = fs.readFileSync(logPath, "utf8");
+    const lines = content.split('\n').map(line => line.trim()).filter(line => line);
+    lines.forEach(line => portedFilesCache.add(line));
+  } catch (err) {
+    console.warn(`[remark-fix-image-paths] Failed to load ported-files.log: ${err.message}`);
+  }
+  
+  return portedFilesCache;
+}
 
 // Logging utility - writes image transformation logs to _maintainers/logs/ directory
 function logToFile(logFile, message) {
@@ -32,6 +65,26 @@ function remarkFixImagePaths() {
   return (tree, file) => {
     try {
       const filePath = file?.path || file?.history?.[0] || "unknown";
+      
+      // Convert to relative path from docs/ directory (without extension)
+      const docsRoot = path.join(process.cwd(), "docs");
+      let relativeFilePath = 'unknown';
+      try {
+        const relativePath = path.relative(docsRoot, filePath);
+        if (relativePath && !relativePath.startsWith('..')) {
+          relativeFilePath = relativePath.replace(/\.(md|mdx)$/, '');
+        }
+      } catch (e) {
+        // If path resolution fails, try fallback method
+        relativeFilePath = filePath.replace(/^.*\/docs\//, '').replace(/\.mdx?$/, '') || 'unknown';
+      }
+      
+      // Only process files that are in the ported files log
+      // This ensures we only process files that were actually ported, not all docs
+      const portedFiles = loadPortedFiles();
+      if (!portedFiles.has(relativeFilePath)) {
+        return; // Skip files that weren't ported
+      }
       
       // Use a simple approach: traverse the tree manually
       // Since we can't use unist-util-visit (ES module), we'll do a simple recursive traversal

@@ -1,18 +1,13 @@
 ---
 description: Get the base fee percentile for a chain.
+warning: this page has been ported from another repository, any edits may be overwritten by running the port script
 ---
 
-
+<!-- import CreditCost from '@site/src/components/CreditCost/CreditCostPrice.js'; Component not available in this repository -->
 
 import Tabs from "@theme/Tabs";
-
-
-
-
-
-
-
 import TabItem from "@theme/TabItem";
+
 
 
 # Get the base fee percentile
@@ -32,7 +27,7 @@ based on historical data.
 **Path**:
 
 - `chainId`: `string` - ID of the chain to query.
-  See the list of supported chain IDs.
+  See the [list of supported chain IDs](https://docs.metamask.io/services/get-started/endpoints.md#gas-api).
 
 ## Returns
 
@@ -43,8 +38,8 @@ less than or equal to the provided amount.
 
 ### Request
 
-Include your API key
-and optional API key secret
+Include your [API key](/developer-tools/dashboard/get-started/create-api)
+and optional [API key secret](/developer-tools/dashboard/how-to/secure-an-api/api-key-secret)
 to authorize your account to use the APIs.
 
 :::tip

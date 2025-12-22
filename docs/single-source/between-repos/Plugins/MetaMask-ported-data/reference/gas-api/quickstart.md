@@ -2,17 +2,10 @@
 description: Get started with the Gas APIs.
 sidebar_label: Quickstart
 sidebar_position: 1
+warning: this page has been ported from another repository, any edits may be overwritten by running the port script
 ---
 
 import Tabs from "@theme/Tabs";
-
-
-
-
-
-
-
-
 import TabItem from "@theme/TabItem";
 
 # Gas API quickstart
@@ -27,8 +20,8 @@ View the [API reference content](api-reference/index.md) to view the `curl` comm
 
 ## Prerequisites
 
-- A valid Web3 API key
-  and optional API key secret.
+- A valid [Web3 API key](/developer-tools/dashboard/get-started/create-api)
+  and optional [API key secret](/developer-tools/dashboard/how-to/secure-an-api/api-key-secret).
 - [Node.js and npm installed](https://nodejs.org/en/download).
 
 ## Initialize a new project directory
@@ -47,7 +40,7 @@ Install the `axios` package:
 npm install axios
 ```
 
-Install the `dotenv` package:
+Install the [`dotenv`](https://docs.metamask.io/services/how-to/javascript-dotenv.md) package:
 
 ```bash
 npm install dotenv
@@ -59,7 +52,7 @@ Create a `.env` file at the project root and add the following data:
 
 :::caution warning
 Do not commit the `.env` file to your repository if it contains sensitive data.
-You can create a `.gitignore` file
+You can [create a `.gitignore` file](https://docs.metamask.io/services/how-to/javascript-dotenv.md#create-a-gitignore-file)
 to prevent accidentally committing the file.
 :::
 
@@ -72,7 +65,7 @@ Replace the Infura project credential placeholders with your own.
 
 :::note
 The `INFURA_API_KEY_SECRET` is optional and only necessary if you are using an
-API key secret to authenticate requests.
+[API key secret](/developer-tools/dashboard/how-to/secure-an-api/api-key-secret) to authenticate requests.
 :::
 
 ## Create your script
@@ -90,7 +83,7 @@ Copy the following code into your script:
 
 :::info note
 If using a network other than Ethereum Mainnet, update the `chainId` value (`1`) in the code to an
-alternate supported network.
+alternate [supported network](https://docs.metamask.io/services/get-started/endpoints.md#gas-api).
 :::
 
 <Tabs>

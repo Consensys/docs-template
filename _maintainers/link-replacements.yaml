@@ -4,6 +4,11 @@
 # Maintainers can manually add other folders (e.g., bitcoin) to reference/
 # All links are rewritten to local paths - if content exists locally link works
 
+# Source base path: The base path used in upstream repository that relative paths should be converted to
+# This is used when converting relative paths (e.g., ../../concepts/...) to absolute paths for pattern matching
+# Default: /services (if not specified)
+sourceBasePath: /services
+
 # Exact path replacements (matches the exact link path)
 replacements:
   /services: https://docs.metamask.io/services
@@ -15,6 +20,15 @@ replacements:
 # Supports {network} placeholder in replacement (extracted from pattern match)
 # Uses ([a-z0-9-]+) to match any network name (letters, numbers, hyphens)
 patterns:
+  # _partials pattern - matches partial imports used in JSON-RPC method files
+  # Matches: /services/reference/_partials/{anything}
+  # Example: /services/reference/_partials/filter-methods/_eth_call-description.mdx
+  #   -> /reference/_partials/filter-methods/_eth_call-description.mdx
+  - pattern: '/services/reference/_partials/.+'
+    replacement: '/reference/_partials'
+    extractPath: true
+    description: 'Rewrite _partials import paths to local paths'
+  
   # Generic JSON-RPC methods pattern - works for ANY network
   # Matches: /services/reference/{any-network}/json-rpc-methods/{anything}
   # Example: /services/reference/base/json-rpc-methods/eth_call
@@ -42,10 +56,21 @@ patterns:
   # Matches: /services/{anything} that's not /services/reference/...
   # Example: /services/get-started, /services/concepts, etc.
   # Preserve as external links since these aren't ported
-  - pattern: '/services/(?!reference/)([a-z0-9-/]+)'
+  - pattern: '/services/(?!reference/)(.+)'
     replacement: 'https://docs.metamask.io/services/{path}'
     extractPath: false
     description: 'Preserve full MetaMask path for general services paths (non-reference)'
+  
+  # Absolute paths that don't match other patterns (e.g., /developer-tools/...)
+  # Matches: /{anything} that's not /services/ or /reference/ or an anchor
+  # Example: /developer-tools/dashboard/get-started/create-api
+  #   -> https://docs.metamask.io/developer-tools/dashboard/get-started/create-api
+  # This pattern must come AFTER /services/ patterns to ensure /services/ paths are handled first
+  # Note: Pattern uses negative lookahead to exclude /services/, /reference/, and anchors
+  - pattern: '/(?!services/|reference/|#)(.+)'
+    replacement: 'https://docs.metamask.io/{path}'
+    extractPath: false
+    description: 'Convert absolute paths to external MetaMask docs URLs'
 
 # Notes:
 # - ([a-z0-9-]+) matches any network name: letters, numbers, hyphens
