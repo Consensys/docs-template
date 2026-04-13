@@ -24,7 +24,7 @@ jobs:
       issues: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v6
       - name: Release
         uses: Consensys/github-actions/docs-release@main
         with:
