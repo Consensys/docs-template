@@ -84,7 +84,7 @@ Follow these steps to deploy your private GitHub repository to Vercel:
           contents: read
           pull-requests: write
         steps:
-          - uses: actions/checkout@v3
+          - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
           - name: Build
             uses: consensys/docs-gha/build@main
             with:

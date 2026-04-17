@@ -14,8 +14,8 @@ jobs:
       matrix:
         file-extensions: [".md", ".mdx"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: LinkCheck
-        uses: ConsenSys/github-actions/docs-link-check@main
+        uses: ConsenSys/github-actions/docs-link-check@7256f3d39c7bb71ec4ca9fc6078991302d4c8650
         with:
           FILE_EXTENSION: ${{ matrix.file-extensions }}
